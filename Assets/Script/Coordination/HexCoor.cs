@@ -69,6 +69,20 @@ public struct HexCoor
 		return new Vector2(p + q / 2f, q * SQRT_3 / 2f);
 	}
 
+	public static HexCoor Round(Vector2 _coor)
+	{
+		var _q = _coor.y / (SQRT_3/2f);
+		var _p = _coor.x - _q/2;
+		return new HexCoor(Mathf.RoundToInt(_p), Mathf.RoundToInt(_q));
+	}
+
+	public static int Side(Vector2 _coor, HexCoor _center)
+	{
+		var _delta = _coor - _center.ToVector2();
+		var _side = Mathf.Atan2(_delta.y, _delta.x) / (Mathf.PI / 6);
+		return ((int) _side + 30) % 6;
+	}
+
 	public override string ToString()
 	{
 		return "( " + p + ", " + q + " )";

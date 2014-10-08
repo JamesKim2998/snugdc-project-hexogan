@@ -10,8 +10,8 @@ public class NeoArmMotors : MonoBehaviour
 	private interface IThrust
 	{
 		void Add(int _thrust, Vector2 _position);
-		void ApplyPos(Rigidbody2D _rigidbody);
-		void ApplyNeg(Rigidbody2D _rigidbody);
+		void ApplyPos(Rigidbody2D _rigidbody, float _factor);
+		void ApplyNeg(Rigidbody2D _rigidbody, float _factor);
 		void Clear();
 	}
 
@@ -25,20 +25,20 @@ public class NeoArmMotors : MonoBehaviour
 			m_Weighted += _thrust * _position;
 		}
 
-		public void ApplyPos(Rigidbody2D _rigidbody)
+		public void ApplyPos(Rigidbody2D _rigidbody, float _factor)
 		{
-			Apply(_rigidbody, 1);
+			Apply(_rigidbody, _factor);
 		}
 
-		public void ApplyNeg(Rigidbody2D _rigidbody)
+		public void ApplyNeg(Rigidbody2D _rigidbody, float _factor)
 		{
-			Apply(_rigidbody, -1);
+			Apply(_rigidbody, -_factor);
 		}
 
-		private void Apply(Rigidbody2D _rigidbody, int _direction)
+		private void Apply(Rigidbody2D _rigidbody, float _factor)
 		{
 			if (m_Total == 0) return;
-			var _thrust = _rigidbody.transform.TransformDirection(new Vector2 { x = _direction * m_Total });
+			var _thrust = _rigidbody.transform.TransformDirection(new Vector2 { x = _factor * m_Total });
 			var _delta = _rigidbody.transform.TransformDirection(m_Weighted / m_Total);
 			_rigidbody.AddForceAtPosition(_thrust, _rigidbody.transform.localPosition + _delta);
 		}
@@ -59,16 +59,16 @@ public class NeoArmMotors : MonoBehaviour
 			m_Total += _thrust * _position.magnitude / 3;
 		}
 
-		public void ApplyPos(Rigidbody2D _rigidbody)
+		public void ApplyPos(Rigidbody2D _rigidbody, float _factor)
 		{
-			if (Mathf.Approximately(m_Total, 0)) return;
-			_rigidbody.AddTorque(m_Total);
+			if (Mathf.Approximately(m_Total * _factor, 0)) return;
+			_rigidbody.AddTorque(m_Total * _factor);
 		}
 
-		public void ApplyNeg(Rigidbody2D _rigidbody)
+		public void ApplyNeg(Rigidbody2D _rigidbody, float _factor)
 		{
-			if (Mathf.Approximately(m_Total, 0)) return;
-			_rigidbody.AddTorque(-m_Total);
+			if (Mathf.Approximately(m_Total * _factor, 0)) return;
+			_rigidbody.AddTorque(-m_Total * _factor);
 		}
 
 		public void Clear()
@@ -102,8 +102,8 @@ public class NeoArmMotors : MonoBehaviour
 			m_Datas.Add(_motorData);
 		}
 
-		public void ApplyPos(Rigidbody2D _rigidbody) { m_Thrust.ApplyPos(_rigidbody); }
-		public void ApplyNeg(Rigidbody2D _rigidbody) { m_Thrust.ApplyNeg(_rigidbody); }
+		public void ApplyPos(Rigidbody2D _rigidbody, float _factor) { m_Thrust.ApplyPos(_rigidbody, _factor); }
+		public void ApplyNeg(Rigidbody2D _rigidbody, float _factor) { m_Thrust.ApplyNeg(_rigidbody, _factor); }
 
 		public void BuildThrust(Vector2 _com)
 		{
@@ -188,23 +188,23 @@ public class NeoArmMotors : MonoBehaviour
 	{
 		m_Thrusts.Motor(_thrustNormal);
 		m_Drags.Motor(-_thrustNormal);
-		m_DriftLs.Motor(_driftNormal);
-		m_DriftRs.Motor(-_driftNormal);
+		m_DriftLs.Motor(-_driftNormal);
+		m_DriftRs.Motor(_driftNormal);
 
 		if (rigidbody2D.velocity.sqrMagnitude < body.speedLimit * body.speedLimit)
 		{
 			if (_thrustNormal > 0.001f)
-				m_Thrusts.ApplyPos(rigidbody2D);
+				m_Thrusts.ApplyPos(rigidbody2D, _thrustNormal);
 			else if (_thrustNormal < -0.001f)
-				m_Drags.ApplyNeg(rigidbody2D);
+				m_Drags.ApplyNeg(rigidbody2D, -_thrustNormal);
 		}
 
 		if (Mathf.Abs(rigidbody2D.angularVelocity) < body.angularSpeedLimit)
 		{
 			if (_driftNormal > 0.001f)
-				m_DriftLs.ApplyPos(rigidbody2D);
+				m_DriftRs.ApplyNeg(rigidbody2D, _driftNormal);
 			else if (_driftNormal < -0.001f)
-				m_DriftRs.ApplyNeg(rigidbody2D);
+				m_DriftLs.ApplyPos(rigidbody2D, -_driftNormal);
 		}
 	}
 

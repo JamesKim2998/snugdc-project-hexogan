@@ -5,9 +5,14 @@ public static class NeoHex
 {
 	public static Vector2 Position(HexCoor _coor)
 	{
-		var _p = _coor.p*NeoConst.HEX_P;
-		var _q = _coor.q*NeoConst.HEX_Q;
-		return new Vector2(_p + _q.x, _q.y);
+		return _coor.ToVector2() * NeoConst.HEX_P;
+	}
+
+	public static HexCoor Coor(Vector2 _position, out int _side)
+	{
+		var _coor = HexCoor.Round(_position/NeoConst.HEX_P);
+		_side = HexCoor.Side(_position, _coor);
+		return _coor;
 	}
 
 	public static void Locate(Transform _transform, HexCoor _coor)
@@ -27,4 +32,5 @@ public static class NeoHex
 		_angles.z = 60 * _idx;
 		_transform.localEulerAngles = _angles;
 	}
+
 }

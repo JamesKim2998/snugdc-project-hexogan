@@ -4,10 +4,8 @@ using System.Collections;
 
 public class NeoMechanic : MonoBehaviour {
 	public int mass = 1;
-	// public readonly HexCell<NeoMechanic> hex;
+	public NeoMechanics mechanics;
 
 	public NeoMechanic()
-	{
-		// hex = new HexCell<NeoMechanic>(this);
-	}
+	{}
 }

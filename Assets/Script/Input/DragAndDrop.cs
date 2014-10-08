@@ -2,16 +2,19 @@
 using System.Collections;
 
 public class DragAndDrop : MonoBehaviour {
-	Vector3 m_Offset;
+	public Vector2 offset { get; private set; }
 
 	void OnMouseDown()
 	{
-		m_Offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
 	}
 
 	void OnMouseDrag()
 	{
-		var _curScreenSpace = Input.mousePosition;
-		transform.position = Camera.main.ScreenToWorldPoint(_curScreenSpace) + m_Offset;
+		var _position = transform.position;
+		var _mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		_position.x = _mousePosition.x;
+		_position.y = _mousePosition.y;
+		transform.position = _position + (Vector3) offset;
 	}
 }

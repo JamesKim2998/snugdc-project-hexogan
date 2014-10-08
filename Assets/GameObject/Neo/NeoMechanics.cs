@@ -15,8 +15,15 @@ public class NeoMechanics : MonoBehaviour
 	{
 	}
 
+	void Add(NeoMechanic _mechanic)
+	{
+		_mechanic.mechanics = this;
+	}
+
 	public void Add(NeoBody _body, HexCoor _coor)
 	{
+		Add(_body);
+
 		m_Bodies.Add(_coor, new HexCell<NeoBody>(_body));
 		_body.transform.parent = transform;
 		NeoHex.Locate(_body.transform, _coor);
@@ -27,6 +34,8 @@ public class NeoMechanics : MonoBehaviour
 	{
 		var _body = m_Bodies[_coor];
 		if (_body == null) return;
+
+		Add(_arm);
 
 		var _coorDouble = _coor * 2 + HexCoor.FromAdjacent(_side);
 

@@ -5,12 +5,7 @@ using System.Runtime.Serialization;
 [System.Serializable]
 public class AttackData 
 {
-	public static readonly AttackData DAMAGE_MAX = new AttackData(1000);
-
-	public AttackData(int _damage)
-	{
-		damage = _damage;
-	}
+	public static readonly AttackData DAMAGE_MAX = new AttackData(int.MaxValue);
 
 	public string ownerPlayer;
 
@@ -20,12 +15,12 @@ public class AttackData
 	[System.NonSerialized]
 	public Vector2 velocity = Vector2.zero;
 	public int damage = 0;
-    
-	public static implicit operator int(AttackData _attackData) 
+
+	public AttackData(int _damage)
 	{
-		return _attackData.damage;
+		damage = _damage;
 	}
-	
+
 	public string Serialize() 
 	{
 		return Serializer.Serialize(this)
@@ -42,5 +37,10 @@ public class AttackData
 
 		_attackData.velocity = _velocity;
 		return _attackData;
+	}
+
+	public static implicit operator int(AttackData _attackData)
+	{
+		return _attackData.damage;
 	}
 }

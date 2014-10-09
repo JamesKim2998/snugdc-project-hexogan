@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Ricochet : MonoBehaviour 
+public class ProjectileDecoratorRicochet : MonoBehaviour 
 {
 	// penetration
 	public int penetration;

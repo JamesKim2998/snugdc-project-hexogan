@@ -65,11 +65,17 @@ public class Projectile : MonoBehaviour
     private float m_DecayTime;
 	#endregion
 
-	// attack
+	#region attack
 	public bool isHitOwner = false;
-    [HideInInspector]
+
+	[HideInInspector]
 	public AttackData attackData;
-	public int damage { set { attackData.damage = value; }}
+	public int damage
+	{
+		get { return attackData.damage; } 
+		set { attackData.damage = value; }
+	}
+	#endregion
 
 	// physics
 	public Vector2 initialVelocity = Vector2.zero;
@@ -82,7 +88,7 @@ public class Projectile : MonoBehaviour
 	public LayerMask collisionTerrains;
 
 	// components
-	private Ricochet m_Ricochet;
+	private ProjectileDecoratorRicochet m_Ricochet;
 	private Animator m_Animator;
 
 	// collide with something
@@ -113,7 +119,7 @@ public class Projectile : MonoBehaviour
 		if (initialVelocity != Vector2.zero)
 			rigidbody2D.velocity = initialVelocity;
 
-		m_Ricochet = GetComponent<Ricochet>();
+		m_Ricochet = GetComponent<ProjectileDecoratorRicochet>();
 		m_Animator = GetComponent<Animator>();
 
 		if (! prepareDuration.Equals(0)) 

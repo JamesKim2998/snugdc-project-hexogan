@@ -6,7 +6,7 @@ using System.Collections;
 [RequireComponent(typeof(DragAndDrop))]
 public abstract class NeoMechanicDragAndDrop : MonoBehaviour
 {
-	public LayerMask dropMask;
+	static public LayerMask dropMask;
 
 	void OnMouseDown()
 	{
@@ -46,7 +46,7 @@ public abstract class NeoMechanicDragAndDrop : MonoBehaviour
 			if (!_overlap) return false;
 			var _body = _overlap.GetComponent<NeoBody>();
 			if (!_body) return false;
-			var _mechanics = _body.mechanics;
+			var _mechanics = _body.parent;
 			if (!_mechanics) return false;
 
 			var _bodyCoor = _body.coor;

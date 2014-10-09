@@ -34,9 +34,22 @@ public class NeoMechanics : MonoBehaviour
 			: null;
 	}
 
-	void Add(NeoMechanic _mechanic)
+	void Add(NeoMechanic _mechanic, HexCoor _coor, int? _side = null)
 	{
-		_mechanic.mechanics = this;
+		_mechanic.SetParent(this, _coor);
+		body.AddMass(_mechanic.mass, _coor, _side);
+		m_IsDirty = true;
+	}
+
+	public bool IsRemovable(NeoMechanic _mechanic)
+	{
+		return _mechanic.parent == this;
+	}
+
+	private void Remove(NeoMechanic _mechanic, HexCoor _coor, int? _side = null)
+	{
+		_mechanic.Detach();
+		body.AddMass(-_mechanic.mass, _coor, _side);
 		m_IsDirty = true;
 	}
 
@@ -46,11 +59,10 @@ public class NeoMechanics : MonoBehaviour
 		if (!m_Bodies.TryAdd(_coor, _cell))
 			return false;
 
-		Add(_body);
+		Add((NeoMechanic) _body, _coor);
 
 		_body.transform.parent = transform;
 		Locate(_body.transform, _coor);
-		body.AddMass(_body.mass, _coor * 2);
 
 		var _side = -1;
 		foreach (var _neighbor in _cell.GetNeighbors())
@@ -68,16 +80,28 @@ public class NeoMechanics : MonoBehaviour
 		var _body = m_Bodies[_coor];
 		if (_body == null) return;
 
-		Add(_arm);
-
-		var _coorDouble = _coor * 2 + HexCoor.FromAdjacent(_side);
+		Add((NeoMechanic) _arm, _coor, _side);
 
 		_body.data.AddArm(_arm, _side);
 		m_Arms.Add(_arm);
-		body.AddMass(_arm.mass, _coorDouble);
 
 		var _motor = _arm.GetComponent<NeoArmMotor>();
 		if (_motor) motors.Add(_motor, _coor);
+	}
+
+	public void Remove(NeoArm _arm)
+	{
+		if (! IsRemovable(_arm)) return;
+		var _motor = _arm.GetComponent<NeoArmMotor>();
+		if (_motor) motors.Remove(_motor);
+		Remove(_arm, _arm.coor, _arm.side);
+	}
+
+	public void Remove(NeoBody _body)
+	{
+		if (! IsRemovable(_body)) return;
+		m_Bodies.Remove(_body.coor); 
+		Remove(_body, _body.coor);
 	}
 
 	public void Build()

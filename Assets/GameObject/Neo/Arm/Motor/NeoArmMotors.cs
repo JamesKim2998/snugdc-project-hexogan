@@ -56,7 +56,7 @@ public class NeoArmMotors : MonoBehaviour
 
 		public void Add(int _thrust, Vector2 _position)
 		{
-			m_Total += _thrust * _position.magnitude / 3;
+			m_Total += _thrust * _position.magnitude;
 		}
 
 		public void ApplyPos(Rigidbody2D _rigidbody, float _factor)
@@ -174,6 +174,12 @@ public class NeoArmMotors : MonoBehaviour
 		var _motorData = new MotorData {motor = _motor, position = _position, };
 		m_Motors.Add(_motorData);
 	}
+
+	public void Remove(NeoArmMotor _motor)
+	{
+		m_Motors.RemoveAll(_motorData => _motorData.motor == _motor);
+	}
+
 	#endregion
 
 	public void ClearThrusts()

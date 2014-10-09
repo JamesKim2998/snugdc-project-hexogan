@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(Neo))]
@@ -10,19 +11,54 @@ public class NeoRigidbody : MonoBehaviour
 
 	void Awake()
 	{
-		rigidbody2D.mass = 1;
-		rigidbody2D.inertia = 1;
+		rigidbody2D.mass = 0;
+		rigidbody2D.inertia = 0;
 	}
 
-	private int m_TotalMass = 0;
-	private HexCoor m_MassWeightedDoubleCoor = new HexCoor();
-
-	public void AddMass(int _mass, HexCoor _coorDouble)
+	public void Update()
 	{
+		if (m_IsMassDirty)
+			BuildMass();
+	}
+
+	class MassData
+	{
+		public int mass;
+	}
+
+	private bool m_IsMassDirty = false;
+	private readonly Dictionary<HexCoor, MassData> m_MassDatas = new Dictionary<HexCoor, MassData>();
+	private int m_TotalMass;
+	private HexCoor m_MassWeightedDoubleCoor;
+
+	public void AddMass(int _mass, HexCoor _coor, int? _side = null)
+	{
+		m_IsMassDirty = true;
+
+		var _coorDouble = _coor * 2;
+		if (_side.HasValue) _coorDouble += HexCoor.FromAdjacent(_side.Value);
+
 		m_TotalMass += _mass;
 		m_MassWeightedDoubleCoor += _coorDouble * _mass;
-		rigidbody2D.mass = m_TotalMass;
-		rigidbody2D.centerOfMass = NeoHex.Position(m_MassWeightedDoubleCoor) / 2 / m_TotalMass;
+
+		MassData _massData;
+		if (m_MassDatas.TryGetValue(_coorDouble, out _massData))
+			_massData.mass += _mass;
+		else
+			m_MassDatas.Add(_coorDouble, new MassData { mass = _mass });
 	}
 
+	public void BuildMass()
+	{
+		if (! m_IsMassDirty) return;
+		m_IsMassDirty = false;
+		
+		rigidbody2D.mass = m_TotalMass;
+		rigidbody2D.centerOfMass = NeoHex.Position(m_MassWeightedDoubleCoor) / 2 / m_TotalMass;
+
+		float _inertia = 0;
+		foreach (var _massData in m_MassDatas)
+			_inertia += _massData.Value.mass*(_massData.Key.ToVector2() / 2).sqrMagnitude;
+		rigidbody2D.inertia = _inertia;
+	}
 }

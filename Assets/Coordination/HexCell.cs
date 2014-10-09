@@ -14,11 +14,7 @@ public class HexCell<T>
 
 	~HexCell()
 	{
-		for (var _i = 0; _i < 6; ++_i)
-		{
-			var _neighbor = m_Neighbors[_i];
-			if (_neighbor != null) _neighbor.m_Neighbors[HexCoor.OppositeSide(_i)] = null;
-		}
+		DisconnectAll();
 	}
 
 	public HexCell<T> GetNeighbor(int _idx)
@@ -34,7 +30,7 @@ public class HexCell<T>
 
 	public void Connect(HexCell<T> _neighbor, int _idx)
 	{
-		if (m_Neighbors[_idx] != null)
+		if (GetNeighbor(_idx) != null)
 		{
 			Debug.LogError("There is already mechanic exists in " + _idx + ". Ignore.");
 			return;
@@ -52,9 +48,21 @@ public class HexCell<T>
 			return;
 		}
 
-		var _neighbor = m_Neighbors[_idx];
+		var _neighbor = GetNeighbor(_idx);
 		_neighbor.m_Neighbors[HexCoor.OppositeSide(_idx)] = null;
 		m_Neighbors[_idx] = null;
 	}
 
+	public void DisconnectAll()
+	{
+		for (var _side = 0; _side != 6; ++_side)
+		{
+			var _neighbor = m_Neighbors[_side];
+			if (_neighbor != null)
+			{
+				_neighbor.m_Neighbors[HexCoor.OppositeSide(_side)] = null;
+				m_Neighbors[_side] = null;
+			}
+		}
+	}
 }

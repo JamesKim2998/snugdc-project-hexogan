@@ -18,12 +18,18 @@ public class Neo : MonoBehaviour
 		mechanics = gameObject.AddComponent<NeoMechanics>();
 		mechanics.body = body;
 		mechanics.motors = motors;
+	}
 
+	void Start()
+	{
 		mechanics.Add(core.GetComponent<NeoBody>(), HexCoor.ZERO);
 	}
 
 	public void Motor(float _thrustNormal, float _driftNormal)
 	{
-		motors.Motor(_thrustNormal, _driftNormal);
+		if (_thrustNormal > -0.01f)
+			motors.Motor(_thrustNormal, _driftNormal);
+		else
+			motors.Motor(_thrustNormal, -_driftNormal);
 	}
 }

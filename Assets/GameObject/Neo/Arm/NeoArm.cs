@@ -3,22 +3,46 @@ using System.Collections;
 
 public class NeoArm : NeoMechanic
 {
-	private NeoBody m_Body;
+	public NeoArmType type;
+
+	public NeoBody body { get; private set; }
 	public int side { get; private set; }
 
-	public void Attach(NeoBody _body, int _side)
+	public bool Attach(NeoBody _body, int _side)
 	{
-		if (m_Body)
+		if (body)
 		{
-			Debug.LogWarning("Body already exists. Replace.");
-			return;
+			Debug.LogWarning("Body already exists. Ignore.");
+			return false;
 		}
 
-		m_Body = _body;
+		if (!_body.parent)
+		{
+			Debug.LogWarning("Body doesn't have parent. Ignore.");
+			return false;
+		}
+
+		if (_body.parent)
+		{
+			if (parent != _body.parent)
+			{
+				Debug.LogWarning("Parent doesn't match. Ignore.");
+				return false;
+			}
+		}
+		else
+		{
+			SetParent(_body.parent, _body.coor);
+		}
+
+		body = _body;
 		side = _side;
 		transform.parent = _body.transform;
 		LocateSide(transform, _side);
+		
+		return true;
 	}
+
 	public static void LocateSide(Transform _transform, int _idx)
 	{
 		_transform.localPosition = NeoHex.Side(_idx);
@@ -26,4 +50,11 @@ public class NeoArm : NeoMechanic
 		_angles.z = 60 * _idx;
 		_transform.localEulerAngles = _angles;
 	}
+
+	public override void Detach()
+	{
+		if (body) body.RemoveNeighbor(side);
+		base.Detach();
+	}
+
 }

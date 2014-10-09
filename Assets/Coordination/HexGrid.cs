@@ -9,6 +9,11 @@ public class HexGrid<T> : IEnumerable<KeyValuePair<HexCoor, HexCell<T>>>
 	
 	private readonly BiDictionary<HexCoor, HexCell<T>> m_Cells = new BiDictionary<HexCoor, HexCell<T>>();
 
+	public HexCell<T> this[HexCoor _coor]
+	{
+		get { return Get(_coor); }
+	}
+
 	public bool TryGet(HexCoor _coor, out HexCell<T> _output)
 	{
 		return m_Cells.TryGetValue(_coor, out _output);
@@ -96,9 +101,12 @@ public class HexGrid<T> : IEnumerable<KeyValuePair<HexCoor, HexCell<T>>>
 			_cell.Connect(_neighbor.cell, _neighbor.side);
 	}
 
-	public HexCell<T> this[HexCoor _coor]
+	public void Remove(HexCoor _coor)
 	{
-		get { return Get(_coor); }
+		var _cell = Get(_coor);
+		if (_cell == null) return;
+		m_Cells.Remove(_coor);
+		_cell.DisconnectAll();
 	}
 
 	public IEnumerator<KeyValuePair<HexCoor, HexCell<T>>> GetEnumerator()

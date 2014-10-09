@@ -6,7 +6,8 @@ using UnityEngine;
 [Serializable]
 public struct HexCoor 
 {
-	static readonly float SQRT_3 = Mathf.Sqrt(3);
+	public static readonly HexCoor ZERO = new HexCoor(0, 0);
+	private static readonly float SQRT_3 = Mathf.Sqrt(3);
 
 	public int p, q;
 
@@ -48,6 +49,12 @@ public struct HexCoor
 		return -1;
 	}
 
+	public static IEnumerable<HexCoor> GetAdjacents()
+	{
+		for (var _i = 0; _i < 6; ++_i)
+			yield return FromAdjacent(_i);
+	}
+
 	public static HexCoor FromAdjacent(int _idx)
 	{
 		switch (_idx)
@@ -79,8 +86,8 @@ public struct HexCoor
 	public static int Side(Vector2 _coor, HexCoor _center)
 	{
 		var _delta = _coor - _center.ToVector2();
-		var _side = Mathf.Atan2(_delta.y, _delta.x) / (Mathf.PI / 6);
-		return ((int) _side + 30) % 6;
+		var _side = Mathf.Atan2(_delta.y, _delta.x)/(Mathf.PI/3) + 6.5f;
+		return ((int) _side) % 6;
 	}
 
 	public override string ToString()

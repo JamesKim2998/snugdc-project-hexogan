@@ -4,6 +4,7 @@ using System.Collections;
 
 public class Neo : MonoBehaviour
 {
+	public NeoCore core;
 
 	public NeoRigidbody body;
 	public NeoMechanics mechanics { get; private set; }
@@ -17,6 +18,8 @@ public class Neo : MonoBehaviour
 		mechanics = gameObject.AddComponent<NeoMechanics>();
 		mechanics.body = body;
 		mechanics.motors = motors;
+
+		mechanics.Add(core.GetComponent<NeoBody>(), HexCoor.ZERO);
 	}
 
 	public void Motor(float _thrustNormal, float _driftNormal)

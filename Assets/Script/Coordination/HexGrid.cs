@@ -50,37 +50,50 @@ public class HexGrid<T> : IEnumerable<KeyValuePair<HexCoor, HexCell<T>>>
 			++_side;
 		}
 	}
-	
-	public void Add(HexCoor _coor, HexCell<T> _cell)
+
+	public bool CheckAddable(HexCoor _coor, HexCell<T> _cell)
 	{
-		if (m_Cells.Count != 0 && Debug.isDebugBuild)
+		if (m_Cells.Count != 0)
 		{
 			HexCell<T> _temp;
 			if (TryGet(_coor, out _temp))
 			{
 				Debug.LogError("There is already mechanic in " + _coor + ". Ignore.");
-				return;
+				return false;
 			}
 
 			if (Contains(_cell))
 			{
 				Debug.LogError("Trying to add mechanic. But already exists. Ignore.");
-				return;
+				return false;
 			}
 
 			if (!Neighbors(_coor).Any())
 			{
 				Debug.LogError("There is no neighbor around " + _coor + ". Ignore.");
-				return;
+				return false;
 			}
 		}
 
-		m_Cells.Add(_coor, _cell);
+		return true;
+	}
 
-		foreach (var _neighbor in Neighbors(_coor))
+	public bool TryAdd(HexCoor _coor, HexCell<T> _cell)
+	{
+		if (CheckAddable(_coor, _cell))
 		{
-			_cell.Connect(_neighbor.cell, _neighbor.side);
+			Add(_coor, _cell);
+			return true;
 		}
+
+		return false;
+	}
+
+	public void Add(HexCoor _coor, HexCell<T> _cell)
+	{
+		m_Cells.Add(_coor, _cell);
+		foreach (var _neighbor in Neighbors(_coor))
+			_cell.Connect(_neighbor.cell, _neighbor.side);
 	}
 
 	public HexCell<T> this[HexCoor _coor]

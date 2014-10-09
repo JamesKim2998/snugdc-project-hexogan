@@ -17,6 +17,13 @@ public class NeoArm : NeoMechanic
 		m_Body = _body;
 		side = _side;
 		transform.parent = _body.transform;
-		NeoHex.LocateSide(transform, _side);
+		LocateSide(transform, _side);
+	}
+	public static void LocateSide(Transform _transform, int _idx)
+	{
+		_transform.localPosition = NeoHex.Side(_idx);
+		var _angles = _transform.localEulerAngles;
+		_angles.z = 60 * _idx;
+		_transform.localEulerAngles = _angles;
 	}
 }

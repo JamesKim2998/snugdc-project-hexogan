@@ -8,29 +8,19 @@ public static class NeoHex
 		return _coor.ToVector2() * NeoConst.HEX_P;
 	}
 
-	public static HexCoor Coor(Vector2 _position, out int _side)
+	public static HexCoor Coor(Vector2 _position)
 	{
-		var _coor = HexCoor.Round(_position/NeoConst.HEX_P);
-		_side = HexCoor.Side(_position, _coor);
-		return _coor;
+		return HexCoor.Round(_position/NeoConst.HEX_P);
 	}
 
-	public static void Locate(Transform _transform, HexCoor _coor)
+	public static int Side(Vector2 _position, HexCoor _center)
 	{
-		_transform.localPosition = Position(_coor);
+		return HexCoor.Side(_position/NeoConst.HEX_P, _center);
 	}
 
 	public static Vector2 Side(int _idx)
 	{
 		return HexCoor.FromAdjacent(_idx).ToVector2() / 2f * NeoConst.HEX_P;
-	}
-
-	public static void LocateSide(Transform _transform, int _idx)
-	{
-		_transform.localPosition = Side(_idx);
-		var _angles = _transform.localEulerAngles;
-		_angles.z = 60 * _idx;
-		_transform.localEulerAngles = _angles;
 	}
 
 }

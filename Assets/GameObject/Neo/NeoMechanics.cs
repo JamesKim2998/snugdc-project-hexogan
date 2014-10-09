@@ -11,23 +11,56 @@ public class NeoMechanics : MonoBehaviour
 	private readonly HexGrid<NeoBody> m_Bodies = new HexGrid<NeoBody>();
 	private readonly List<NeoArm> m_Arms = new List<NeoArm>();
 
+	private bool m_IsDirty = false;
+
 	NeoMechanics()
 	{
+	}
+
+	void Update()
+	{
+		if (m_IsDirty)
+		{
+			Build();
+			m_IsDirty = false;
+		}
+	}
+
+	public HexCell<NeoBody> GetBody(HexCoor _coor)
+	{
+		HexCell<NeoBody> _body;
+		return m_Bodies.TryGet(_coor, out _body)
+			? _body
+			: null;
 	}
 
 	void Add(NeoMechanic _mechanic)
 	{
 		_mechanic.mechanics = this;
+		m_IsDirty = true;
 	}
 
-	public void Add(NeoBody _body, HexCoor _coor)
+	public bool Add(NeoBody _body, HexCoor _coor)
 	{
+		var _cell = new HexCell<NeoBody>(_body);
+		if (!m_Bodies.TryAdd(_coor, _cell))
+			return false;
+
 		Add(_body);
 
-		m_Bodies.Add(_coor, new HexCell<NeoBody>(_body));
 		_body.transform.parent = transform;
-		NeoHex.Locate(_body.transform, _coor);
+		Locate(_body.transform, _coor);
 		body.AddMass(_body.mass, _coor * 2);
+
+		var _side = -1;
+		foreach (var _neighbor in _cell.GetNeighbors())
+		{
+			++_side;
+			if (_neighbor == null) continue;
+			_body.AddBody(_neighbor.data, _side);
+		}
+		
+		return true;
 	}
 
 	public void Add(NeoArm _arm, HexCoor _coor, int _side)
@@ -51,4 +84,13 @@ public class NeoMechanics : MonoBehaviour
 	{
 		motors.BuildThrust();
 	}
+
+	public static void Locate(Transform _transform, HexCoor _coor)
+	{
+		var _pos = (Vector3)NeoHex.Position(_coor);
+		var _posOld = _transform.localPosition;
+		_pos.z = _posOld.z;
+		_transform.localPosition = _pos;
+	}
+
 }

@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using System.Collections;
 
 public class HexCell<T>
 {
 	public T data { get; private set; }
-
 	private readonly HexCell<T>[] m_Neighbors = new HexCell<T>[6];
 
 	public HexCell(T _data)
@@ -21,15 +21,23 @@ public class HexCell<T>
 		}
 	}
 
+	public HexCell<T> GetNeighbor(int _idx)
+	{
+		return m_Neighbors[_idx];
+	}
+
+	public IEnumerable<HexCell<T>> GetNeighbors()
+	{
+		for (var _i = 0; _i < 6; ++_i)
+			yield return m_Neighbors[_i];
+	}
+
 	public void Connect(HexCell<T> _neighbor, int _idx)
 	{
-		if (Debug.isDebugBuild)
+		if (m_Neighbors[_idx] != null)
 		{
-			if (m_Neighbors[_idx] != null)
-			{
-				Debug.LogError("There is already mechanic exists in " + _idx + ". Ignore.");
-				return;
-			}
+			Debug.LogError("There is already mechanic exists in " + _idx + ". Ignore.");
+			return;
 		}
 
 		m_Neighbors[_idx] = _neighbor;
@@ -38,10 +46,10 @@ public class HexCell<T>
 
 	public void Disconnect(int _idx)
 	{
-		if (Debug.isDebugBuild)
+		if (m_Neighbors[_idx] == null)
 		{
-			if (m_Neighbors[_idx] != null)
-				Debug.LogWarning("There is no neighbor in " + _idx + ". Continue anyway.");
+			Debug.LogWarning("There is no neighbor in " + _idx + ". Ignore.");
+			return;
 		}
 
 		var _neighbor = m_Neighbors[_idx];

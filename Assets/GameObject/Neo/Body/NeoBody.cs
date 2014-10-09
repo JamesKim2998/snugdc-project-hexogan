@@ -56,7 +56,7 @@ public class NeoBody : NeoMechanic
 		if (_body) _body.RemoveNeighbor(HexCoor.OppositeSide(_side));
 
 		var _arm = _neighbor.GetComponent<NeoArm>();
-		if (_arm) _arm.Detach();
+		if (_arm) parent.Remove(_arm);
 	}
 
 	public override void Detach()

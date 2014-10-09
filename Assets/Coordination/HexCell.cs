@@ -17,6 +17,49 @@ public class HexCell<T>
 		DisconnectAll();
 	}
 
+	public bool IsBridge()
+	{
+		var _cnt = 0;
+		bool _first = false;
+		bool? _old = null;
+
+		foreach (var _neighbor in GetNeighbors())
+		{
+			var _new = _neighbor != null;
+
+			if (_old.HasValue)
+			{
+				if (!_new && _old.Value)
+				{
+					++_cnt;
+					if (_cnt > 1)
+					{
+						Debug.Log("Island possible.");
+						return true;
+					}
+				}
+			}
+			else
+			{
+				_first = _new;
+			}
+
+			_old = _new;
+		}
+
+		if (_old.HasValue && !_first && _old.Value)
+		{
+			++_cnt;
+			if (_cnt > 1)
+			{
+				Debug.Log("Island possible.");
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public HexCell<T> GetNeighbor(int _idx)
 	{
 		return m_Neighbors[_idx];
@@ -24,7 +67,7 @@ public class HexCell<T>
 
 	public IEnumerable<HexCell<T>> GetNeighbors()
 	{
-		for (var _i = 0; _i < 6; ++_i)
+		for (var _i = 0; _i != 6; ++_i)
 			yield return m_Neighbors[_i];
 	}
 

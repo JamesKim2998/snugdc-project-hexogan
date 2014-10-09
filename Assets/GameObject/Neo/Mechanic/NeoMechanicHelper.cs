@@ -2,11 +2,12 @@
 using System.Collections;
 
 public static class NeoMechanicHelper {
-	public static void AddDragAndDrop(NeoMechanic _mechanic)
+	public static DragAndDrop AddDragAndDrop(NeoMechanic _mechanic)
 	{
 		if (_mechanic.GetComponent<NeoBody>())
-			_mechanic.gameObject.AddComponent<NeoBodyDragAndDrop>();
-		if (_mechanic.GetComponent<NeoArm>())
-			_mechanic.gameObject.AddComponent<NeoArmDragAndDrop>();
+			return _mechanic.gameObject.AddComponent<NeoBodyDragAndDrop>();
+		else if (_mechanic.GetComponent<NeoArm>())
+			return _mechanic.gameObject.AddComponent<NeoArmDragAndDrop>();
+		return null;
 	}
 }

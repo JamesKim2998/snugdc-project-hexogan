@@ -11,7 +11,8 @@ public class NeoMechanics : MonoBehaviour
 	private readonly HexGrid<NeoBody> m_Bodies = new HexGrid<NeoBody>();
 	private readonly List<NeoArm> m_Arms = new List<NeoArm>();
 
-	private bool m_IsDirty = false;
+	private bool m_MassDirty = false;
+	private bool m_IslandDirty = false;
 
 	NeoMechanics()
 	{
@@ -19,10 +20,18 @@ public class NeoMechanics : MonoBehaviour
 
 	void Update()
 	{
-		if (m_IsDirty)
+		if (m_IslandDirty)
+		{
+			var _island = m_Bodies.RemoveIslands();
+			foreach (var _cell in _island)
+				Remove(_cell.data, false);
+			m_IslandDirty = false;
+		}
+
+		if (m_MassDirty)
 		{
 			Build();
-			m_IsDirty = false;
+			m_MassDirty = false;
 		}
 	}
 
@@ -38,7 +47,7 @@ public class NeoMechanics : MonoBehaviour
 	{
 		_mechanic.SetParent(this, _coor);
 		body.AddMass(_mechanic.mass, _coor, _side);
-		m_IsDirty = true;
+		m_MassDirty = true;
 	}
 
 	public bool IsRemovable(NeoMechanic _mechanic)
@@ -50,7 +59,7 @@ public class NeoMechanics : MonoBehaviour
 	{
 		_mechanic.Detach();
 		body.AddMass(-_mechanic.mass, _coor, _side);
-		m_IsDirty = true;
+		m_MassDirty = true;
 	}
 
 	public bool Add(NeoBody _body, HexCoor _coor)
@@ -97,10 +106,23 @@ public class NeoMechanics : MonoBehaviour
 		Remove(_arm, _arm.coor, _arm.side);
 	}
 
-	public void Remove(NeoBody _body)
+	public void Remove(NeoBody _body, bool _removeFromGrid = true)
 	{
-		if (! IsRemovable(_body)) return;
-		m_Bodies.Remove(_body.coor); 
+		if (!IsRemovable(_body)) return;
+
+		if (_removeFromGrid)
+		{
+			var _cell = GetBody(_body.coor);
+			if (_cell == null)
+			{
+				Debug.LogError("Cell is not exists! Ignore.");
+				return;
+			}
+
+			m_IslandDirty |= _cell.IsBridge();
+			m_Bodies.Remove(_body.coor);
+		}
+
 		Remove(_body, _body.coor);
 	}
 

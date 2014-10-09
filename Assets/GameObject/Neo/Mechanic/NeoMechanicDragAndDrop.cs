@@ -3,24 +3,26 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(DragAndDrop))]
-public abstract class NeoMechanicDragAndDrop : MonoBehaviour
+public abstract class NeoMechanicDragAndDrop : DragAndDrop
 {
 	static public LayerMask dropMask;
 
-	void OnMouseDown()
+	protected override void _OnMouseDown()
 	{
+		base._OnMouseDown();
 		transform.position += Vector3.back;
 		collider2D.isTrigger = true;
 	}
 
-	void OnMouseDrag()
+	protected override void _OnMouseDrag()
 	{
+		base._OnMouseDrag();
 		Pivot();
 	}
 
-	void OnMouseUp()
+	protected override void _OnMouseUp()
 	{
+		base._OnMouseUp();
 		Pivot(true);
 		transform.position += Vector3.forward;
 		collider2D.isTrigger = false;
@@ -36,7 +38,7 @@ public abstract class NeoMechanicDragAndDrop : MonoBehaviour
 
 	bool Pivot(bool _attach = false)
 	{
-		var _screenPos = Input.mousePosition + (Vector3)GetComponent<DragAndDrop>().offset;
+		var _screenPos = Input.mousePosition + (Vector3) offset;
 		var _worldPos = Camera.main.ScreenToWorldPoint(_screenPos);
 
 		var _overlaps = Physics2D.OverlapCircleAll(_worldPos, 0.1f, dropMask, -0.1f, 0.1f);
@@ -62,7 +64,6 @@ public abstract class NeoMechanicDragAndDrop : MonoBehaviour
 				if (Attach(_mechanics, _body, _bodyCoor, _side))
 				{
 					Destroy(this);
-					Destroy(GetComponent<DragAndDrop>());
 					return true;
 				}
 			}

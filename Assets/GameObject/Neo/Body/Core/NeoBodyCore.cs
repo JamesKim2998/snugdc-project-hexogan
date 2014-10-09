@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(NeoBody))]
-public class NeoCore : MonoBehaviour
+public class NeoBodyCore : MonoBehaviour
 {
 
 }

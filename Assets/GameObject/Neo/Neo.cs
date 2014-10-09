@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Neo : MonoBehaviour
 {
-	public NeoCore core;
+	public NeoBodyCore core;
 
 	public NeoRigidbody body;
 	public NeoMechanics mechanics { get; private set; }

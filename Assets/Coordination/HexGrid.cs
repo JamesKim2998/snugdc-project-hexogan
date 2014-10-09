@@ -105,8 +105,45 @@ public class HexGrid<T> : IEnumerable<KeyValuePair<HexCoor, HexCell<T>>>
 	{
 		var _cell = Get(_coor);
 		if (_cell == null) return;
-		m_Cells.Remove(_coor);
+		Remove(_cell);
+	}
+
+	public void Remove(HexCell<T> _cell)
+	{
+		m_Cells.Reverse.Remove(_cell);
 		_cell.DisconnectAll();
+	}
+
+	public HashSet<HexCell<T>> RemoveIslands()
+	{
+		var _checked = new HashSet<HexCell<T>>();
+		var _traversing = new HashSet<HexCell<T>> { Get(HexCoor.ZERO) };
+
+		while (_traversing.Count != 0)
+		{
+			var _cell = _traversing.First();
+
+			if (! _checked.Contains(_cell))
+			{
+				foreach (var _neighbor in _cell.GetNeighbors().Where(_neighbor => _neighbor != null))
+					_traversing.Add(_neighbor);
+				_checked.Add(_cell);	
+			}
+			
+			_traversing.Remove(_cell);
+		}
+
+		var _island = new HashSet<HexCell<T>>();
+		foreach (var _cell in this)
+		{
+			if (! _checked.Contains(_cell.Value)) 
+				_island.Add(_cell.Value);
+		}
+
+		foreach (var _cell in _island)
+			Remove(_cell);
+
+		return _island;
 	}
 
 	public IEnumerator<KeyValuePair<HexCoor, HexCell<T>>> GetEnumerator()

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NeoArmDatabase : Database<NeoArmType, NeoArmData>
+public class NeoBodyDatabase : Database<NeoBodyType, NeoBodyData>
 {
-	public static NeoArmDatabase shared;
+	public static NeoBodyDatabase shared;
 
 	public override void Build()
 	{

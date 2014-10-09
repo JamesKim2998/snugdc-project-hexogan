@@ -1,0 +1,15 @@
+public enum ProjectileType
+{
+	NONE,
+	BEGIN,
+    TEST = 7,
+	BIG_CANNON_BEAM = 2,
+	BLASTER_BEAM,
+	RED_BULLET,
+	GRAVITY_RIFLE_BULLET,
+	RPG_MISSILE,
+	YELLOW_BULLET = 8,
+	BLUE_BULLET = 9,
+    RED_LASER = 10,
+	END = 11,
+}

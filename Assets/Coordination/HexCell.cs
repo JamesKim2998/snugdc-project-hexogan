@@ -20,7 +20,7 @@ public class HexCell<T>
 	public bool IsBridge()
 	{
 		var _cnt = 0;
-		bool _first = false;
+		var _first = false;
 		bool? _old = null;
 
 		foreach (var _neighbor in GetNeighbors())
@@ -30,14 +30,7 @@ public class HexCell<T>
 			if (_old.HasValue)
 			{
 				if (!_new && _old.Value)
-				{
-					++_cnt;
-					if (_cnt > 1)
-					{
-						Debug.Log("Island possible.");
-						return true;
-					}
-				}
+					if (++_cnt > 1) return true;
 			}
 			else
 			{
@@ -48,14 +41,7 @@ public class HexCell<T>
 		}
 
 		if (_old.HasValue && !_first && _old.Value)
-		{
-			++_cnt;
-			if (_cnt > 1)
-			{
-				Debug.Log("Island possible.");
-				return true;
-			}
-		}
+			if (++_cnt > 1) return true;
 
 		return false;
 	}

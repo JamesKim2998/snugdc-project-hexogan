@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NeoArmEmitter : MonoBehaviour
-{
-
-	public GameObject projectile;
+public class EmitterDecoratorDeadzone : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

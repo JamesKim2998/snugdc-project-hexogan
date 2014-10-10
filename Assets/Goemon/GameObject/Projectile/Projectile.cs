@@ -26,10 +26,7 @@ public class Projectile : MonoBehaviour
     }
     
     [HideInInspector]
-	public int ownerID = 0;
-
-	[HideInInspector]
-	public int ownerDamageDetecterID = 0;
+	public uint owner = 0;
 
     #region active
 
@@ -257,7 +254,7 @@ public class Projectile : MonoBehaviour
                 goto finalize;
 
             var _damageDetector = _collider.GetComponentInChildren<DamageDetector>();
-			var _isOwner = _damageDetector.GetInstanceID() == ownerDamageDetecterID;
+			var _isOwner = _damageDetector.owner == owner;
 
 			if (! isHitOwner && _isOwner)
 				return;

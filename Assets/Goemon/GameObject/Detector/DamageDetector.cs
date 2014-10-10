@@ -2,7 +2,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class DamageDetector : MonoBehaviour {
+public class DamageDetector : MonoBehaviour 
+{
+	public int owner;
 
 	public Action<AttackData> postDamage { get; set; }
 
@@ -11,8 +13,8 @@ public class DamageDetector : MonoBehaviour {
 
 		if (postDamage != null) 
 			postDamage(attackData);
-		else 
-			Debug.Log("doDamage is not set!");
+		else
+			Debug.Log("postDamage is not set!");
 	}
 
 }

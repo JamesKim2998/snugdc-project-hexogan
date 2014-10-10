@@ -168,16 +168,16 @@ public class NeoArmMotors : MonoBehaviour
 
 	#region add/remove
 
-	public void Add(NeoArmMotor _motor, HexCoor _coor)
+	public void Add(NeoArmMotor _arm, HexCoor _coor)
 	{
 		var _position = NeoHex.Position(_coor);
-		var _motorData = new MotorData {motor = _motor, position = _position, };
+		var _motorData = new MotorData {motor = _arm, position = _position, };
 		m_Motors.Add(_motorData);
 	}
 
-	public void Remove(NeoArmMotor _motor)
+	public void Remove(NeoArmMotor _arm)
 	{
-		m_Motors.RemoveAll(_motorData => _motorData.motor == _motor);
+		m_Motors.RemoveAll(_motorData => _motorData.motor == _arm);
 	}
 
 	#endregion

@@ -16,6 +16,9 @@ public class NeoMechanicEditor : Editor
 	{
 		base.OnInspectorGUI();
 
+		if (PrefabHelper.IsPrefab(m_This))
+			return;
+
 		if (m_This.parent)
 		{
 			if (GUILayout.Button("Detach"))

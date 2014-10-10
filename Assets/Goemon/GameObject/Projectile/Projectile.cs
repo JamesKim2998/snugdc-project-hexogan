@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
     public ProjectileType editorType = ProjectileType.NONE;
@@ -26,7 +27,7 @@ public class Projectile : MonoBehaviour
     }
     
     [HideInInspector]
-	public uint owner = 0;
+	public int owner = 0;
 
     #region active
 
@@ -128,7 +129,7 @@ public class Projectile : MonoBehaviour
 	
 	void DestroySelf() 
 	{
-		if (networkView.enabled && networkView.viewID != NetworkViewID.unassigned)
+		if (networkView && networkView.enabled && networkView.viewID != NetworkViewID.unassigned)
 			Network.Destroy(networkView.viewID);
 		else 
 			Destroy(gameObject);

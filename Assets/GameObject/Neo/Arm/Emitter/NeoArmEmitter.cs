@@ -1,17 +1,35 @@
-﻿using UnityEngine;
+﻿using System.Runtime.Remoting.Messaging;
+using UnityEngine;
 using System.Collections;
 
 public class NeoArmEmitter : MonoBehaviour
 {
-	public Emitter emitter;
+	public EmitterType emitterType;
+	public Animator animator;
 
-	// Use this for initialization
-	void Start () {
-	
+	public Emitter emitter { get; private set; }
+
+	void Start()
+	{
+		emitter = EmitterDatabase.shared[emitterType].Instantiate();
+		TransformHelper.SetParentWithoutScale(emitter, this);
+		emitter.transform.localPosition = Vector3.zero;
+
+		animator = GetComponent<Animator>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	public bool IsShootable()
+	{
+		return emitter.IsShootable();
+	}
+
+	public bool TryShoot()
+	{
+		return emitter.TryShoot();
+	}
+
+	private void Shoot()
+	{
+		emitter.Shoot();
 	}
 }

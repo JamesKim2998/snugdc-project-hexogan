@@ -61,4 +61,9 @@ public class NeoRigidbody : MonoBehaviour
 			_inertia += _massData.Value.mass*(_massData.Key.ToVector2() / 2).sqrMagnitude;
 		rigidbody2D.inertia = _inertia;
 	}
+
+	public static implicit operator Rigidbody2D(NeoRigidbody _self)
+	{
+		return _self.rigidbody2D;
+	}
 }

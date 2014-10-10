@@ -5,8 +5,21 @@ using System.Collections;
 
 public class NeoMechanics : MonoBehaviour
 {
-	public NeoRigidbody body;
-	public NeoArmMotors motors;
+	private NeoRigidbody m_Body;
+	public NeoRigidbody body
+	{
+		get { return m_Body; }
+		set
+		{
+			if (body == value) return;
+			m_Body = value;
+			motors.body = body;
+			emitters.neoBody = body;
+		}
+	}
+
+	public NeoArmMotors motors { get; private set; }
+	public NeoArmEmitters emitters { get; private set; }
 
 	private readonly HexGrid<NeoBody> m_Bodies = new HexGrid<NeoBody>();
 	private readonly List<NeoArm> m_Arms = new List<NeoArm>();
@@ -14,8 +27,10 @@ public class NeoMechanics : MonoBehaviour
 	private bool m_MassDirty = false;
 	private bool m_IslandDirty = false;
 
-	NeoMechanics()
+	void Awake()
 	{
+		motors = gameObject.AddComponent<NeoArmMotors>();
+		emitters = gameObject.AddComponent<NeoArmEmitters>();
 	}
 
 	void Update()
@@ -96,13 +111,21 @@ public class NeoMechanics : MonoBehaviour
 
 		var _motor = _arm.GetComponent<NeoArmMotor>();
 		if (_motor) motors.Add(_motor, _coor);
+
+		var _emitter = _arm.GetComponent<NeoArmEmitter>();
+		if (_emitter) emitters.Add(_emitter);
 	}
 
 	public void Remove(NeoArm _arm)
 	{
 		if (! IsRemovable(_arm)) return;
+
 		var _motor = _arm.GetComponent<NeoArmMotor>();
 		if (_motor) motors.Remove(_motor);
+
+		var _emitter = _arm.GetComponent<NeoArmEmitter>();
+		if (_emitter) emitters.Remove(_emitter);
+
 		Remove(_arm, _arm.coor, _arm.side);
 	}
 

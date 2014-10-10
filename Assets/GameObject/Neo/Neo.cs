@@ -8,16 +8,11 @@ public class Neo : MonoBehaviour
 
 	public NeoRigidbody body;
 	public NeoMechanics mechanics { get; private set; }
-	public NeoArmMotors motors { get; private set; }
 
 	void Awake()
 	{
-		motors = gameObject.AddComponent<NeoArmMotors>();
-		motors.body = body;
-
 		mechanics = gameObject.AddComponent<NeoMechanics>();
 		mechanics.body = body;
-		mechanics.motors = motors;
 	}
 
 	void Start()
@@ -28,8 +23,13 @@ public class Neo : MonoBehaviour
 	public void Motor(float _thrustNormal, float _driftNormal)
 	{
 		if (_thrustNormal > -0.01f)
-			motors.Motor(_thrustNormal, _driftNormal);
+			mechanics.motors.Motor(_thrustNormal, _driftNormal);
 		else
-			motors.Motor(_thrustNormal, -_driftNormal);
+			mechanics.motors.Motor(_thrustNormal, -_driftNormal);
+	}
+
+	public void Shoot()
+	{
+		mechanics.emitters.Shoot();
 	}
 }

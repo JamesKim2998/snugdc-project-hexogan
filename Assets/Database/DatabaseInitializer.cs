@@ -6,12 +6,17 @@ public class DatabaseInitializer : MonoBehaviour
 {
 	private bool m_IsInitialized = false;
 
+	public ProjectileDatabase projectile;
+	public EmitterDatabase emitter;
+
 	public NeoBodyDatabase neoBody;
 	public NeoArmDatabase neoArm;
 
 	public IEnumerable<IDatabase> GetDatabases()
 	{
 		Initialize();
+		yield return projectile;
+		yield return emitter;
 		yield return neoBody;
 		yield return neoArm;
 	}
@@ -26,6 +31,8 @@ public class DatabaseInitializer : MonoBehaviour
 	{
 		if (m_IsInitialized) return;
 		m_IsInitialized = true;
+		ProjectileDatabase.shared = projectile;
+		EmitterDatabase.shared = emitter;
 		NeoBodyDatabase.shared = neoBody;
 		NeoArmDatabase.shared = neoArm;
 	}

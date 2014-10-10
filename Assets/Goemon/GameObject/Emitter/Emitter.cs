@@ -1,14 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class Emitter : MonoBehaviour 
 {
 	public EmitterType type;
 
-	public uint owner { get; set; }
+	public int owner { get; set; }
 	[HideInInspector]
 	public string ownerPlayer;
     public Rigidbody2D ownerBody { get; set; }
@@ -17,7 +14,7 @@ public class Emitter : MonoBehaviour
     public bool useDamage = true;
 	public int editorDamage = 1;
     public bool useShootBundle = false;
-	public uint editorShootBundle = 1;
+	public int editorShootBundle = 1;
     #endregion
 
 	#region state
@@ -73,7 +70,7 @@ public class Emitter : MonoBehaviour
 
 	public bool autoload = false;
 
-	public uint shootBundle
+	public int shootBundle
     {
         get { return doGetBundle != null ? doGetBundle(this) : 1; }
 
@@ -85,13 +82,14 @@ public class Emitter : MonoBehaviour
         }
     }
 
-	public uint shootAtOnce = 1;
+	public int shootAtOnce = 1;
 	#endregion
 
     #region ammo
-	public uint ammoMax = 1;
-	public uint ammo { get; set; }
-
+	public int ammo { get; set; }
+	public int ammoMax = 0;
+	public bool ammoInfinite = true;
+	public bool HasAmmo() { return ammoInfinite || ammo >= 0; }
 	public Action<Emitter> postOutOfAmmo;
     #endregion
 
@@ -103,17 +101,17 @@ public class Emitter : MonoBehaviour
 
 	#region projectile construction
 	// shoot/projectile idx
-	public uint shootCount { get; private set; }
-	public uint shootIdx { get; private set; }
+	public int shootCount { get; private set; }
+	public int shootIdx { get; private set; }
 
-	public uint projectileCount { get; private set; }
-	public uint projectileIdx { get; private set; }
+	public int projectileCount { get; private set; }
+	public int projectileIdx { get; private set; }
 
     // projectile construct
 	public delegate bool DoIsShootable(Emitter _self);
 	public DoIsShootable doIsShootable;
 	
-	public delegate uint DoGetBundle(Emitter _self);
+	public delegate int DoGetBundle(Emitter _self);
 	public DoGetBundle doGetBundle;
 
 	public delegate GameObject DoCreateProjectile(Emitter _self);
@@ -121,7 +119,7 @@ public class Emitter : MonoBehaviour
 
 	public Action<Emitter, GameObject> doShoot;
 
-	public delegate GameObject DoCreateProjectileServer(uint _count, uint _idx);
+	public delegate GameObject DoCreateProjectileServer(int _count, int _idx);
 	public DoCreateProjectileServer doCreateProjectileServer;
 	#endregion
 
@@ -133,7 +131,7 @@ public class Emitter : MonoBehaviour
     #region network
     public bool IsNetworkEnabled()
     {
-        return networkView.isMine && networkView.enabled && (Network.peerType != NetworkPeerType.Disconnected);
+        return networkView && networkView.isMine && networkView.enabled && (Network.peerType != NetworkPeerType.Disconnected);
     }
     #endregion
 
@@ -151,14 +149,14 @@ public class Emitter : MonoBehaviour
 
     public void Awake()
     {
-        ammo = ammoMax;
+		ammo = ammoInfinite ? int.MaxValue : ammoMax;
         if (useDamage) damage = editorDamage;
         if (useShootBundle) shootBundle = editorShootBundle;
     }
 
 	public void Update () 
 	{
-		if (networkView.enabled && ! networkView.isMine)
+		if (networkView && networkView.enabled && ! networkView.isMine)
 			return;
 
 		stateTime += Time.deltaTime;
@@ -169,7 +167,7 @@ public class Emitter : MonoBehaviour
 		case State.SHOOTING: {
 			if (stateTime >= shootTime)
 			{
-				if ((ammo > 0) && (autoload || (shootIdx < shootAtOnce)))
+				if (HasAmmo() && (autoload || (shootIdx < shootAtOnce)))
 					state = State.CHARGING;
 				else 
 					state = State.COOLING;
@@ -192,10 +190,21 @@ public class Emitter : MonoBehaviour
 	}
 
 	public bool IsShootable() {
-		return ammo > 0 
+		return HasAmmo()
             && IsState(State.IDLE)
 			&& stateTime >= prepareTime
             && (doIsShootable == null || ! doIsShootable(this));
+	}
+
+	public bool TryShoot()
+	{
+		if (IsShootable())
+		{
+			Shoot();
+			return true;
+		}
+
+		return false;
 	}
 
 	public void Shoot() {
@@ -212,13 +221,13 @@ public class Emitter : MonoBehaviour
 	{
 	    var _bundle = shootBundle;
 
-	    for (projectileIdx = 0; projectileIdx < _bundle && ammo > 0; ++projectileIdx) 
+		for (projectileIdx = 0; projectileIdx < _bundle && HasAmmo(); ++projectileIdx) 
         {
 			var _projectileGO = doCreateProjectile(this);
 
 			++projectileCount;
 
-			--ammo;
+			if (! ammoInfinite) --ammo;
 
 			_projectileGO.transform.rotation *= transform.rotation;
 			_projectileGO.transform.position += transform.position;
@@ -230,11 +239,8 @@ public class Emitter : MonoBehaviour
 			_projectile.ownerEmitter = type;
 			if (damage.HasValue) _projectile.damage = damage.Value;
 
-			if (ownerBody) 
-            {
-				if (relativeVelocityEnabled) 
-					_projectileGO.rigidbody2D.velocity += ownerBody.velocity;
-			}
+			if (ownerBody && relativeVelocityEnabled) 
+				_projectileGO.rigidbody2D.velocity += ownerBody.velocity;
 
 			var _projectileDeadzone = _projectile.GetComponent<ProjectileDecoratorDeadzone>();
 			if (_projectileDeadzone && deadzone) _projectileDeadzone.deadzone = deadzone.deadzone;
@@ -262,7 +268,7 @@ public class Emitter : MonoBehaviour
 				postShoot(this, _projectileGO.GetComponent<Projectile>());
 		}
 
-		if (ammo <= 0)
+		if (!HasAmmo())
 		{
 			if (postOutOfAmmo != null)
 				postOutOfAmmo(this);
@@ -278,7 +284,7 @@ public class Emitter : MonoBehaviour
 		Quaternion _rotation, 
 		Vector3 _velocity, int _count, int _idx)
 	{
-		var _projectileGO = doCreateProjectileServer((uint) _count, (uint) _idx);
+		var _projectileGO = doCreateProjectileServer((int) _count, (int) _idx);
 
 		_projectileGO.transform.position = _position;
 		_projectileGO.transform.rotation = _rotation;

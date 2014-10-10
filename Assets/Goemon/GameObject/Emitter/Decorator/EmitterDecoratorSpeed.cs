@@ -20,7 +20,7 @@ public class EmitterDecoratorSpeed : MonoBehaviour
 
     void DoShoot(Emitter _emitter, GameObject _projectile)
     {
-        _projectile.rigidbody2D.velocity = speed * _emitter.transform.right;
+        _projectile.rigidbody2D.velocity += (Vector2) (speed * _emitter.transform.right);
     }
 
 }

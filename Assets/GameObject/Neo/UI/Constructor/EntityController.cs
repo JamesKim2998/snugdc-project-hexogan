@@ -31,13 +31,13 @@ namespace neo.ui.constructor
 		{
 			if (! m_Data) return;
 
-			var _mechanic = (GameObject)Instantiate(m_Data.mechanicPrf.gameObject);
+			var _mechanic = m_Data.MakeMechanic();
 
 			var _mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			_mousePos.z = 0;
 			_mechanic.transform.position = _mousePos;
 
-			var _dnd = NeoMechanicHelper.AddDragAndDrop(_mechanic.GetComponent<NeoMechanic>());
+			var _dnd = NeoMechanicHelper.AddDragAndDrop(_mechanic);
 			_dnd.ForcedStick();
 		}
 	}

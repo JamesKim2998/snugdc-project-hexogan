@@ -15,6 +15,10 @@ public class EmitterEditor : Editor
 	public override void OnInspectorGUI()
 	{
 		base.OnInspectorGUI();
+
+		if (PrefabHelper.IsPrefab(m_Target))
+			return;
+
 		if (GUILayout.Button("Shoot"))
 			m_Target.TryShoot();
 	}

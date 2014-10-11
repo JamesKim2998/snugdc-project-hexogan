@@ -155,4 +155,11 @@ public class HexGrid<T> : IEnumerable<KeyValuePair<HexCoor, HexCell<T>>>
 	{
 		return m_Cells.GetEnumerator();
 	}
+
+	public void Clear()
+	{
+		foreach (var _cell in m_Cells)
+			_cell.Value.DisconnectAll();
+		m_Cells.Clear();
+	}
 }

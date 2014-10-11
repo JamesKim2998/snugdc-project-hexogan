@@ -25,11 +25,16 @@ public class NeoArmEmitter : MonoBehaviour
 
 	public bool TryShoot()
 	{
-		return emitter.TryShoot();
+		if (! IsShootable()) 
+			return false;
+
+		Shoot();
+		return true;
 	}
 
 	private void Shoot()
 	{
 		emitter.Shoot();
+		animator.SetTrigger("shoot");
 	}
 }

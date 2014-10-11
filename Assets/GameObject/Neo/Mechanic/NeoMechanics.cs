@@ -33,6 +33,12 @@ public class NeoMechanics : MonoBehaviour
 		emitters = gameObject.AddComponent<NeoArmEmitters>();
 	}
 
+	void OnDestroy()
+	{
+		Destroy(motors);
+		Destroy(emitters);
+	}
+
 	void Update()
 	{
 		if (m_IslandDirty)
@@ -70,11 +76,13 @@ public class NeoMechanics : MonoBehaviour
 		return _mechanic.parent == this;
 	}
 
-	private void Remove(NeoMechanic _mechanic, HexCoor _coor, int? _side = null)
+	public void Remove(NeoMechanic _mechanic)
 	{
-		_mechanic.Detach();
-		body.AddMass(-_mechanic.mass, _coor, _side);
-		m_MassDirty = true;
+		var _body = _mechanic.GetComponent<NeoBody>();
+		if (_body) { Remove(_body, true); return; }
+
+		var _arm = _mechanic.GetComponent<NeoArm>();
+		if (_arm) { Remove(_arm); return; }
 	}
 
 	public bool Add(NeoBody _body, HexCoor _coor)
@@ -116,6 +124,13 @@ public class NeoMechanics : MonoBehaviour
 		if (_emitter) emitters.Add(_emitter);
 	}
 
+	private void RemoveMechanic(NeoMechanic _mechanic, HexCoor _coor, int? _side = null)
+	{
+		_mechanic.Detach();
+		body.AddMass(-_mechanic.mass, _coor, _side);
+		m_MassDirty = true;
+	}
+
 	public void Remove(NeoArm _arm)
 	{
 		if (! IsRemovable(_arm)) return;
@@ -126,13 +141,16 @@ public class NeoMechanics : MonoBehaviour
 		var _emitter = _arm.GetComponent<NeoArmEmitter>();
 		if (_emitter) emitters.Remove(_emitter);
 
-		Remove(_arm, _arm.coor, _arm.side);
+		m_Arms.Remove(_arm);
+		RemoveMechanic(_arm, _arm.coor, _arm.side);
 	}
 
 	public void Remove(NeoBody _body, bool _removeFromGrid = true)
 	{
 		if (!IsRemovable(_body)) return;
 
+		var _isCore = _body.coor == HexCoor.ZERO;
+		
 		if (_removeFromGrid)
 		{
 			var _cell = GetBody(_body.coor);
@@ -146,7 +164,23 @@ public class NeoMechanics : MonoBehaviour
 			m_Bodies.Remove(_body.coor);
 		}
 
-		Remove(_body, _body.coor);
+		RemoveMechanic(_body, _body.coor);
+
+		if (_isCore) RemoveAll();
+	}
+
+	private void RemoveAll()
+	{
+		var _arms = new List<NeoArm>(m_Arms);
+		foreach (var _arm in _arms)
+			Remove(_arm);
+
+		var _bodies = m_Bodies.ToList();
+		foreach (var _body in _bodies)
+			Remove(_body.Value.data, false);
+
+		m_Bodies.Clear();
+		Destroy(this);
 	}
 
 	public void Build()

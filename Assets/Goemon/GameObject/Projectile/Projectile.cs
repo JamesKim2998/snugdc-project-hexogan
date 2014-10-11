@@ -101,10 +101,6 @@ public class Projectile : MonoBehaviour
 	public delegate void PostBumped(Projectile _projectile, Collider2D _collider);
 	public event PostBumped postBumped;
 
-	// effect
-	public GameObject effectHitPrf;
-	public Vector3 effectHitOffset;
-	
     public Projectile()
     {
         decaying = false;
@@ -207,7 +203,6 @@ public class Projectile : MonoBehaviour
 				
 				if (! relativeDrivingForce.Equals(Vector2.zero)) 
 				{
-					// todo: opt
 					var _drivingForceWorld = transform.localToWorldMatrix.MultiplyVector(relativeDrivingForce);
 					_drivingForce += new Vector2(_drivingForceWorld.x, _drivingForceWorld.y);
 				}
@@ -268,13 +263,6 @@ public class Projectile : MonoBehaviour
 			
 			if (postHit != null) 
 				postHit(this, _collider);
-
-			// todo: server를 통해서 이루어져야합니다.
-			if (effectHitPrf)
-			{
-				var _effectHit = (GameObject) Instantiate (effectHitPrf, transform.position, transform.rotation);
-				_effectHit.transform.Translate(effectHitOffset);
-			}
 		}
 		else if (LayerHelper.Exist(collisionTargets, _collider.gameObject))
 		{

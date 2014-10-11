@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 [Serializable]
-public struct HexCoor 
+public struct HexCoor : IEquatable<HexCoor>
 {
 	public static readonly HexCoor ZERO = new HexCoor(0, 0);
 	private static readonly float SQRT_3 = Mathf.Sqrt(3);
@@ -71,11 +72,6 @@ public struct HexCoor
 		}
 	}
 
-	public Vector2 ToVector2()
-	{
-		return new Vector2(p + q / 2f, q * SQRT_3 / 2f);
-	}
-
 	public static HexCoor Round(Vector2 _coor)
 	{
 		var _q = _coor.y / (SQRT_3/2f);
@@ -85,7 +81,7 @@ public struct HexCoor
 
 	public static int Side(Vector2 _coor, HexCoor _center)
 	{
-		var _delta = _coor - _center.ToVector2();
+		var _delta = _coor - _center;
 		var _side = Mathf.Atan2(_delta.y, _delta.x)/(Mathf.PI/3) + 6.5f;
 		return ((int) _side) % 6;
 	}
@@ -95,9 +91,39 @@ public struct HexCoor
 		return "( " + p + ", " + q + " )";
 	}
 
+	#region equality op
 	public bool Compare(int _p, int _q)
 	{
 		return p == _p && q == _q;
+	}
+
+	public override bool Equals(object obj)
+	{
+		if (obj == null || obj.GetType() != GetType())
+			return false;
+		return this == (HexCoor) obj;
+	}
+
+	bool IEquatable<HexCoor>.Equals(HexCoor _other)
+	{
+		return this == _other;
+	}
+
+	public static bool operator ==(HexCoor _self, HexCoor _other)
+	{
+		return _self.p == _other.p
+			   && _self.q == _other.q;
+	}
+
+	public static bool operator !=(HexCoor _self, HexCoor _other)
+	{
+		return !(_self == _other);
+	}
+	#endregion
+
+	public override int GetHashCode()
+	{
+		return p.GetHashCode() ^ q.GetHashCode();
 	}
 
 	public static HexCoor operator +(HexCoor _a, HexCoor _b)
@@ -108,6 +134,11 @@ public struct HexCoor
 	public static HexCoor operator *(HexCoor _coor, int _scalar)
 	{
 		return new HexCoor(_coor.p * _scalar, _coor.q * _scalar);
+	}
+
+	public static implicit operator Vector2(HexCoor _self)
+	{
+		return new Vector2(_self.p + _self.q / 2f, _self.q * SQRT_3 / 2f);
 	}
 
 }

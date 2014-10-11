@@ -22,7 +22,7 @@ public class NeoMechanicEditor : Editor
 		if (m_This.parent)
 		{
 			if (GUILayout.Button("Detach"))
-				NeoMechanicsHelper.Remove(m_This.parent, m_This);
+				m_This.parent.Remove(m_This);
 		}
 		else
 		{

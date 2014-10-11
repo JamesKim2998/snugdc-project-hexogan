@@ -58,7 +58,7 @@ public class NeoRigidbody : MonoBehaviour
 
 		float _inertia = 0;
 		foreach (var _massData in m_MassDatas)
-			_inertia += _massData.Value.mass*(_massData.Key.ToVector2() / 2).sqrMagnitude;
+			_inertia += _massData.Value.mass*((Vector2) _massData.Key / 2).sqrMagnitude;
 		rigidbody2D.inertia = _inertia;
 	}
 

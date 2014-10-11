@@ -22,6 +22,8 @@ public class Neo : MonoBehaviour
 
 	public void Motor(float _thrustNormal, float _driftNormal)
 	{
+		if (! mechanics) return;
+
 		if (_thrustNormal > -0.01f)
 			mechanics.motors.Motor(_thrustNormal, _driftNormal);
 		else
@@ -30,6 +32,7 @@ public class Neo : MonoBehaviour
 
 	public void Shoot()
 	{
+		if (!mechanics) return;
 		mechanics.emitters.Shoot();
 	}
 }

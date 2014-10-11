@@ -7,7 +7,19 @@ public class NeoMechanicData : MonoBehaviour {
 	public Sprite sprite;
 
 	public NeoMechanic mechanicPrf;
+
+	public int durability = 5;
+	public int cohesion = 5;
+
 	public GameObject constructorItemPrf;
+
+	public NeoMechanic MakeMechanic()
+	{
+		var _go = (GameObject)Instantiate(mechanicPrf.gameObject);
+		var _mechanic = _go.GetComponent<NeoMechanic>();
+		_mechanic.Setup(this);
+		return _mechanic;
+	}
 
 	public GameObject MakeConstructorItem()
 	{
@@ -18,7 +30,7 @@ public class NeoMechanicData : MonoBehaviour {
 		}
 		else
 		{
-			_item = new GameObject("item_" + name_);
+			_item = new GameObject(name_);
 			var _renderer = _item.AddComponent<UI2DSprite>();
 			_renderer.sprite2D = sprite;
 			_renderer.MakePixelPerfect();

@@ -39,6 +39,7 @@ namespace neo.ui.constructor
 
 			var _dnd = NeoMechanicHelper.AddDragAndDrop(_mechanic);
 			_dnd.ForcedStick();
+			_dnd.destroyIfFailed = true;
 		}
 	}
 }

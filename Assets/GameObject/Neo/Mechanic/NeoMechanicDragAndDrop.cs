@@ -7,6 +7,8 @@ public abstract class NeoMechanicDragAndDrop : DragAndDrop
 {
 	static public LayerMask dropMask;
 
+	public bool destroyIfFailed = false;
+
 	protected override void _OnMouseDown()
 	{
 		base._OnMouseDown();
@@ -65,6 +67,11 @@ public abstract class NeoMechanicDragAndDrop : DragAndDrop
 				{
 					Destroy(this);
 					return true;
+				}
+				else
+				{
+					if (destroyIfFailed)
+						Destroy(gameObject);
 				}
 			}
 

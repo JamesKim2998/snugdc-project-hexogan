@@ -231,15 +231,9 @@ public class Projectile : MonoBehaviour
 
 		if (m_Ricochet)
 		{
-			if (! m_Ricochet.ShouldCollide(_collider))
+			if (!m_Ricochet.ShouldCollide(_collider))
 				return;
 
-			if (m_Ricochet.OnCollision(_collider))
-				StartDecay();
-		}
-		else 
-		{
-			StartDecay();
 		}
 
 		if (LayerHelper.Exist(collisionTargets, _collider))
@@ -248,6 +242,8 @@ public class Projectile : MonoBehaviour
                 goto finalize;
 
             var _damageDetector = _collider.GetComponentInChildren<DamageDetector>();
+			if (! _damageDetector) return;
+
 			var _isOwner = _damageDetector.owner == owner;
 
 			if (! isHitOwner && _isOwner)
@@ -273,6 +269,15 @@ public class Projectile : MonoBehaviour
 		if (postCollide != null) 
 			postCollide(this, _collider);
 
+		if (m_Ricochet)
+		{
+			if (m_Ricochet.OnCollision(_collider)) 
+				StartDecay();
+		}
+		else
+		{
+			StartDecay();
+		}
 	}
 
 

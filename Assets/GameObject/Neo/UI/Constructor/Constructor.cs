@@ -11,6 +11,8 @@ namespace neo.ui.constructor
 		public EntityView bodyViewPrf;
 		public EntityView armViewPrf;
 
+		public Hammer hammerPrf;
+
 		void Start()
 		{
 			foreach (var _data in NeoBodyDatabase.shared)
@@ -30,7 +32,11 @@ namespace neo.ui.constructor
 			_ctrl.SetData(_data);
 			TransformHelper.SetParentWithoutScale(_ctrl, _grid);
 		}
-		
+
+		public void PickHammer()
+		{
+			Instantiate(hammerPrf.gameObject);
+		}
 	}
 
 }

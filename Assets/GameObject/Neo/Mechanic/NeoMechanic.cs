@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using System.Collections;
 
 public class NeoMechanic : MonoBehaviour {
 	public int mass = 1;
 	public Vector2 com = Vector2.zero;
 
+	public NeoMechanicData editorData;
 	public NeoMechanicData data { get; private set; }
+	public Action<NeoMechanic> postSetupData;
 
 	public HexCoor coor { get; private set; }
 
@@ -21,6 +22,7 @@ public class NeoMechanic : MonoBehaviour {
 		EnableRigidbody();
 		m_DamageDetector = gameObject.AddComponent<DamageDetector>();
 		m_DamageDetector.postDamage += Damage;
+		if (editorData) Setup(editorData);
 	}
 
 	void OnDestroy()
@@ -41,6 +43,7 @@ public class NeoMechanic : MonoBehaviour {
 		data = _data;
 		cohesionLeft = data.cohesion;
 		durabilityLeft = data.durability;
+		if (postSetupData != null) postSetupData(this);
 	}
 	#endregion
 
@@ -98,6 +101,19 @@ public class NeoMechanic : MonoBehaviour {
 
 	#endregion
 
+	#region neighbor
+	protected void AddCohesion(NeoMechanic _mechanic)
+	{
+		cohesionLeft += _mechanic.data.cohesion / 6f;
+	}
+
+	protected void RemoveCohesion(NeoMechanic _mechanic)
+	{
+		cohesionLeft -= _mechanic.data.cohesion / 6f;
+		UpdateLife();
+	}
+	#endregion
+
 	#region rigidbody
 	private void EnableRigidbody()
 	{
@@ -124,18 +140,18 @@ public class NeoMechanic : MonoBehaviour {
 	public void Damage(AttackData _attackData)
 	{
 		if (cohesionLeft > 0 && parent)
-		{
 			cohesionLeft -= _attackData;
-			if (cohesionLeft <= 0)
-				parent.Remove(this);
-		}
 		else if (durabilityLeft > 0)
-		{
 			durabilityLeft -= _attackData;
-			if (durabilityLeft <= 0)
-				Decay();
-		}
-		else if (durabilityLeft <= 0)
+		UpdateLife();
+	}
+
+	void UpdateLife()
+	{
+		if (cohesionLeft <= 0 && parent)
+			parent.Remove(this);
+
+		if (durabilityLeft <= 0)
 		{
 			if (parent) parent.Remove(this);
 			Decay();

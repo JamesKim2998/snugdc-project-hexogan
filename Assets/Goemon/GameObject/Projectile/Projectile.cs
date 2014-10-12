@@ -225,8 +225,6 @@ public class Projectile : MonoBehaviour
 	
 	void OnCollision(Collider2D _collider) 
 	{
-		// todo: trigger라고 맞지 않는다는 보장이 없음. 위험함. 
-		if (_collider.isTrigger) return;
 		if (decaying) return;
 
 		if (LayerHelper.Exist(collisionIgnores, _collider)) return;

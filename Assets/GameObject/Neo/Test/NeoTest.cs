@@ -10,7 +10,7 @@ public class NeoTest : MonoBehaviour
 	public class BodyData
 	{
 		public HexCoor coor;
-		public NeoBody body;
+		public NeoBodyType body;
 	}
 
 	[Serializable]
@@ -18,7 +18,7 @@ public class NeoTest : MonoBehaviour
 	{
 		public HexCoor bodyCoor;
 		public int bodySide;
-		public NeoArm arm;
+		public NeoArmType arm;
 	}
 
 	public Neo neo;
@@ -27,10 +27,16 @@ public class NeoTest : MonoBehaviour
 
 	void Start () {
 		foreach (var _body in editorBodies)
-			neo.mechanics.Add(_body.body, _body.coor);
+		{
+			var _bodyGO = NeoBodyDatabase.shared[_body.body].MakeBody();
+			neo.mechanics.Add(_bodyGO, _body.coor);
+		}
 
 		foreach (var _arm in editorArms)
-			neo.mechanics.Add(_arm.arm, _arm.bodyCoor, _arm.bodySide);
+		{
+			var _armGO = NeoArmDatabase.shared[_arm.arm].MakeArm();
+			neo.mechanics.Add(_armGO, _arm.bodyCoor, _arm.bodySide);
+		}
 
 		neo.mechanics.Build();
 	}

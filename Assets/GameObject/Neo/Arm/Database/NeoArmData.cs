@@ -12,4 +12,9 @@ public class NeoArmData : NeoMechanicData, IDatabaseKey<NeoArmType>
 			name_ = type.ToString();
 	}
 
+	public NeoArm MakeArm()
+	{
+		return MakeMechanic().GetComponent<NeoArm>();
+	}
+
 }

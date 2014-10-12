@@ -19,6 +19,10 @@ public class NeoMechanicEditor : Editor
 		if (PrefabHelper.IsPrefab(m_This))
 			return;
 
+		GUILayout.Label(
+			"CohesionLeft " + m_This.cohesionLeft
+			+ ", DurabilityLeft " + m_This.durabilityLeft);
+
 		if (m_This.parent)
 		{
 			if (GUILayout.Button("Detach"))

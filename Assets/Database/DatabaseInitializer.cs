@@ -12,6 +12,9 @@ public class DatabaseInitializer : MonoBehaviour
 	public NeoBodyDatabase neoBody;
 	public NeoArmDatabase neoArm;
 
+	public CellPlasmDatabase cellPlasm;
+	public CellWallDatabase cellWall;
+
 	public IEnumerable<IDatabase> GetDatabases()
 	{
 		Initialize();
@@ -19,6 +22,8 @@ public class DatabaseInitializer : MonoBehaviour
 		yield return emitter;
 		yield return neoBody;
 		yield return neoArm;
+		yield return cellPlasm;
+		yield return cellWall;
 	}
 
 	void Awake()
@@ -35,6 +40,8 @@ public class DatabaseInitializer : MonoBehaviour
 		EmitterDatabase.shared = emitter;
 		NeoBodyDatabase.shared = neoBody;
 		NeoArmDatabase.shared = neoArm;
+		CellPlasmDatabase.shared = cellPlasm;
+		CellWallDatabase.shared = cellWall;
 	}
 
 	public void Build()

@@ -6,6 +6,7 @@ public class NeoBody : NeoMechanic
 {
 	public NeoBodyType type;
 
+	#region neighbor
 	private readonly NeoMechanic[] m_Neighbors = new NeoMechanic[6];
 
 	public NeoMechanic GetNeighbor(int _side)
@@ -21,15 +22,38 @@ public class NeoBody : NeoMechanic
 
 	private void SetNeighbor(int _side, NeoMechanic _mechanic)
 	{
-		if (GetNeighbor(_side) && _mechanic)
+		var _neighbor = GetNeighbor(_side);
+		if (_neighbor && _mechanic)
 		{
 			Debug.LogError("There is already mechanic in side " + _side + ". Ignore.");
 			return;
 		}
 
 		m_Neighbors[_side] = _mechanic;
+
+		if (_mechanic)
+			AddCohesion(_mechanic);
+		else
+			RemoveCohesion(_neighbor);
 	}
 
+	public void RemoveNeighbor(int _side)
+	{
+		var _neighbor = GetNeighbor(_side);
+		if (!_neighbor) return;
+
+		SetNeighbor(_side, null);
+
+		var _body = _neighbor.GetComponent<NeoBody>();
+		if (_body) _body.RemoveNeighbor(HexCoor.OppositeSide(_side));
+
+		var _arm = _neighbor.GetComponent<NeoArm>();
+		if (_arm) parent.Remove(_arm);
+	}
+
+	#endregion
+
+	#region mechanic neighbor
 	public void AddBody(NeoBody _body, int _side)
 	{
 		if (GetNeighbor(_side) == _body) 
@@ -45,24 +69,11 @@ public class NeoBody : NeoMechanic
 		_arm.Attach(this, _side);
 	}
 
-	public void RemoveNeighbor(int _side)
-	{
-		var _neighbor = GetNeighbor(_side);
-		if (! _neighbor) return;
-
-		SetNeighbor(_side, null);
-
-		var _body = _neighbor.GetComponent<NeoBody>();
-		if (_body) _body.RemoveNeighbor(HexCoor.OppositeSide(_side));
-
-		var _arm = _neighbor.GetComponent<NeoArm>();
-		if (_arm) parent.Remove(_arm);
-	}
-
 	public override void Detach()
 	{
 		for (var _side = 0; _side != 6; ++_side)
 			RemoveNeighbor(_side);
 		base.Detach();
 	}
+	#endregion
 }

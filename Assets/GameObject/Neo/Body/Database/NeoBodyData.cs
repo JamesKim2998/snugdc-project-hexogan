@@ -12,4 +12,8 @@ public class NeoBodyData : NeoMechanicData, IDatabaseKey<NeoBodyType>
 			name_ = type.ToString();
 	}
 
+	public NeoBody MakeBody()
+	{
+		return MakeMechanic().GetComponent<NeoBody>();
+	}
 }

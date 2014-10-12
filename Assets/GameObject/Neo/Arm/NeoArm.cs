@@ -40,6 +40,8 @@ public class NeoArm : NeoMechanic
 		transform.parent = _body.transform;
 		LocateSide(transform, _side);
 		
+		AddCohesion(body);
+
 		return true;
 	}
 

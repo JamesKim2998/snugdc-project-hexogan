@@ -121,6 +121,7 @@ public struct HexCoor : IEquatable<HexCoor>
 	}
 	#endregion
 
+	#region arithmetic op
 	public override int GetHashCode()
 	{
 		return p.GetHashCode() ^ q.GetHashCode();
@@ -141,4 +142,5 @@ public struct HexCoor : IEquatable<HexCoor>
 		return new Vector2(_self.p + _self.q / 2f, _self.q * SQRT_3 / 2f);
 	}
 
+	#endregion
 }

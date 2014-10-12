@@ -6,12 +6,22 @@ using UnityEngine;
 
 public class HexGrid<T> : IEnumerable<KeyValuePair<HexCoor, HexCell<T>>>
 {
-	
+	public bool allowIsland = false;
 	private readonly BiDictionary<HexCoor, HexCell<T>> m_Cells = new BiDictionary<HexCoor, HexCell<T>>();
 
 	public HexCell<T> this[HexCoor _coor]
 	{
 		get { return Get(_coor); }
+	}
+
+	public IEnumerator<KeyValuePair<HexCoor, HexCell<T>>> GetEnumerator()
+	{
+		return m_Cells.GetEnumerator();
+	}
+
+	IEnumerator IEnumerable.GetEnumerator()
+	{
+		return m_Cells.GetEnumerator();
 	}
 
 	public bool TryGet(HexCoor _coor, out HexCell<T> _output)
@@ -73,7 +83,7 @@ public class HexGrid<T> : IEnumerable<KeyValuePair<HexCoor, HexCell<T>>>
 				return false;
 			}
 
-			if (!Neighbors(_coor).Any())
+			if (allowIsland && !Neighbors(_coor).Any())
 			{
 				Debug.LogError("There is no neighbor around " + _coor + ". Ignore.");
 				return false;
@@ -144,16 +154,6 @@ public class HexGrid<T> : IEnumerable<KeyValuePair<HexCoor, HexCell<T>>>
 			Remove(_cell);
 
 		return _island;
-	}
-
-	public IEnumerator<KeyValuePair<HexCoor, HexCell<T>>> GetEnumerator()
-	{
-		return m_Cells.GetEnumerator();
-	}
-
-	IEnumerator IEnumerable.GetEnumerator()
-	{
-		return m_Cells.GetEnumerator();
 	}
 
 	public void Clear()

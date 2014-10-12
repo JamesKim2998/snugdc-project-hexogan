@@ -25,9 +25,16 @@ public abstract class NeoMechanicDragAndDrop : DragAndDrop
 	protected override void _OnMouseUp()
 	{
 		base._OnMouseUp();
-		Pivot(true);
-		transform.position += Vector3.forward;
-		collider2D.isTrigger = false;
+		if (Pivot(true))
+		{
+			transform.position += Vector3.forward;
+			collider2D.isTrigger = false;
+		}
+		else
+		{
+			if (destroyIfFailed)
+				Destroy(gameObject);
+		}
 	}
 
 	protected virtual bool IsLocatable(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, int _side)
@@ -67,11 +74,6 @@ public abstract class NeoMechanicDragAndDrop : DragAndDrop
 				{
 					Destroy(this);
 					return true;
-				}
-				else
-				{
-					if (destroyIfFailed)
-						Destroy(gameObject);
 				}
 			}
 

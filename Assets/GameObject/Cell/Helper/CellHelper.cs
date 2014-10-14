@@ -8,17 +8,24 @@ public static class CellHelper
 	{
 		var _cell = ComponentHelper.Instantiate(CellDatabase.cellPrf);
 
-		var _plasm = CellPlasmDatabase.shared[_plasmType].MakeGO();
+		var _plasm = CellPlasmDatabase.shared[_plasmType].MakePlasm();
 		_cell.plasm = _plasm;
 
 		if (_wallType != CellWallType.NONE)
 		{
-			var _wall = CellWallDatabase.shared[_wallType].MakeGO();
+			var _wall = CellWallDatabase.shared[_wallType].MakeWall();
 			_cell.wall = _wall;
 		}
 
 		return _cell;
 	}
 
-
+	public static CellPartDragAndDrop AddDragAndDrop(GameObject _cellPart)
+	{
+		if (_cellPart.GetComponent<CellPlasm>())
+			return _cellPart.gameObject.AddComponent<CellPlasmDragAndDrop>();
+		else if (_cellPart.GetComponent<CellWall>())
+			return _cellPart.gameObject.AddComponent<CellWallDragAndDrop>();
+		return null;
+	}
 }

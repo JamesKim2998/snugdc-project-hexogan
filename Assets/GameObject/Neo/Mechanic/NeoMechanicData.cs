@@ -15,27 +15,9 @@ public class NeoMechanicData : MonoBehaviour {
 
 	public NeoMechanic MakeMechanic()
 	{
-		var _go = (GameObject)Instantiate(mechanicPrf.gameObject);
-		var _mechanic = _go.GetComponent<NeoMechanic>();
+		var _mechanic = ComponentHelper.Instantiate(mechanicPrf);
 		_mechanic.Setup(this);
 		return _mechanic;
 	}
 
-	public GameObject MakeConstructorItem()
-	{
-		GameObject _item;
-		if (constructorItemPrf)
-		{
-			_item = (GameObject)Instantiate(constructorItemPrf);
-		}
-		else
-		{
-			_item = new GameObject(name_);
-			var _renderer = _item.AddComponent<UI2DSprite>();
-			_renderer.sprite2D = sprite;
-			_renderer.MakePixelPerfect();
-		}
-
-		return _item;
-	}
 }

@@ -5,7 +5,12 @@ public class CellGrid : MonoBehaviour
 {
 	private readonly HexGrid<Cell> m_Cells = new HexGrid<Cell>();
 
-	public void Locate(Transform _transform, HexCoor _coor)
+	public bool TryGet(HexCoor _coor, out HexCell<Cell> _output)
+	{
+		return m_Cells.TryGet(_coor, out _output);
+	}
+
+	public static void Locate(Transform _transform, HexCoor _coor)
 	{
 		var _pos = (Vector3) (Vector2) _coor;
 		var _posOld = _transform.localPosition;
@@ -13,11 +18,11 @@ public class CellGrid : MonoBehaviour
 		_transform.localPosition = _pos;
 	}
 
-	public bool Add(Cell _cell, HexCoor _coor)
+	public HexCell<Cell> Add(Cell _cell, HexCoor _coor)
 	{
 		var _hexCell = new HexCell<Cell>(_cell);
 		if (!m_Cells.TryAdd(_coor, _hexCell))
-			return false;
+			return null;
 		
 		_cell.SetGrid(this);
 		_cell.transform.parent = transform;
@@ -31,7 +36,7 @@ public class CellGrid : MonoBehaviour
 			_cell.SetNeighbor(_neighbor.data, _side);
 		}
 		
-		return true;
+		return _hexCell;
 	}
 
 	public bool IsRemovable(Cell _cell)

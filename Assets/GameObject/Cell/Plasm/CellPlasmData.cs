@@ -1,19 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CellPlasmData : MonoBehaviour, IDatabaseKey<CellPlasmType>
+public class CellPlasmData : CellPartData, IDatabaseKey<CellPlasmType>
 {
 	public CellPlasmType type;
 	public CellPlasmType Key() { return type; }
 
-	public CellPlasm goPrf;
+	public override string name_ { get { return type.ToString(); } }
+
+	public new CellPlasm goPrf { get { return base.goPrf.GetComponent<CellPlasm>(); } }
 
 	public int hp;
 
-	public CellPlasm MakeGO()
+	public override GameObject MakeGO()
 	{
-		var _go = ComponentHelper.Instantiate(goPrf);
-		_go.Setup(this);
+		var _go = base.MakeGO();
+		_go.GetComponent<CellPlasm>().Setup(this);
 		return _go;
+	}
+
+	public CellPlasm MakePlasm()
+	{
+		return MakeGO().GetComponent<CellPlasm>();
 	}
 }

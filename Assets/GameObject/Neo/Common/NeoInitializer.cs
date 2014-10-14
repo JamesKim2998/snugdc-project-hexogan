@@ -1,5 +1,4 @@
-﻿using neo.ui.constructor;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class NeoInitializer : MonoBehaviour
@@ -9,6 +8,5 @@ public class NeoInitializer : MonoBehaviour
 	void Awake()
 	{
 		NeoMechanicDragAndDrop.dropMask = mechanicDropMask;
-		Hammer.dropMask = mechanicDropMask;
 	}
 }

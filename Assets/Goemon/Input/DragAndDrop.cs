@@ -3,7 +3,19 @@ using System.Collections;
 
 public class DragAndDrop : MonoBehaviour
 {
-	public Vector2 offset { get; private set; }
+	private Vector2 m_Offset;
+	public Vector2 offset
+	{
+		get { return m_Offset; }
+		set
+		{
+			m_Offset = value;
+			var _posOld = transform.position;
+			var _posNew = (Vector3) m_Offset + Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			_posNew.z = _posOld.z;
+			transform.position = _posNew;
+		}
+	}
 
 	#region physics
 	private bool m_Physics = false;

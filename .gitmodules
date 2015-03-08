@@ -1,0 +1,3 @@
+[submodule "Assets/Gem"]
+	path = Assets/Gem
+	url = https://github.com/geoidn2/GemUnity.git

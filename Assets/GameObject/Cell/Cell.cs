@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Gem;
 using UnityEngine;
 
 public class Cell : MonoBehaviour
@@ -24,7 +25,7 @@ public class Cell : MonoBehaviour
 
 			if (plasm)
 			{
-				TransformHelper.SetParentWithoutScale(plasm, this);
+				plasm.transform.SetParentWithoutScale(transform);
 				plasm.transform.localPosition = Vector3.zero;
 				plasm.postDecay += ListenPlasmDecay;
 				if (wall) plasm.SetDamagable(false);
@@ -64,7 +65,7 @@ public class Cell : MonoBehaviour
 
 			if (wall)
 			{
-				TransformHelper.SetParentWithoutScale(wall, this);
+				wall.transform.SetParentIdentity(transform);
 				wall.transform.localPosition = Vector3.zero;
 				wall.postDecay += ListenWallDecay;
 				if (plasm) plasm.SetDamagable(false);

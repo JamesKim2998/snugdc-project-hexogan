@@ -1,6 +1,5 @@
-﻿using System.Runtime.Remoting.Messaging;
+﻿using Gem;
 using UnityEngine;
-using System.Collections;
 
 public class NeoArmEmitter : MonoBehaviour
 {
@@ -12,7 +11,7 @@ public class NeoArmEmitter : MonoBehaviour
 	void Start()
 	{
 		emitter = EmitterDatabase.shared[emitterType].Instantiate();
-		TransformHelper.SetParentWithoutScale(emitter, this);
+		emitter.transform.SetParentIdentity(transform);
 		emitter.transform.localPosition = Vector3.zero;
 
 		animator = GetComponent<Animator>();

@@ -1,12 +1,12 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Gem;
+using UnityEngine;
 
 public static class CellHelper
 {
 
 	public static Cell MakeCell(CellPlasmType _plasmType, CellWallType _wallType = CellWallType.NONE)
 	{
-		var _cell = ComponentHelper.Instantiate(CellDatabase.cellPrf);
+		var _cell = CellDatabase.cellPrf.Instantiate();
 
 		var _plasm = CellPlasmDatabase.shared[_plasmType].MakePlasm();
 		_cell.plasm = _plasm;

@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Gem;
+using UnityEngine;
 
 public class NeoMechanicData : MonoBehaviour {
 
@@ -15,7 +15,7 @@ public class NeoMechanicData : MonoBehaviour {
 
 	public NeoMechanic MakeMechanic()
 	{
-		var _mechanic = ComponentHelper.Instantiate(mechanicPrf);
+		var _mechanic = mechanicPrf.Instantiate();
 		_mechanic.Setup(this);
 		return _mechanic;
 	}

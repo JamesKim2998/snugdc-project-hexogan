@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Gem;
 
 public class CellPlasmDragAndDrop : CellPartDragAndDrop
 {
@@ -18,7 +17,7 @@ public class CellPlasmDragAndDrop : CellPartDragAndDrop
 
 		if (_cell == null)
 		{
-			var _cellGO = ComponentHelper.Instantiate(cellPrf);
+			var _cellGO = cellPrf.Instantiate();
 			_cell = cellGrid.Add(_cellGO, _coor);
 		}
 

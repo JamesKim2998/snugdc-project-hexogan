@@ -1,6 +1,5 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using System.Collections;
 
 [CustomEditor(typeof(NeoMechanic))]
 public class NeoMechanicEditor : Editor
@@ -30,11 +29,11 @@ public class NeoMechanicEditor : Editor
 		}
 		else
 		{
-			if (!m_This.gameObject.GetComponent<DragAndDrop>())
+			if (!m_This.gameObject.GetComponent<Gem.DragAndDrop>())
 			{
 				if (GUILayout.Button("Drag and drop"))
 				{
-					m_This.gameObject.AddComponent<DragAndDrop>();
+					m_This.gameObject.AddComponent<Gem.DragAndDrop>();
 					NeoMechanicHelper.AddDragAndDrop(m_This);
 				}
 			}

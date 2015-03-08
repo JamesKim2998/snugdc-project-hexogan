@@ -1,6 +1,6 @@
 ﻿using System;
+using Gem;
 using UnityEngine;
-using System.Collections;
 
 namespace ui
 {
@@ -15,7 +15,7 @@ namespace ui
 		{
 			nameLabel.text = _data.name;
 			var _item = _data.MakeItem();
-			TransformHelper.SetParentIdentity(_item, itemPivot);
+			_item.transform.SetParentIdentity(itemPivot.transform);
 		}
 
 		public void ListenPressDown()

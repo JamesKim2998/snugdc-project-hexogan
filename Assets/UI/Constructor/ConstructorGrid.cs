@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Gem;
+using UnityEngine;
 
 namespace ui
 {
@@ -11,11 +11,11 @@ namespace ui
 
 		public void Add(IConstructorItem _item)
 		{
-			var _view = ComponentHelper.Instantiate(viewPrf);
+			var _view = viewPrf.Instantiate();
 			var _ctrl = _view.gameObject.AddComponent<ConstructorEntityController>();
 			_ctrl.SetView(_view);
 			_ctrl.SetItem(_item);
-			TransformHelper.SetParentWithoutScale(_ctrl, grid);
+			_ctrl.transform.SetParentIdentity(grid.transform);
 		}
 
 		public void Reposition()

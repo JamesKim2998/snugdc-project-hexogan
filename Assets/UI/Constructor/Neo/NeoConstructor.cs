@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Gem;
+using UnityEngine;
 using System.Collections;
 
 namespace ui
@@ -23,7 +24,7 @@ namespace ui
 
 		public void PickHammer()
 		{
-			var _hammer = ComponentHelper.Instantiate(hammerPrf);
+			var _hammer = hammerPrf.Instantiate();
 			_hammer.gameObject.AddComponent<NeoConstructorHammer>();
 		}
 	}

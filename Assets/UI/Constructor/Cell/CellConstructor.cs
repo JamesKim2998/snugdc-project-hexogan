@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using Gem;
+using UnityEngine;
 
 namespace ui
 {
@@ -26,7 +26,7 @@ namespace ui
 
 		public void PickHammer()
 		{
-			var _hammer = ComponentHelper.Instantiate(hammerPrf);
+			var _hammer = hammerPrf.Instantiate();
 			_hammer.gameObject.AddComponent<CellConstructorHammer>();
 		}
 

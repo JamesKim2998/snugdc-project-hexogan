@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using TestSimpleRNG;
+using UnityEngine;
 
 [RequireComponent(typeof(Emitter))]
 public class EmitterDecoratorRandomScatter : MonoBehaviour

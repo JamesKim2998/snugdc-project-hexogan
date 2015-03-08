@@ -1,6 +1,5 @@
-﻿using ui;
+﻿using Gem;
 using UnityEngine;
-using System.Collections;
 
 namespace ui
 {

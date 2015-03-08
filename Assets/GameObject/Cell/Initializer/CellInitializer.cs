@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class CellInitializer : MonoBehaviour
+namespace HX
 {
-	public Cell cellPrf;
-
-	void Start () {
-		Setup();
-	}
-	
-	public void Setup()
+	public class CellInitializer : MonoBehaviour
 	{
-		CellDatabase.cellPrf = cellPrf;
+		public Cell cellPrf;
+
+		private void Start()
+		{
+			Setup();
+		}
+
+		public void Setup()
+		{
+			CellDatabase.cellPrf = cellPrf;
+		}
 	}
 }

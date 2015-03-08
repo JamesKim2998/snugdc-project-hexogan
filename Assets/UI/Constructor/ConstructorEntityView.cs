@@ -2,7 +2,7 @@
 using Gem;
 using UnityEngine;
 
-namespace ui
+namespace HX.UI
 {
 	public class ConstructorEntityView : MonoBehaviour
 	{

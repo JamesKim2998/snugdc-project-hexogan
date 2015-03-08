@@ -1,52 +1,54 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 
-public class DatabaseInitializer : MonoBehaviour
+namespace HX
 {
-	private bool m_IsInitialized = false;
-
-	public ProjectileDatabase projectile;
-	public EmitterDatabase emitter;
-
-	public NeoBodyDatabase neoBody;
-	public NeoArmDatabase neoArm;
-
-	public CellPlasmDatabase cellPlasm;
-	public CellWallDatabase cellWall;
-
-	public IEnumerable<IDatabase> GetDatabases()
+	public class DatabaseInitializer : MonoBehaviour
 	{
-		Initialize();
-		yield return projectile;
-		yield return emitter;
-		yield return neoBody;
-		yield return neoArm;
-		yield return cellPlasm;
-		yield return cellWall;
-	}
+		private bool mIsInitialized;
 
-	void Awake()
-	{
-		Initialize();
-		Build();
-	}
+		public ProjectileDatabase projectile;
+		public EmitterDatabase emitter;
 
-	void Initialize()
-	{
-		if (m_IsInitialized) return;
-		m_IsInitialized = true;
-		ProjectileDatabase.shared = projectile;
-		EmitterDatabase.shared = emitter;
-		NeoBodyDatabase.shared = neoBody;
-		NeoArmDatabase.shared = neoArm;
-		CellPlasmDatabase.shared = cellPlasm;
-		CellWallDatabase.shared = cellWall;
-	}
+		public NeoBodyDatabase neoBody;
+		public NeoArmDatabase neoArm;
 
-	public void Build()
-	{
-		foreach (var _database in GetDatabases())
-			_database.Build();
+		public CellPlasmDatabase cellPlasm;
+		public CellWallDatabase cellWall;
+
+		public IEnumerable<IDatabase> GetDatabases()
+		{
+			Initialize();
+			yield return projectile;
+			yield return emitter;
+			yield return neoBody;
+			yield return neoArm;
+			yield return cellPlasm;
+			yield return cellWall;
+		}
+
+		void Awake()
+		{
+			Initialize();
+			Build();
+		}
+
+		void Initialize()
+		{
+			if (mIsInitialized) return;
+			mIsInitialized = true;
+			ProjectileDatabase.g = projectile;
+			EmitterDatabase.g = emitter;
+			NeoBodyDatabase.g = neoBody;
+			NeoArmDatabase.g = neoArm;
+			CellPlasmDatabase.g = cellPlasm;
+			CellWallDatabase.g = cellWall;
+		}
+
+		public void Build()
+		{
+			foreach (var _database in GetDatabases())
+				_database.Build();
+		}
 	}
 }

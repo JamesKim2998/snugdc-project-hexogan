@@ -10,7 +10,7 @@ public class NeoArmEmitter : MonoBehaviour
 
 	void Start()
 	{
-		emitter = EmitterDatabase.shared[emitterType].Instantiate();
+		emitter = EmitterDatabase.g[emitterType].Instantiate();
 		emitter.transform.SetParentIdentity(transform);
 		emitter.transform.localPosition = Vector3.zero;
 

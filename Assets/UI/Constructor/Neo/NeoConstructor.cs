@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace ui
+namespace HX.UI
 {
 	public class NeoConstructor : MonoBehaviour
 	{
@@ -13,9 +13,9 @@ namespace ui
 
 		void Start()
 		{
-			foreach (var _data in NeoBodyDatabase.shared)
+			foreach (var _data in NeoBodyDatabase.g)
 				bodyGrid.Add(new NeoConstructorItem(_data));
-			foreach (var _data in NeoArmDatabase.shared)
+			foreach (var _data in NeoArmDatabase.g)
 				armGrid.Add(new NeoConstructorItem(_data));
 
 			bodyGrid.Reposition();

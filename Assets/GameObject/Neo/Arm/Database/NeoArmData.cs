@@ -1,20 +1,20 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class NeoArmData : NeoMechanicData, IDatabaseKey<NeoArmType>
+﻿namespace HX
 {
-	public NeoArmType type;
-	public NeoArmType Key() { return type; }
-
-	public void Build()
+	public class NeoArmData : NeoMechanicData, IDatabaseKey<NeoArmType>
 	{
-		if (name_ == "")
-			name_ = type.ToString();
-	}
+		public NeoArmType type;
+		public NeoArmType Key() { return type; }
 
-	public NeoArm MakeArm()
-	{
-		return MakeMechanic().GetComponent<NeoArm>();
-	}
+		public void Build()
+		{
+			if (name_ == "")
+				name_ = type.ToString();
+		}
 
+		public NeoArm MakeArm()
+		{
+			return MakeMechanic().GetComponent<NeoArm>();
+		}
+
+	}
 }

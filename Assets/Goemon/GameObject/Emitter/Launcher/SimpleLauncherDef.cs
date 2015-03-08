@@ -11,7 +11,7 @@ public class SimpleLauncherDef : MonoBehaviour
 		get
 		{
 			if (m_ProjectilePrf) return m_ProjectilePrf;
-			m_ProjectilePrf = ProjectileDatabase.shared[projectile].projectilePrf;
+			m_ProjectilePrf = ProjectileDatabase.g[projectile].projectilePrf;
 			return m_ProjectilePrf;
 		}
 	}

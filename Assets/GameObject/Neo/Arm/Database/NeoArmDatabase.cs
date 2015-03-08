@@ -1,14 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class NeoArmDatabase : Database<NeoArmType, NeoArmData>
+﻿namespace HX
 {
-	public static NeoArmDatabase shared;
-
-	public override void Build()
+	public class NeoArmDatabase : Database<NeoArmType, NeoArmData>
 	{
-		base.Build();
-		foreach (var _data in this)
-			_data.Build();
+		public static NeoArmDatabase g;
+
+		public override void Build()
+		{
+			base.Build();
+			foreach (var _data in this)
+				_data.Build();
+		}
 	}
 }

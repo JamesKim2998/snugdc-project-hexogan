@@ -1,19 +1,19 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class NeoBodyData : NeoMechanicData, IDatabaseKey<NeoBodyType>
+﻿namespace HX
 {
-	public NeoBodyType type;
-	public NeoBodyType Key() { return type; }
-
-	public void Build()
+	public class NeoBodyData : NeoMechanicData, IDatabaseKey<NeoBodyType>
 	{
-		if (name_ == "")
-			name_ = type.ToString();
-	}
+		public NeoBodyType type;
+		public NeoBodyType Key() { return type; }
 
-	public NeoBody MakeBody()
-	{
-		return MakeMechanic().GetComponent<NeoBody>();
+		public void Build()
+		{
+			if (name_ == "")
+				name_ = type.ToString();
+		}
+
+		public NeoBody MakeBody()
+		{
+			return MakeMechanic().GetComponent<NeoBody>();
+		}
 	}
 }

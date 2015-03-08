@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class NeoInitializer : MonoBehaviour
+namespace HX
 {
-	public LayerMask mechanicDropMask;
-	
-	void Awake()
+	public class NeoInitializer : MonoBehaviour
 	{
-		NeoMechanicDragAndDrop.dropMask = mechanicDropMask;
+		public LayerMask mechanicDropMask;
+
+		void Awake()
+		{
+			NeoMechanicDragAndDrop.dropMask = mechanicDropMask;
+		}
 	}
 }

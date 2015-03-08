@@ -1,14 +1,14 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class NeoBodyDatabase : Database<NeoBodyType, NeoBodyData>
+﻿namespace HX
 {
-	public static NeoBodyDatabase shared;
-
-	public override void Build()
+	public class NeoBodyDatabase : Database<NeoBodyType, NeoBodyData>
 	{
-		base.Build();
-		foreach (var _data in this)
-			_data.Build();
+		public static NeoBodyDatabase g;
+
+		public override void Build()
+		{
+			base.Build();
+			foreach (var _data in this)
+				_data.Build();
+		}
 	}
 }

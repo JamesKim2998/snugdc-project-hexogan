@@ -1,7 +1,7 @@
 ﻿using Gem;
 using UnityEngine;
 
-namespace ui
+namespace HX.UI
 {
 	[RequireComponent(typeof(UIGrid))]
 	public class ConstructorGrid : MonoBehaviour

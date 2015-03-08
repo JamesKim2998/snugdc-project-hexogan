@@ -4,6 +4,6 @@ using System.Collections.Generic;
 
 public class EmitterDatabase : Database<EmitterType, EmitterData>
 {
-	public static EmitterDatabase shared;
+	public static EmitterDatabase g;
 }
 

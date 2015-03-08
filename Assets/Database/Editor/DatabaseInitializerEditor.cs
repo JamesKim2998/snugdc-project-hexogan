@@ -1,22 +1,24 @@
 ﻿using UnityEditor;
 using UnityEngine;
-using System.Collections;
 
-[CustomEditor(typeof(DatabaseInitializer))]
-public class DatabaseInitializerEditor : Editor
+namespace HX
 {
-	private DatabaseInitializer m_Target;
-
-	void OnEnable()
+	[CustomEditor(typeof(DatabaseInitializer))]
+	public class DatabaseInitializerEditor : Editor
 	{
-		m_Target = (DatabaseInitializer) target;
-	}
+		private DatabaseInitializer m_Target;
 
-	public override void OnInspectorGUI()
-	{
-		base.OnInspectorGUI();
+		void OnEnable()
+		{
+			m_Target = (DatabaseInitializer)target;
+		}
 
-		if (GUILayout.Button("Build"))
-			m_Target.Build();
+		public override void OnInspectorGUI()
+		{
+			base.OnInspectorGUI();
+
+			if (GUILayout.Button("Build"))
+				m_Target.Build();
+		}
 	}
 }

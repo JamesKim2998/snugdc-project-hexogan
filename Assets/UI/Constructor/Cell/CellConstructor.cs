@@ -1,7 +1,7 @@
 ﻿using Gem;
 using UnityEngine;
 
-namespace ui
+namespace HX.UI
 {
 	public class CellConstructor : MonoBehaviour
 	{
@@ -15,9 +15,9 @@ namespace ui
 
 		void Start()
 		{
-			foreach (var _data in CellPlasmDatabase.shared)
+			foreach (var _data in CellPlasmDatabase.g)
 				plasmGrid.Add(MakeItem(_data));
-			foreach (var _data in CellWallDatabase.shared)
+			foreach (var _data in CellWallDatabase.g)
 				wallGrid.Add(MakeItem(_data));
 
 			plasmGrid.Reposition();

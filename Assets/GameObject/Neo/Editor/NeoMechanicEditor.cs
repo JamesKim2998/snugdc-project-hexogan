@@ -1,64 +1,67 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(NeoMechanic))]
-public class NeoMechanicEditor : Editor
+namespace HX
 {
-	private NeoMechanic m_This;
-
-	void OnEnable()
+	[CustomEditor(typeof(NeoMechanic))]
+	public class NeoMechanicEditor : Editor
 	{
-		m_This = (NeoMechanic) target;
-	}
+		private NeoMechanic m_This;
 
-	public override void OnInspectorGUI()
-	{
-		base.OnInspectorGUI();
-
-		if (PrefabHelper.IsPrefab(m_This))
-			return;
-
-		GUILayout.Label(
-			"CohesionLeft " + m_This.cohesionLeft
-			+ ", DurabilityLeft " + m_This.durabilityLeft);
-
-		if (m_This.parent)
+		void OnEnable()
 		{
-			if (GUILayout.Button("Detach"))
-				m_This.parent.Remove(m_This);
+			m_This = (NeoMechanic)target;
 		}
-		else
+
+		public override void OnInspectorGUI()
 		{
-			if (!m_This.gameObject.GetComponent<Gem.DragAndDrop>())
+			base.OnInspectorGUI();
+
+			if (PrefabHelper.IsPrefab(m_This))
+				return;
+
+			GUILayout.Label(
+				"CohesionLeft " + m_This.cohesionLeft
+				+ ", DurabilityLeft " + m_This.durabilityLeft);
+
+			if (m_This.parent)
 			{
-				if (GUILayout.Button("Drag and drop"))
+				if (GUILayout.Button("Detach"))
+					m_This.parent.Remove(m_This);
+			}
+			else
+			{
+				if (!m_This.gameObject.GetComponent<Gem.DragAndDrop>())
 				{
-					m_This.gameObject.AddComponent<Gem.DragAndDrop>();
-					NeoMechanicHelper.AddDragAndDrop(m_This);
+					if (GUILayout.Button("Drag and drop"))
+					{
+						m_This.gameObject.AddComponent<Gem.DragAndDrop>();
+						NeoMechanicHelper.AddDragAndDrop(m_This);
+					}
 				}
+			}
+		}
+
+		public void OnSceneGUI()
+		{
+			base.OnInspectorGUI();
+
+			if (!m_This.parent)
+			{
+				Handles.color = Color.red;
+
+				Handles.DrawSolidArc(
+					m_This.transform.TransformPoint(m_This.com),
+					Vector3.forward, Vector3.right,
+					360, 0.02f);
 			}
 		}
 	}
 
-	public void OnSceneGUI()
-	{
-		base.OnInspectorGUI();
 
-		if (!m_This.parent)
-		{
-			Handles.color = Color.red;
+	[CustomEditor(typeof(NeoArm))]
+	public class NeoArmEditor : NeoMechanicEditor { }
 
-			Handles.DrawSolidArc(
-				m_This.transform.TransformPoint(m_This.com),
-				Vector3.forward, Vector3.right,
-				360, 0.02f);
-		}
-	}
+	[CustomEditor(typeof(NeoBody))]
+	public class NeoBodyEditor : NeoMechanicEditor { }
 }
-
-
-[CustomEditor(typeof(NeoArm))]
-public class NeoArmEditor : NeoMechanicEditor {}
-
-[CustomEditor(typeof(NeoBody))]
-public class NeoBodyEditor : NeoMechanicEditor { }

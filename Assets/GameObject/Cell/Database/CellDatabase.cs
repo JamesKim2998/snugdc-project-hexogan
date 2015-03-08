@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public static class CellDatabase {
-	public static Cell cellPrf;
+﻿namespace HX
+{
+	public static class CellDatabase
+	{
+		public static Cell cellPrf;
+	}
 }

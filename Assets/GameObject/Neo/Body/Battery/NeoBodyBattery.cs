@@ -1,31 +1,33 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-[RequireComponent(typeof(NeoBody))]
-public class NeoBodyBattery : MonoBehaviour
+namespace HX
 {
-	public float energyLeft { get; private set; }
-	public NeoBodyBatteryData data { get; private set; }
-
-	void Start()
+	[RequireComponent(typeof(NeoBody))]
+	public class NeoBodyBattery : MonoBehaviour
 	{
-		GetComponent<NeoMechanic>().postSetupData += ListenSetupData;
-	}
+		public float energyLeft { get; private set; }
+		public NeoBodyBatteryData data { get; private set; }
 
-	void OnDestroy()
-	{
-		GetComponent<NeoMechanic>().postSetupData -= ListenSetupData;
-	}
-
-	private void ListenSetupData(NeoMechanic _mechanic)
-	{
-		if (data)
+		void Start()
 		{
-			Debug.LogWarning("Trying to setup data again. Ignore.");
-			return;
+			GetComponent<NeoMechanic>().postSetupData += ListenSetupData;
 		}
 
-		data = _mechanic.data.GetComponent<NeoBodyBatteryData>();
-		energyLeft = data.capacity;
+		void OnDestroy()
+		{
+			GetComponent<NeoMechanic>().postSetupData -= ListenSetupData;
+		}
+
+		private void ListenSetupData(NeoMechanic _mechanic)
+		{
+			if (data)
+			{
+				Debug.LogWarning("Trying to setup data again. Ignore.");
+				return;
+			}
+
+			data = _mechanic.data.GetComponent<NeoBodyBatteryData>();
+			energyLeft = data.capacity;
+		}
 	}
 }

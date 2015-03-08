@@ -1,38 +1,40 @@
-﻿using System.Collections.Generic;
+﻿using Gem;
 using UnityEngine;
-using System.Collections;
 
-public class Neo : MonoBehaviour
+namespace HX
 {
-	public NeoBodyCore core;
-
-	public NeoRigidbody body;
-	public NeoMechanics mechanics { get; private set; }
-
-	void Awake()
+	public class Neo : MonoBehaviour
 	{
-		mechanics = gameObject.AddComponent<NeoMechanics>();
-		mechanics.body = body;
-	}
+		public NeoBodyCore core;
 
-	void Start()
-	{
-		mechanics.Add(core.GetComponent<NeoBody>(), HexCoor.ZERO);
-	}
+		public NeoRigidbody body;
+		public NeoMechanics mechanics { get; private set; }
 
-	public void Motor(float _thrustNormal, float _driftNormal)
-	{
-		if (! mechanics) return;
+		void Awake()
+		{
+			mechanics = gameObject.AddComponent<NeoMechanics>();
+			mechanics.body = body;
+		}
 
-		if (_thrustNormal > -0.01f)
-			mechanics.motors.Motor(_thrustNormal, _driftNormal);
-		else
-			mechanics.motors.Motor(_thrustNormal, -_driftNormal);
-	}
+		void Start()
+		{
+			mechanics.Add(core.GetComponent<NeoBody>(), HexCoor.ZERO);
+		}
 
-	public void Shoot()
-	{
-		if (!mechanics) return;
-		mechanics.emitters.Shoot();
+		public void Motor(float _thrustNormal, float _driftNormal)
+		{
+			if (!mechanics) return;
+
+			if (_thrustNormal > -0.01f)
+				mechanics.motors.Motor(_thrustNormal, _driftNormal);
+			else
+				mechanics.motors.Motor(_thrustNormal, -_driftNormal);
+		}
+
+		public void Shoot()
+		{
+			if (!mechanics) return;
+			mechanics.emitters.Shoot();
+		}
 	}
 }

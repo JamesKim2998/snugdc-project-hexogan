@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-namespace ui
+namespace HX.UI
 {
 	public class ConstructorEntityController : MonoBehaviour
 	{

@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-namespace ui
+namespace HX.UI
 {
 	[RequireComponent(typeof(MouseActor))]
 	public class CellConstructorHammer : MonoBehaviour

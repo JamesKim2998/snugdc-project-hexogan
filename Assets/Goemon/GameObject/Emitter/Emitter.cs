@@ -135,10 +135,6 @@ public class Emitter : MonoBehaviour
     }
     #endregion
 
-    #region misc properties
-	public DeadzoneField deadzone;
-    #endregion
-
     public Emitter()
     {
         ammo = 0;
@@ -241,9 +237,6 @@ public class Emitter : MonoBehaviour
 
 			if (ownerBody && relativeVelocityEnabled) 
 				_projectileGO.rigidbody2D.velocity += ownerBody.velocity;
-
-			var _projectileDeadzone = _projectile.GetComponent<ProjectileDecoratorDeadzone>();
-			if (_projectileDeadzone && deadzone) _projectileDeadzone.deadzone = deadzone.deadzone;
 
 			if (doShoot != null) 
 				doShoot(this, _projectileGO);

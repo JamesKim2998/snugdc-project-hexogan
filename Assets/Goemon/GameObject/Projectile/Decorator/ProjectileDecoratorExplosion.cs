@@ -30,7 +30,7 @@ public class ProjectileDecoratorExplosion : MonoBehaviour {
 		ExplodeOnCrash_RequestExplode(transform.position);
 
 		if (Network.peerType == NetworkPeerType.Server) 
-            networkView.RPC("ExplodeOnCrash_RequestExplode", RPCMode.Others, transform.position);
+            GetComponent<NetworkView>().RPC("ExplodeOnCrash_RequestExplode", RPCMode.Others, transform.position);
 	}
 
 	[RPC]

@@ -35,7 +35,7 @@ public class ArcTargeter : MonoBehaviour
         if (_sqrDistance > radius*radius)
             return false;
 
-        var _rotation = Quaternion.FromToRotation(rigidbody2D.velocity, _targetPosition);
+        var _rotation = Quaternion.FromToRotation(GetComponent<Rigidbody2D>().velocity, _targetPosition);
         var _angle = _rotation.eulerAngles.z;
         if (_angle > 180) _angle -= 360;
         if (Mathf.Abs(_angle) > range) return false;
@@ -43,9 +43,9 @@ public class ArcTargeter : MonoBehaviour
         target = _obj;
         var _newAngle = Mathf.Clamp(_angle, -constCatchUp, constCatchUp);
         _newAngle = Mathf.Lerp(_newAngle, _angle, lerpCatchUp);
-        var _newVelocity = (Vector3) rigidbody2D.velocity;
+        var _newVelocity = (Vector3) GetComponent<Rigidbody2D>().velocity;
         _newVelocity = Quaternion.AngleAxis(_newAngle, Vector3.forward) * _newVelocity;
-        rigidbody2D.velocity = _newVelocity;
+        GetComponent<Rigidbody2D>().velocity = _newVelocity;
 
         return true;
     }

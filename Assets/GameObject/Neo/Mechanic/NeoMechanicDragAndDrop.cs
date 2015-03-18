@@ -13,7 +13,7 @@ namespace HX
 		{
 			base._OnMouseDown();
 			transform.position += Vector3.back;
-			collider2D.isTrigger = true;
+			GetComponent<Collider2D>().isTrigger = true;
 		}
 
 		protected override void _OnMouseDrag()
@@ -28,7 +28,7 @@ namespace HX
 			if (Pivot(true))
 			{
 				transform.position += Vector3.forward;
-				collider2D.isTrigger = false;
+				GetComponent<Collider2D>().isTrigger = false;
 			}
 			else
 			{

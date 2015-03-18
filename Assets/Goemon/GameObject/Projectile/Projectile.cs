@@ -111,7 +111,7 @@ public class Projectile : MonoBehaviour
         type = editorType;
 
 		if (initialVelocity != Vector2.zero)
-			rigidbody2D.velocity = initialVelocity;
+			GetComponent<Rigidbody2D>().velocity = initialVelocity;
 
 		m_Ricochet = GetComponent<ProjectileDecoratorRicochet>();
 		m_Animator = GetComponent<Animator>();
@@ -125,8 +125,8 @@ public class Projectile : MonoBehaviour
 	
 	void DestroySelf() 
 	{
-		if (networkView && networkView.enabled && networkView.viewID != NetworkViewID.unassigned)
-			Network.Destroy(networkView.viewID);
+		if (GetComponent<NetworkView>() && GetComponent<NetworkView>().enabled && GetComponent<NetworkView>().viewID != NetworkViewID.unassigned)
+			Network.Destroy(GetComponent<NetworkView>().viewID);
 		else 
 			Destroy(gameObject);
 	}
@@ -147,8 +147,8 @@ public class Projectile : MonoBehaviour
 		
 		if (stopOnDecay) 
 		{
-			rigidbody2D.velocity = new Vector2(0, 0);
-			rigidbody2D.isKinematic = true;
+			GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+			GetComponent<Rigidbody2D>().isKinematic = true;
 		}
 	}
 
@@ -194,7 +194,7 @@ public class Projectile : MonoBehaviour
 	{
 		if (! decaying) 
 		{
-			if (! rigidbody2D.isKinematic)
+			if (! GetComponent<Rigidbody2D>().isKinematic)
 			{
 				Vector2 _drivingForce = Vector2.zero;
 				
@@ -208,7 +208,7 @@ public class Projectile : MonoBehaviour
 				}
 				
 				if (_drivingForce != Vector2.zero)
-					rigidbody2D.AddForce(_drivingForce);
+					GetComponent<Rigidbody2D>().AddForce(_drivingForce);
 			}
 		}
 	}
@@ -251,7 +251,7 @@ public class Projectile : MonoBehaviour
 				
 			if (_damageDetector && _damageDetector.enabled) 
 			{
-				attackData.velocity = rigidbody2D.velocity;
+				attackData.velocity = GetComponent<Rigidbody2D>().velocity;
 				_damageDetector.Damage(attackData);
 			}
 			

@@ -23,7 +23,7 @@ public class Explosion : MonoBehaviour
 	void Start()
 	{
         if (field) 
-            field = collider2D as CircleCollider2D;
+            field = GetComponent<Collider2D>() as CircleCollider2D;
 
         if (executeOnStart) 
             Explode();
@@ -44,14 +44,14 @@ public class Explosion : MonoBehaviour
         var _rayResults = Physics2D.OverlapCircleAll(transform.position, impulseRadius, impulseMask);
         foreach (var _rayResult in _rayResults)
         {
-            if (! _rayResult.rigidbody2D) continue;
+            if (! _rayResult.GetComponent<Rigidbody2D>()) continue;
             var _delta = _rayResult.transform.position - transform.position;
             var _distance = _delta.magnitude;
             var _direction = _delta/_distance;
             var _factor = (_distance < radius) ? 1.0f
                 : (impulseRadius - _distance) / (impulseRadius - radius);
             var _impulse = impulse * _factor * _direction;
-            _rayResult.rigidbody2D.AddForce(_impulse, ForceMode2D.Impulse);
+            _rayResult.GetComponent<Rigidbody2D>().AddForce(_impulse, ForceMode2D.Impulse);
         }
     }
 

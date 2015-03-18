@@ -128,17 +128,17 @@ namespace HX
 
 		private void EnableRigidbody()
 		{
-			if (rigidbody2D) return;
+			if (GetComponent<Rigidbody2D>()) return;
 			gameObject.AddComponent<Rigidbody2D>();
-			rigidbody2D.mass = mass;
-			rigidbody2D.centerOfMass = com;
-			rigidbody2D.drag = 1;
-			rigidbody2D.angularDrag = 1;
+			GetComponent<Rigidbody2D>().mass = mass;
+			GetComponent<Rigidbody2D>().centerOfMass = com;
+			GetComponent<Rigidbody2D>().drag = 1;
+			GetComponent<Rigidbody2D>().angularDrag = 1;
 		}
 
 		private void DisableRigidbody()
 		{
-			if (!rigidbody2D) return;
+			if (!GetComponent<Rigidbody2D>()) return;
 			Destroy(gameObject.GetComponent<Rigidbody2D>());
 		}
 

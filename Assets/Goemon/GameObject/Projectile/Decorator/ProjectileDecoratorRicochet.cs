@@ -85,7 +85,7 @@ public class ProjectileDecoratorRicochet : MonoBehaviour
             return false;
 
         // raycast
-        var _direction = transform.rigidbody2D.velocity.normalized;
+        var _direction = transform.GetComponent<Rigidbody2D>().velocity.normalized;
 
         var _rayResult = Physics2D.Raycast(
             transform.position,
@@ -99,9 +99,9 @@ public class ProjectileDecoratorRicochet : MonoBehaviour
             if ((_rayResult.point - (Vector2)transform.position).sqrMagnitude < 0.01f)
                 return false;
 
-            var _velocity = transform.rigidbody2D.velocity;
+            var _velocity = transform.GetComponent<Rigidbody2D>().velocity;
             var _rotation = Quaternion.FromToRotation(-_direction, _rayResult.normal);
-            transform.rigidbody2D.velocity = _rotation * _rotation * -_velocity;
+            transform.GetComponent<Rigidbody2D>().velocity = _rotation * _rotation * -_velocity;
         }
         else
         {

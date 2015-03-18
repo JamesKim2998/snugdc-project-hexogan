@@ -36,9 +36,9 @@ public class EmitterDecoratorRandomScatter : MonoBehaviour
         {
             var _delta = (float)SimpleRNG.GetNormal(0, directionDeviation);
             var _rotation = Quaternion.AngleAxis(_delta, Vector3.forward);
-            var _velocity = _projectile.rigidbody2D.velocity;
+            var _velocity = _projectile.GetComponent<Rigidbody2D>().velocity;
             _velocity = _rotation * _velocity;
-            _projectile.rigidbody2D.velocity = _velocity;
+            _projectile.GetComponent<Rigidbody2D>().velocity = _velocity;
         }
     }
 }

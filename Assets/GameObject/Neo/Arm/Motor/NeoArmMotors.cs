@@ -199,20 +199,20 @@ namespace HX
 			m_DriftLs.Motor(-_driftNormal);
 			m_DriftRs.Motor(_driftNormal);
 
-			if (rigidbody2D.velocity.sqrMagnitude < body.speedLimit * body.speedLimit)
+			if (GetComponent<Rigidbody2D>().velocity.sqrMagnitude < body.speedLimit * body.speedLimit)
 			{
 				if (_thrustNormal > 0.001f)
-					m_Thrusts.ApplyPos(rigidbody2D, _thrustNormal);
+					m_Thrusts.ApplyPos(GetComponent<Rigidbody2D>(), _thrustNormal);
 				else if (_thrustNormal < -0.001f)
-					m_Drags.ApplyNeg(rigidbody2D, -_thrustNormal);
+					m_Drags.ApplyNeg(GetComponent<Rigidbody2D>(), -_thrustNormal);
 			}
 
-			if (Mathf.Abs(rigidbody2D.angularVelocity) < body.angularSpeedLimit)
+			if (Mathf.Abs(GetComponent<Rigidbody2D>().angularVelocity) < body.angularSpeedLimit)
 			{
 				if (_driftNormal > 0.001f)
-					m_DriftRs.ApplyNeg(rigidbody2D, _driftNormal);
+					m_DriftRs.ApplyNeg(GetComponent<Rigidbody2D>(), _driftNormal);
 				else if (_driftNormal < -0.001f)
-					m_DriftLs.ApplyPos(rigidbody2D, -_driftNormal);
+					m_DriftLs.ApplyPos(GetComponent<Rigidbody2D>(), -_driftNormal);
 			}
 		}
 
@@ -220,7 +220,7 @@ namespace HX
 		{
 			ClearThrusts();
 
-			var _com = body.rigidbody2D.centerOfMass;
+			var _com = body.GetComponent<Rigidbody2D>().centerOfMass;
 
 			foreach (var _motorData in m_Motors)
 			{

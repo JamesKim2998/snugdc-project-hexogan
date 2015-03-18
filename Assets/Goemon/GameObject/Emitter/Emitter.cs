@@ -131,7 +131,7 @@ public class Emitter : MonoBehaviour
     #region network
     public bool IsNetworkEnabled()
     {
-        return networkView && networkView.isMine && networkView.enabled && (Network.peerType != NetworkPeerType.Disconnected);
+        return GetComponent<NetworkView>() && GetComponent<NetworkView>().isMine && GetComponent<NetworkView>().enabled && (Network.peerType != NetworkPeerType.Disconnected);
     }
     #endregion
 
@@ -152,7 +152,7 @@ public class Emitter : MonoBehaviour
 
 	public void Update () 
 	{
-		if (networkView && networkView.enabled && ! networkView.isMine)
+		if (GetComponent<NetworkView>() && GetComponent<NetworkView>().enabled && ! GetComponent<NetworkView>().isMine)
 			return;
 
 		stateTime += Time.deltaTime;
@@ -236,23 +236,23 @@ public class Emitter : MonoBehaviour
 			if (damage.HasValue) _projectile.damage = damage.Value;
 
 			if (ownerBody && relativeVelocityEnabled) 
-				_projectileGO.rigidbody2D.velocity += ownerBody.velocity;
+				_projectileGO.GetComponent<Rigidbody2D>().velocity += ownerBody.velocity;
 
 			if (doShoot != null) 
 				doShoot(this, _projectileGO);
 
             if (IsNetworkEnabled())
 			{
-				_projectileGO.networkView.viewID = Network.AllocateViewID();
-				_projectileGO.networkView.enabled = true;
+				_projectileGO.GetComponent<NetworkView>().viewID = Network.AllocateViewID();
+				_projectileGO.GetComponent<NetworkView>().enabled = true;
 
-				networkView.RPC("Emitter_RequestCreateProjectileServer", 
+				GetComponent<NetworkView>().RPC("Emitter_RequestCreateProjectileServer", 
 				                RPCMode.Others, 
-				                _projectile.networkView.viewID, 
+				                _projectile.GetComponent<NetworkView>().viewID, 
 				                Network.player.guid,
 				                _projectileGO.transform.position, 
 				                _projectileGO.transform.localRotation, 
-				                (Vector3) _projectileGO.rigidbody2D.velocity, 
+				                (Vector3) _projectileGO.GetComponent<Rigidbody2D>().velocity, 
 				                projectileCount, 
 				                projectileIdx);
 			}
@@ -281,15 +281,15 @@ public class Emitter : MonoBehaviour
 
 		_projectileGO.transform.position = _position;
 		_projectileGO.transform.rotation = _rotation;
-		_projectileGO.rigidbody2D.velocity = _velocity;
+		_projectileGO.GetComponent<Rigidbody2D>().velocity = _velocity;
 
         var _projectile = _projectileGO.GetComponent<Projectile>();
 		_projectile.owner = owner;
 		_projectile.ownerPlayer = _ownerPlayer;
         _projectile.ownerEmitter = type;
 
-        _projectileGO.networkView.viewID = _viewID;
-        _projectileGO.networkView.enabled = true;
+        _projectileGO.GetComponent<NetworkView>().viewID = _viewID;
+        _projectileGO.GetComponent<NetworkView>().enabled = true;
 	}
 
 	public void Rest() 

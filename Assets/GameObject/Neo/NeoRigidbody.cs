@@ -15,8 +15,8 @@ namespace HX
 
 		private void Awake()
 		{
-			rigidbody2D.mass = 0;
-			rigidbody2D.inertia = 0;
+			GetComponent<Rigidbody2D>().mass = 0;
+			GetComponent<Rigidbody2D>().inertia = 0;
 		}
 
 		public void Update()
@@ -57,18 +57,18 @@ namespace HX
 			if (! m_IsMassDirty) return;
 			m_IsMassDirty = false;
 
-			rigidbody2D.mass = m_TotalMass;
-			rigidbody2D.centerOfMass = NeoHex.Position(m_MassWeightedDoubleCoor)/2/m_TotalMass;
+			GetComponent<Rigidbody2D>().mass = m_TotalMass;
+			GetComponent<Rigidbody2D>().centerOfMass = NeoHex.Position(m_MassWeightedDoubleCoor)/2/m_TotalMass;
 
 			float _inertia = 0;
 			foreach (var _massData in m_MassDatas)
 				_inertia += _massData.Value.mass*((Vector2) _massData.Key/2).sqrMagnitude;
-			rigidbody2D.inertia = _inertia;
+			GetComponent<Rigidbody2D>().inertia = _inertia;
 		}
 
 		public static implicit operator Rigidbody2D(NeoRigidbody _self)
 		{
-			return _self.rigidbody2D;
+			return _self.GetComponent<Rigidbody2D>();
 		}
 	}
 

@@ -16,8 +16,8 @@ namespace HX
 		{
 			base._OnMouseDown();
 			transform.position += Vector3.back;
-			m_ColliderOrgTriggerFlag = collider2D.isTrigger;
-			collider2D.isTrigger = true;
+			m_ColliderOrgTriggerFlag = GetComponent<Collider2D>().isTrigger;
+			GetComponent<Collider2D>().isTrigger = true;
 		}
 
 		protected override void _OnMouseDrag()
@@ -33,7 +33,7 @@ namespace HX
 			{
 				transform.position += Vector3.forward;
 				if (m_ColliderOrgTriggerFlag.HasValue)
-					collider2D.isTrigger = m_ColliderOrgTriggerFlag.Value;
+					GetComponent<Collider2D>().isTrigger = m_ColliderOrgTriggerFlag.Value;
 			}
 			else
 			{

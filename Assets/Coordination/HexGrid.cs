@@ -52,7 +52,7 @@ namespace Gem
 
 		public struct Neighbor
 		{
-			public int side;
+			public HexIdx side;
 			public HexCell<T> cell;
 		}
 
@@ -63,7 +63,7 @@ namespace Gem
 			{
 				HexCell<T> _cell;
 				if (TryGet(_coorNeighbor, out _cell))
-					yield return new Neighbor { cell = _cell, side = _side };
+					yield return new Neighbor { cell = _cell, side = (HexIdx)_side };
 				++_side;
 			}
 		}

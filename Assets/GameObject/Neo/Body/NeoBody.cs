@@ -12,18 +12,18 @@ namespace HX
 		#region neighbor
 		private readonly NeoMechanic[] m_Neighbors = new NeoMechanic[6];
 
-		public NeoMechanic GetNeighbor(int _side)
+		public NeoMechanic GetNeighbor(HexIdx _side)
 		{
-			return m_Neighbors[_side];
+			return m_Neighbors[(int)_side];
 		}
 
 		public IEnumerator<NeoMechanic> GetNeighbors()
 		{
-			for (int _side = 0; _side != 6; ++_side)
-				yield return GetNeighbor(_side);
+			foreach (var i in HexHelper.GetIdxes())
+				yield return GetNeighbor(i);
 		}
 
-		private void SetNeighbor(int _side, NeoMechanic _mechanic)
+		private void SetNeighbor(HexIdx _side, NeoMechanic _mechanic)
 		{
 			var _neighbor = GetNeighbor(_side);
 			if (_neighbor && _mechanic)
@@ -32,7 +32,7 @@ namespace HX
 				return;
 			}
 
-			m_Neighbors[_side] = _mechanic;
+			m_Neighbors[(int)_side] = _mechanic;
 
 			if (_mechanic)
 				AddCohesion(_mechanic);
@@ -40,7 +40,7 @@ namespace HX
 				RemoveCohesion(_neighbor);
 		}
 
-		public void RemoveNeighbor(int _side)
+		public void RemoveNeighbor(HexIdx _side)
 		{
 			var _neighbor = GetNeighbor(_side);
 			if (!_neighbor) return;
@@ -48,7 +48,7 @@ namespace HX
 			SetNeighbor(_side, null);
 
 			var _body = _neighbor.GetComponent<NeoBody>();
-			if (_body) _body.RemoveNeighbor(HexCoor.OppositeSide(_side));
+			if (_body) _body.RemoveNeighbor(_side.Opposite());
 
 			var _arm = _neighbor.GetComponent<NeoArm>();
 			if (_arm) parent.Remove(_arm);
@@ -57,16 +57,16 @@ namespace HX
 		#endregion
 
 		#region mechanic neighbor
-		public void AddBody(NeoBody _body, int _side)
+		public void AddBody(NeoBody _body, HexIdx _side)
 		{
 			if (GetNeighbor(_side) == _body)
 				return;
 
 			SetNeighbor(_side, _body);
-			_body.AddBody(this, HexCoor.OppositeSide(_side));
+			_body.AddBody(this, _side.Opposite());
 		}
 
-		public void AddArm(NeoArm _arm, int _side)
+		public void AddArm(NeoArm _arm, HexIdx _side)
 		{
 			SetNeighbor(_side, _arm);
 			_arm.Attach(this, _side);
@@ -74,8 +74,8 @@ namespace HX
 
 		public override void Detach()
 		{
-			for (var _side = 0; _side != 6; ++_side)
-				RemoveNeighbor(_side);
+			foreach (var i in HexHelper.GetIdxes())
+				RemoveNeighbor(i);
 			base.Detach();
 		}
 		#endregion

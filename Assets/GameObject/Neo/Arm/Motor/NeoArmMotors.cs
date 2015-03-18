@@ -85,7 +85,7 @@ namespace HX
 		{
 			public NeoArmMotor motor;
 			public Vector2 position;
-			public int side { get { return motor.GetComponent<NeoArm>().side; } }
+			public HexIdx side { get { return motor.GetComponent<NeoArm>().side; } }
 		}
 
 		private class MotorDatas
@@ -229,19 +229,19 @@ namespace HX
 
 				switch (_side)
 				{
-					case 0: m_Drags.Add(_motorData); break;
-					case 3: m_Thrusts.Add(_motorData); break;
+					case HexIdx.R: m_Drags.Add(_motorData); break;
+					case HexIdx.L: m_Thrusts.Add(_motorData); break;
 
-					case 1:
-					case 2:
+					case HexIdx.TR:
+					case HexIdx.TL:
 						if (_delta.x < 0)
 							m_DriftLs.Add(_motorData);
 						else if (_delta.x > 0)
 							m_DriftRs.Add(_motorData);
 						break;
 
-					case 4:
-					case 5:
+					case HexIdx.BR:
+					case HexIdx.BL:
 						if (_delta.x < 0)
 							m_DriftRs.Add(_motorData);
 						else if (_delta.x > 0)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Gem;
+using UnityEngine;
 
 
 namespace HX
@@ -8,9 +9,9 @@ namespace HX
 		public NeoArmType type;
 
 		public NeoBody body { get; private set; }
-		public int side { get; private set; }
+		public HexIdx side { get; private set; }
 
-		public bool Attach(NeoBody _body, int _side)
+		public bool Attach(NeoBody _body, HexIdx _side)
 		{
 			if (body)
 			{
@@ -47,11 +48,11 @@ namespace HX
 			return true;
 		}
 
-		public static void LocateSide(Transform _transform, int _idx)
+		public static void LocateSide(Transform _transform, HexIdx _idx)
 		{
 			_transform.localPosition = NeoHex.Side(_idx);
 			var _angles = _transform.localEulerAngles;
-			_angles.z = 60*_idx;
+			_angles.z = _idx.ToDegree();
 			_transform.localEulerAngles = _angles;
 		}
 

@@ -35,12 +35,12 @@ namespace HX
 		private int m_TotalMass;
 		private HexCoor m_MassWeightedDoubleCoor;
 
-		public void AddMass(int _mass, HexCoor _coor, int? _side = null)
+		public void AddMass(int _mass, HexCoor _coor, HexIdx? _side = null)
 		{
 			m_IsMassDirty = true;
 
 			var _coorDouble = _coor*2;
-			if (_side.HasValue) _coorDouble += HexCoor.FromAdjacent(_side.Value);
+			if (_side.HasValue) _coorDouble += _side.Value;
 
 			m_TotalMass += _mass;
 			m_MassWeightedDoubleCoor += _coorDouble*_mass;

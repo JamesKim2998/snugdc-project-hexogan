@@ -10,80 +10,62 @@ namespace Gem
 		public static readonly HexCoor ZERO = new HexCoor(0, 0);
 		private static readonly float SQRT_3 = Mathf.Sqrt(3);
 
-		public int p, q;
+		public HexP p;
+		public HexQ q;
 
-		public HexCoor(int _p, int _q)
+		public HexCoor(HexP _p, HexQ _q)
 		{
 			p = _p;
 			q = _q;
 		}
 
-		public IEnumerable<HexCoor> Neighbors()
+		public HexCoor(HexIdx i)
 		{
-			for (var _i = 0; _i != 6; ++_i)
+			var _p = 0;
+			var _q = 0;
+
+			switch (i)
 			{
-				yield return this + FromAdjacent(_i);
-			}
-		}
+				case HexIdx.R: _p = 1; _q = 0; break;
+				case HexIdx.TR: _p = 0; _q = 1; break;
+				case HexIdx.TL: _p = -1; _q = 1; break;
+				case HexIdx.L: _p = -1; _q = 0; break;
+				case HexIdx.BL: _p = 0; _q = -1; break;
+				case HexIdx.BR: _p = 1; _q = -1; break;
 
-		public static int OppositeSide(int _index)
-		{
-			return (_index + 3) % 6;
-		}
-
-		public int ToAdjacent()
-		{
-			if (Compare(1, 0))
-				return 0;
-			if (Compare(0, 1))
-				return 1;
-			if (Compare(-1, 1))
-				return 2;
-			if (Compare(-1, 0))
-				return 3;
-			if (Compare(0, -1))
-				return 4;
-			if (Compare(1, -1))
-				return 5;
-
-			Debug.LogError("Invalid direction " + this + ".");
-			return -1;
-		}
-
-		public static IEnumerable<HexCoor> GetAdjacents()
-		{
-			for (var _i = 0; _i < 6; ++_i)
-				yield return FromAdjacent(_i);
-		}
-
-		public static HexCoor FromAdjacent(int _idx)
-		{
-			switch (_idx)
-			{
-				case 0: return new HexCoor(1, 0);
-				case 1: return new HexCoor(0, 1);
-				case 2: return new HexCoor(-1, 1);
-				case 3: return new HexCoor(-1, 0);
-				case 4: return new HexCoor(0, -1);
-				case 5: return new HexCoor(1, -1);
 				default:
-					Debug.LogError("Invalid index " + _idx + ".");
-					return new HexCoor(0, 0);
+					L.E("invalid idx " + i + ".");
+					break;
 			}
+
+			p = (HexP)_p;
+			q = (HexQ)_q;
 		}
 
 		public static HexCoor Round(Vector2 _coor)
 		{
 			var _q = _coor.y / (SQRT_3 / 2f);
 			var _p = _coor.x - _q / 2;
-			return new HexCoor(Mathf.RoundToInt(_p), Mathf.RoundToInt(_q));
+			return new HexCoor((HexP)Mathf.RoundToInt(_p), (HexQ)Mathf.RoundToInt(_q));
 		}
 
-		public static int Side(Vector2 _coor, HexCoor _center)
+		public static IEnumerable<HexCoor> Adjacents()
+		{
+			foreach (var i in HexHelper.GetIdxes())
+				yield return i;
+		}
+
+		public IEnumerable<HexCoor> Neighbors()
+		{
+			foreach (var i in HexHelper.GetIdxes())
+				yield return this + i;
+		}
+
+		public static HexIdx Side(Vector2 _coor, HexCoor _center)
 		{
 			var _delta = _coor - _center;
 			var _side = Mathf.Atan2(_delta.y, _delta.x) / (Mathf.PI / 3) + 6.5f;
-			return ((int)_side) % 6;
+			return (HexIdx) (((int)_side) % 6);
 		}
 
 		public override string ToString()
@@ -92,7 +74,7 @@ namespace Gem
 		}
 
 		#region equality op
-		public bool Compare(int _p, int _q)
+		public bool Compare(HexP _p, HexQ _q)
 		{
 			return p == _p && q == _q;
 		}
@@ -109,16 +91,44 @@ namespace Gem
 			return this == _other;
 		}
 
-		public static bool operator ==(HexCoor _self, HexCoor _other)
+		public static bool operator ==(HexCoor _this, HexCoor _other)
 		{
-			return _self.p == _other.p
-				   && _self.q == _other.q;
+			return _this.p == _other.p
+				   && _this.q == _other.q;
 		}
 
-		public static bool operator !=(HexCoor _self, HexCoor _other)
+		public static bool operator !=(HexCoor _this, HexCoor _other)
 		{
-			return !(_self == _other);
+			return !(_this == _other);
 		}
+		#endregion
+
+		#region conversion op
+
+		public static implicit operator HexCoor(HexIdx _val)
+		{
+			return new HexCoor(_val);
+		}
+
+		public static explicit operator HexIdx(HexCoor _this)
+		{
+			if (_this.Compare(HexP.ONE, HexQ.ZERO))
+				return HexIdx.R;
+			if (_this.Compare(HexP.ZERO, HexQ.ONE))
+				return HexIdx.TR;
+			if (_this.Compare(HexP.MINUS_ONE, HexQ.ONE))
+				return HexIdx.TL;
+			if (_this.Compare(HexP.MINUS_ONE, HexQ.ZERO))
+				return HexIdx.L;
+			if (_this.Compare(HexP.ZERO, HexQ.MINUS_ONE))
+				return HexIdx.BL;
+			if (_this.Compare(HexP.ONE, HexQ.MINUS_ONE))
+				return HexIdx.BR;
+
+			L.E("invalid coor " + _this);
+			return HexIdx.R;
+		}
+
 		#endregion
 
 		#region arithmetic op
@@ -129,19 +139,20 @@ namespace Gem
 
 		public static HexCoor operator +(HexCoor _a, HexCoor _b)
 		{
-			return new HexCoor(_a.p + _b.p, _a.q + _b.q);
+			return new HexCoor(_a.p + (int)_b.p, _a.q + (int)_b.q);
 		}
 
-		public static HexCoor operator *(HexCoor _coor, int _scalar)
+		public static HexCoor operator *(HexCoor _this, int _scalar)
 		{
-			return new HexCoor(_coor.p * _scalar, _coor.q * _scalar);
+			return new HexCoor((HexP)((int)_this.p * _scalar), (HexQ)((int)_this.q * _scalar));
 		}
 
-		public static implicit operator Vector2(HexCoor _self)
+		public static implicit operator Vector2(HexCoor _this)
 		{
-			return new Vector2(_self.p + _self.q / 2f, _self.q * SQRT_3 / 2f);
+			return new Vector2((int)_this.p + (int)_this.q / 2f, (int)_this.q * SQRT_3 / 2f);
 		}
 
 		#endregion
+
 	}
 }

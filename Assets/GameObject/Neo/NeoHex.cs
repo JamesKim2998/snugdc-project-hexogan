@@ -12,17 +12,17 @@ namespace HX
 
 		public static HexCoor Coor(Vector2 _position)
 		{
-			return HexCoor.Round(_position / NeoConst.HEX_P);
+			return HexCoor.Round(_position/NeoConst.HEX_P);
 		}
 
-		public static int Side(Vector2 _position, HexCoor _center)
+		public static HexIdx Side(Vector2 _position, HexCoor _center)
 		{
-			return HexCoor.Side(_position / NeoConst.HEX_P, _center);
+			return HexCoor.Side(_position/NeoConst.HEX_P, _center);
 		}
 
-		public static Vector2 Side(int _idx)
+		public static Vector2 Side(HexIdx _idx)
 		{
-			return (Vector2)HexCoor.FromAdjacent(_idx) / 2f * NeoConst.HEX_P;
+			return (Vector2)(HexCoor)_idx / 2f * NeoConst.HEX_P;
 		}
 
 	}

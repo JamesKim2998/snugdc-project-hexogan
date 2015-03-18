@@ -6,7 +6,7 @@ namespace Gem
 	public class HexCell<T>
 	{
 		public T data { get; private set; }
-		private readonly HexCell<T>[] m_Neighbors = new HexCell<T>[6];
+		private readonly HexCell<T>[] mNeighbors = new HexCell<T>[6];
 
 		public HexCell(T _data)
 		{
@@ -47,18 +47,18 @@ namespace Gem
 			return false;
 		}
 
-		public HexCell<T> GetNeighbor(int _idx)
+		public HexCell<T> GetNeighbor(HexIdx _idx)
 		{
-			return m_Neighbors[_idx];
+			return mNeighbors[(int)_idx];
 		}
 
 		public IEnumerable<HexCell<T>> GetNeighbors()
 		{
 			for (var _i = 0; _i != 6; ++_i)
-				yield return m_Neighbors[_i];
+				yield return mNeighbors[_i];
 		}
 
-		public void Connect(HexCell<T> _neighbor, int _idx)
+		public void Connect(HexCell<T> _neighbor, HexIdx _idx)
 		{
 			if (GetNeighbor(_idx) != null)
 			{
@@ -66,32 +66,32 @@ namespace Gem
 				return;
 			}
 
-			m_Neighbors[_idx] = _neighbor;
-			_neighbor.m_Neighbors[HexCoor.OppositeSide(_idx)] = this;
+			mNeighbors[(int)_idx] = _neighbor;
+			_neighbor.mNeighbors[(int)_idx.Opposite()] = this;
 		}
 
-		public void Disconnect(int _idx)
+		public void Disconnect(HexIdx _idx)
 		{
-			if (m_Neighbors[_idx] == null)
+			if (GetNeighbor(_idx) == null)
 			{
 				Debug.LogWarning("There is no neighbor in " + _idx + ". Ignore.");
 				return;
 			}
 
 			var _neighbor = GetNeighbor(_idx);
-			_neighbor.m_Neighbors[HexCoor.OppositeSide(_idx)] = null;
-			m_Neighbors[_idx] = null;
+			_neighbor.mNeighbors[(int)_idx.Opposite()] = null;
+			mNeighbors[(int)_idx] = null;
 		}
 
 		public void DisconnectAll()
 		{
-			for (var _side = 0; _side != 6; ++_side)
+			foreach (var i in HexHelper.GetIdxes())
 			{
-				var _neighbor = m_Neighbors[_side];
+				var _neighbor = GetNeighbor(i);
 				if (_neighbor != null)
 				{
-					_neighbor.m_Neighbors[HexCoor.OppositeSide(_side)] = null;
-					m_Neighbors[_side] = null;
+					_neighbor.mNeighbors[(int)i.Opposite()] = null;
+					mNeighbors[(int)i] = null;
 				}
 			}
 		}

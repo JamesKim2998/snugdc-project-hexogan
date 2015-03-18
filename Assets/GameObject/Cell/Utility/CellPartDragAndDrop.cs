@@ -42,7 +42,7 @@ namespace HX
 			}
 		}
 
-		protected virtual bool IsLocatable(HexCell<Cell> _cell, HexCoor _coor)
+		protected virtual bool IsLocatable(HexNode<Cell> _cell, HexCoor _coor)
 		{
 			return true;
 		}
@@ -60,7 +60,7 @@ namespace HX
 			transform.eulerAngles = _angleOld;
 		}
 
-		protected abstract bool Attach(HexCell<Cell> _cell, HexCoor _coor);
+		protected abstract bool Attach(HexNode<Cell> _cell, HexCoor _coor);
 
 		bool Pivot(bool _attach = false)
 		{
@@ -70,7 +70,7 @@ namespace HX
 			var _hexPos = cellGrid.transform.worldToLocalMatrix.MultiplyPoint(transform.position);
 			var _hexCoor = HexCoor.Round(_hexPos);
 
-			HexCell<Cell> _cell;
+			HexNode<Cell> _cell;
 			cellGrid.TryGet(_hexCoor, out _cell);
 
 			if (!IsLocatable(_cell, _hexCoor))

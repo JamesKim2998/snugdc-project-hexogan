@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace Gem
 {
-	public class HexCell<T>
+	public class HexNode<T>
 	{
 		public T data { get; private set; }
-		private readonly HexCell<T>[] mNeighbors = new HexCell<T>[6];
+		private readonly HexNode<T>[] mNeighbors = new HexNode<T>[6];
 
-		public HexCell(T _data)
+		public HexNode(T _data)
 		{
 			data = _data;
 		}
 
-		~HexCell()
+		~HexNode()
 		{
 			DisconnectAll();
 		}
@@ -47,34 +46,44 @@ namespace Gem
 			return false;
 		}
 
-		public HexCell<T> GetNeighbor(HexIdx _idx)
+		public HexNode<T> GetNeighbor(HexIdx _idx)
 		{
 			return mNeighbors[(int)_idx];
 		}
 
-		public IEnumerable<HexCell<T>> GetNeighbors()
+		public IEnumerable<HexNode<T>> GetAdjacents()
 		{
 			for (var _i = 0; _i != 6; ++_i)
 				yield return mNeighbors[_i];
 		}
 
-		public void Connect(HexCell<T> _neighbor, HexIdx _idx)
+		public IEnumerable<HexNode<T>> GetNeighbors()
+		{
+			for (var _i = 0; _i != 6; ++_i)
+			{
+				var _neighbor = mNeighbors[_i];
+				if (_neighbor != null)
+					yield return _neighbor;
+			}
+		}
+
+		public void Connect(HexNode<T> _node, HexIdx _idx)
 		{
 			if (GetNeighbor(_idx) != null)
 			{
-				Debug.LogError("There is already mechanic exists in " + _idx + ". Ignore.");
+				L.E("there is already mechanic exists in " + _idx + ". ignore.");
 				return;
 			}
 
-			mNeighbors[(int)_idx] = _neighbor;
-			_neighbor.mNeighbors[(int)_idx.Opposite()] = this;
+			mNeighbors[(int)_idx] = _node;
+			_node.mNeighbors[(int)_idx.Opposite()] = this;
 		}
 
 		public void Disconnect(HexIdx _idx)
 		{
 			if (GetNeighbor(_idx) == null)
 			{
-				Debug.LogWarning("There is no neighbor in " + _idx + ". Ignore.");
+				L.W("there is no neighbor in " + _idx + ". ignore.");
 				return;
 			}
 

@@ -42,10 +42,10 @@ namespace Gem
 			q = (HexQ)_q;
 		}
 
-		public static HexCoor Round(Vector2 _coor)
+		public static HexCoor Round(Vector2 _val)
 		{
-			var _q = _coor.y / (SQRT_3 / 2f);
-			var _p = _coor.x - _q / 2;
+			var _q = _val.y/(SQRT_3/2f);
+			var _p = _val.x - _q/2;
 			return new HexCoor((HexP)Mathf.RoundToInt(_p), (HexQ)Mathf.RoundToInt(_q));
 		}
 
@@ -63,9 +63,7 @@ namespace Gem
 
 		public static HexIdx Side(Vector2 _coor, HexCoor _center)
 		{
-			var _delta = _coor - _center;
-			var _side = Mathf.Atan2(_delta.y, _delta.x) / (Mathf.PI / 3) + 6.5f;
-			return (HexIdx) (((int)_side) % 6);
+			return HexHelper.Side(_coor - _center);
 		}
 
 		public override string ToString()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Gem
 {
@@ -29,14 +30,21 @@ namespace Gem
 			return EnumHelper.GetValues<HexIdx>();
 		}
 
+		public static int ToDegree(this HexIdx i)
+		{
+			return 60 * (int)i;
+		}
+
 		public static HexIdx Opposite(this HexIdx i)
 		{
 			return (HexIdx)(((int)i + 3) % 6);
 		}
 
-		public static int ToDegree(this HexIdx i)
+		public static HexIdx Side(Vector2 _val)
 		{
-			return 60*(int)i;
+			var _angle = Mathf.Atan2(_val.y, _val.x);
+			var _side = _angle/(Mathf.PI/3) + 6.5f;
+			return (HexIdx) (((int) _side)%6);
 		}
 	}
 }

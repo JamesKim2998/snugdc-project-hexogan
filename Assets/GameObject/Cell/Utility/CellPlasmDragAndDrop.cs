@@ -4,7 +4,7 @@ namespace HX
 {
 	public class CellPlasmDragAndDrop : CellPartDragAndDrop
 	{
-		protected override bool IsLocatable(HexCell<Cell> _cell, HexCoor _coor)
+		protected override bool IsLocatable(HexNode<Cell> _cell, HexCoor _coor)
 		{
 			if (!base.IsLocatable(_cell, _coor))
 				return false;
@@ -12,7 +12,7 @@ namespace HX
 			return _cell == null || !_cell.data.plasm;
 		}
 
-		protected override bool Attach(HexCell<Cell> _cell, HexCoor _coor)
+		protected override bool Attach(HexNode<Cell> _cell, HexCoor _coor)
 		{
 			if (_cell != null && _cell.data.plasm)
 				return false;

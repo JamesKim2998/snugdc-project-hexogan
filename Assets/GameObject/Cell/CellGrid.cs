@@ -5,9 +5,9 @@ namespace HX
 {
 	public class CellGrid : MonoBehaviour
 	{
-		private readonly HexGrid<Cell> m_Cells = new HexGrid<Cell>();
+		private readonly HexGraph<Cell> m_Cells = new HexGraph<Cell>();
 
-		public bool TryGet(HexCoor _coor, out HexCell<Cell> _output)
+		public bool TryGet(HexCoor _coor, out HexNode<Cell> _output)
 		{
 			return m_Cells.TryGet(_coor, out _output);
 		}
@@ -20,9 +20,9 @@ namespace HX
 			_transform.localPosition = _pos;
 		}
 
-		public HexCell<Cell> Add(Cell _cell, HexCoor _coor)
+		public HexNode<Cell> Add(Cell _cell, HexCoor _coor)
 		{
-			var _hexCell = new HexCell<Cell>(_cell);
+			var _hexCell = new HexNode<Cell>(_cell);
 			if (!m_Cells.TryAdd(_coor, _hexCell))
 				return null;
 
@@ -31,7 +31,7 @@ namespace HX
 			Locate(_cell.transform, _coor);
 
 			var _side = -1;
-			foreach (var _neighbor in _hexCell.GetNeighbors())
+			foreach (var _neighbor in _hexCell.GetAdjacents())
 			{
 				++_side;
 				if (_neighbor == null) continue;

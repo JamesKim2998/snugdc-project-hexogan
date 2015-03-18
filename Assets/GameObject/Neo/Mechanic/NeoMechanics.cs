@@ -23,7 +23,7 @@ namespace HX
 		public NeoArmMotors motors { get; private set; }
 		public NeoArmEmitters emitters { get; private set; }
 
-		private readonly HexGrid<NeoBody> m_Bodies = new HexGrid<NeoBody>();
+		private readonly HexGraph<NeoBody> m_Bodies = new HexGraph<NeoBody>();
 		private readonly List<NeoArm> m_Arms = new List<NeoArm>();
 
 		private bool m_MassDirty = false;
@@ -58,9 +58,9 @@ namespace HX
 			}
 		}
 
-		public HexCell<NeoBody> GetBody(HexCoor _coor)
+		public HexNode<NeoBody> GetBody(HexCoor _coor)
 		{
-			HexCell<NeoBody> _body;
+			HexNode<NeoBody> _body;
 			return m_Bodies.TryGet(_coor, out _body)
 				? _body
 				: null;
@@ -89,7 +89,7 @@ namespace HX
 
 		public bool Add(NeoBody _body, HexCoor _coor)
 		{
-			var _cell = new HexCell<NeoBody>(_body);
+			var _cell = new HexNode<NeoBody>(_body);
 			if (!m_Bodies.TryAdd(_coor, _cell))
 				return false;
 
@@ -99,7 +99,7 @@ namespace HX
 			Locate(_body.transform, _coor);
 
 			var _side = -1;
-			foreach (var _neighbor in _cell.GetNeighbors())
+			foreach (var _neighbor in _cell.GetAdjacents())
 			{
 				++_side;
 				if (_neighbor == null) continue;

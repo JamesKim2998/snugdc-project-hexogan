@@ -12,6 +12,12 @@ namespace HX
 		#region neighbor
 		private readonly NeoMechanic[] mNeighbors = new NeoMechanic[6];
 
+		protected override void Awake()
+		{
+			base.Awake();
+			mechanicType = NeoMechanicType.BODY;
+		}
+
 		public NeoMechanic GetNeighbor(HexIdx _side)
 		{
 			return mNeighbors[(int)_side];

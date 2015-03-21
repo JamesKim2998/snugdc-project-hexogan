@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Gem;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace HX
 
 		private bool mMassDirty = false;
 		private bool mIslandDirty = false;
+		private readonly List<NeoMechanic> mMechanicsDirty = new List<NeoMechanic>();
 
 		public NeoMechanics(Neo _neo)
 		{
@@ -29,6 +31,10 @@ namespace HX
 
 		public void Update()
 		{
+			foreach (var _mechanic in mMechanicsDirty)
+				_mechanic.collider.enabled = true;
+			mMechanicsDirty.Clear();
+			
 			if (mIslandDirty)
 			{
 				var _island = mBodies.RemoveIslands();
@@ -54,9 +60,11 @@ namespace HX
 
 		void Add(NeoMechanic _mechanic, HexCoor _coor, HexIdx? _side = null)
 		{
+			_mechanic.collider.enabled = false;
 			_mechanic.SetParent(this, _coor);
 			body.AddMass(_mechanic.mass, _coor, _side);
 			mMassDirty = true;
+			mMechanicsDirty.Add(_mechanic);
 		}
 
 		public bool IsRemovable(NeoMechanic _mechanic)
@@ -66,11 +74,25 @@ namespace HX
 
 		public void Remove(NeoMechanic _mechanic)
 		{
-			var _body = _mechanic.GetComponent<NeoBody>();
-			if (_body) { Remove(_body, true); return; }
+			if (_mechanic == NeoMechanicType.BODY)
+			{
+				var _body = _mechanic.GetComponent<NeoBody>();
+				Remove(_body, true);
+			}
+			else if (_mechanic == NeoMechanicType.ARM)
+			{
+				var _arm = _mechanic.GetComponent<NeoArm>();
+				Remove(_arm);
+			}
+			else
+			{
+				L.E("undefined mechanic type " + _mechanic.mechanicType);
+			}
+		}
 
-			var _arm = _mechanic.GetComponent<NeoArm>();
-			if (_arm) { Remove(_arm); return; }
+		private void BeforeRemove(NeoMechanic _mechanic)
+		{
+			mMechanicsDirty.Remove(_mechanic);
 		}
 
 		public bool Add(NeoBody _body, HexCoor _coor)
@@ -81,7 +103,7 @@ namespace HX
 
 			Add((NeoMechanic)_body, _coor);
 
-			_body.transform.parent = transform;
+			_body.transform.SetParent(transform, false);
 			Locate(_body.transform, _coor);
 
 			var _side = -1;
@@ -123,11 +145,21 @@ namespace HX
 		{
 			if (!IsRemovable(_arm)) return;
 
-			var _motor = _arm.GetComponent<NeoArmMotor>();
-			if (_motor) motors.Remove(_motor);
+			BeforeRemove(_arm);
 
-			var _emitter = _arm.GetComponent<NeoArmEmitter>();
-			if (_emitter) emitters.Remove(_emitter);
+			switch (_arm.type)
+			{
+				case NeoArmType.MOTOR:
+					var _motor = _arm.GetComponent<NeoArmMotor>();
+					motors.Remove(_motor);
+					break;
+				case NeoArmType.EMITTER:
+					var _emitter = _arm.GetComponent<NeoArmEmitter>();
+					emitters.Remove(_emitter);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 
 			mArms.Remove(_arm);
 			RemoveMechanic(_arm, _arm.coor, _arm.side);
@@ -136,6 +168,8 @@ namespace HX
 		public void Remove(NeoBody _body, bool _removeFromGrid = true)
 		{
 			if (!IsRemovable(_body)) return;
+
+			BeforeRemove(_body);
 
 			var _isCore = _body.coor == HexCoor.ZERO;
 
@@ -168,6 +202,7 @@ namespace HX
 				Remove(_body.Value.data, false);
 
 			mBodies.Clear();
+			mMechanicsDirty.Clear();
 		}
 
 		public void Build()

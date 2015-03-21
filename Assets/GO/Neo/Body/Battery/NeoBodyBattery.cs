@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 
 namespace HX
 {
 	[RequireComponent(typeof(NeoBody))]
 	public class NeoBodyBattery : MonoBehaviour
 	{
-		[SerializeField]
+		[SerializeField, UsedImplicitly]
 		private NeoBody mBody;
 		public NeoBody body { get { return mBody; } }
 		public float energyLeft { get; private set; }

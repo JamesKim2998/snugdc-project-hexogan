@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using JetBrains.Annotations;
+using UnityEngine;
 
 namespace HX
 {
 	public class NeoArmMotor : MonoBehaviour
 	{
-		[SerializeField]
+		[SerializeField, UsedImplicitly]
 		private NeoArm mArm;
 		public NeoArm arm { get { return mArm; }}
 

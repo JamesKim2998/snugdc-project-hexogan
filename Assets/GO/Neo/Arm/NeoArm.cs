@@ -10,17 +10,23 @@ namespace HX
 		public NeoBody body { get; private set; }
 		public HexIdx side { get; private set; }
 
+		protected override void Awake()
+		{
+			base.Awake();
+			mechanicType = NeoMechanicType.ARM;
+		}
+
 		public bool Attach(NeoBody _body, HexIdx _side)
 		{
 			if (body)
 			{
-				Debug.LogWarning("Body already exists. Ignore.");
+				Debug.LogWarning("body already exists. ignore.");
 				return false;
 			}
 
 			if (!_body.parent)
 			{
-				Debug.LogWarning("Body doesn't have parent. Ignore.");
+				Debug.LogWarning("body doesn't have parent. ignore.");
 				return false;
 			}
 
@@ -28,7 +34,7 @@ namespace HX
 			{
 				if (parent != _body.parent)
 				{
-					Debug.LogWarning("Parent doesn't match. Ignore.");
+					Debug.LogWarning("parent doesn't match. ignore.");
 					return false;
 				}
 			}
@@ -39,7 +45,8 @@ namespace HX
 
 			body = _body;
 			side = _side;
-			transform.parent = _body.transform;
+
+			transform.SetParent(_body.transform, false);
 			LocateSide(transform, _side);
 
 			AddCohesion(body);

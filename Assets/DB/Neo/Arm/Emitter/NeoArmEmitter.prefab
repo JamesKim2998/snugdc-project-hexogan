@@ -117,6 +117,7 @@ MonoBehaviour:
   mass: 1
   com: {x: 0, y: 0}
   mData: {fileID: 11400000, guid: de0de29b45feda24cbf60baf4680c4cf, type: 2}
+  mCollider: {fileID: 6100000}
   animator: {fileID: 9500000}
   type: 2
 --- !u!212 &21200000

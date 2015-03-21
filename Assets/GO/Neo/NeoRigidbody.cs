@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Gem;
+using JetBrains.Annotations;
 using UnityEngine;
 
 
@@ -13,7 +14,7 @@ namespace HX
 		public float speedLimit = 3;
 		public float angularSpeedLimit = 720;
 
-		[SerializeField] 
+		[SerializeField, UsedImplicitly] 
 		private Rigidbody2D mRigidbody;
 		public new Rigidbody2D rigidbody { get { return mRigidbody; } }
 

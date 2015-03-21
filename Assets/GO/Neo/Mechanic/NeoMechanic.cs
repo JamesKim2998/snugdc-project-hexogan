@@ -1,28 +1,35 @@
 ﻿using Gem;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HX
 {
 	public class NeoMechanic : MonoBehaviour
 	{
+		public NeoMechanicType mechanicType { get; protected set; }
+
 		public int mass = 1;
 		public Vector2 com = Vector2.zero;
 
-		[SerializeField]
+		[SerializeField, UsedImplicitly]
 		private NeoMechanicData mData;
 		public NeoMechanicData data { get { return mData; } }
 
 		public HexCoor coor { get; private set; }
 
+		[SerializeField, UsedImplicitly]
+		private Collider2D mCollider;
+		public new Collider2D collider { get { return mCollider; }}
+		private Rigidbody2D mRigidbody;
+
 		public Animator animator;
 
 		#region construct/destruct
 
-		private bool mIsDestroying = false;
+		private bool mIsDestroying;
 
-		private void Awake()
+		protected virtual void Awake()
 		{
-			EnableRigidbody();
 			mDamageDetector = gameObject.AddComponent<DamageDetector>();
 			mDamageDetector.onDetect += Damage;
 			cohesionLeft = data.cohesion;
@@ -79,7 +86,7 @@ namespace HX
 				return false;
 			}
 
-			DisableRigidbody();
+			RemoveRigidBody();
 			parent = _parent;
 			coor = _coor;
 
@@ -89,7 +96,7 @@ namespace HX
 		public virtual void Detach()
 		{
 			if (!mIsDestroying)
-				EnableRigidbody();
+				AddRigidBody();
 			parent = null;
 		}
 
@@ -112,20 +119,20 @@ namespace HX
 
 		#region rigidbody
 
-		private void EnableRigidbody()
+		private void AddRigidBody()
 		{
-			if (GetComponent<Rigidbody2D>()) return;
-			gameObject.AddComponent<Rigidbody2D>();
-			GetComponent<Rigidbody2D>().mass = mass;
-			GetComponent<Rigidbody2D>().centerOfMass = com;
-			GetComponent<Rigidbody2D>().drag = 1;
-			GetComponent<Rigidbody2D>().angularDrag = 1;
+			if (mRigidbody) return;
+			mRigidbody = gameObject.AddComponent<Rigidbody2D>();
+			mRigidbody.mass = mass;
+			mRigidbody.centerOfMass = com;
+			mRigidbody.drag = 1;
+			mRigidbody.angularDrag = 1;
 		}
 
-		private void DisableRigidbody()
+		private void RemoveRigidBody()
 		{
-			if (!GetComponent<Rigidbody2D>()) return;
-			Destroy(gameObject.GetComponent<Rigidbody2D>());
+			if (!mRigidbody) return;
+			Destroy(mRigidbody);
 		}
 
 		#endregion
@@ -163,5 +170,11 @@ namespace HX
 		}
 
 		#endregion
+
+		public static implicit operator NeoMechanicType(NeoMechanic _this)
+		{
+			return _this.mechanicType;
+		}
+
 	}
 }

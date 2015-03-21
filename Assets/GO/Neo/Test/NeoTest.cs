@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+
+using System;
 using System.Collections.Generic;
 using Gem;
 using UnityEngine;
@@ -23,18 +25,21 @@ namespace HX
 		}
 
 		public Neo neo;
-		public List<BodyData> editorBodies;
-		public List<ArmData> editorArms;
+
+		[SerializeField]
+		private List<BodyData> mBodies;
+		[SerializeField]
+		public List<ArmData> mArms;
 
 		void Start()
 		{
-			foreach (var _body in editorBodies)
+			foreach (var _body in mBodies)
 			{
 				var _bodyGO = NeoBodyDB.g[_body.body].MakeBody();
 				neo.mechanics.Add(_bodyGO, _body.coor);
 			}
 
-			foreach (var _arm in editorArms)
+			foreach (var _arm in mArms)
 			{
 				var _armGO = NeoArmDB.g[_arm.arm].MakeArm();
 				neo.mechanics.Add(_armGO, _arm.bodyCoor, _arm.bodySide);
@@ -45,3 +50,5 @@ namespace HX
 
 	}
 }
+
+#endif

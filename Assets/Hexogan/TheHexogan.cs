@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Gem;
 using UnityEngine;
 
@@ -6,6 +7,9 @@ namespace HX
 {
 	public class TheHexogan : MonoBehaviour
 	{
+		[NonSerialized]
+		private static bool sIsInited;
+
 		public EmitterDB emitterDB;
 		public ProjectileDB projDB;
 		public NeoConst neoConst;
@@ -16,6 +20,15 @@ namespace HX
 		public CellWallDB cellWallDB;
 
 		void Awake()
+		{
+			if (!sIsInited)
+			{
+				sIsInited = true;
+				Init();
+			}
+		}
+
+		void Init()
 		{
 			EmitterDB.g = emitterDB;
 			ProjectileDB.g = projDB;

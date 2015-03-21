@@ -56,7 +56,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mass: 6
   com: {x: 0, y: 0}
-  mData: {fileID: 0}
+  mData: {fileID: 11400000, guid: abe48a7add857f44783860a2dacd562c, type: 2}
   animator: {fileID: 0}
   type: 1
 --- !u!212 &21200000

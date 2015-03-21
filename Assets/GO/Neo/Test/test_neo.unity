@@ -874,6 +874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedLimit: 3
   angularSpeedLimit: 360
+  mRigidbody: {fileID: 1898811798}
 --- !u!114 &1898811800
 MonoBehaviour:
   m_ObjectHideFlags: 0

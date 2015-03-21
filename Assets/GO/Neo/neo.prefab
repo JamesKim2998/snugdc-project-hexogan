@@ -11,7 +11,6 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
   - 50: {fileID: 5000000}
-  - 114: {fileID: 11400004}
   m_Layer: 0
   m_Name: Neo
   m_TagString: Untagged
@@ -102,7 +101,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedLimit: 3
-  angularSpeedLimit: 360
+  angularSpeedLimit: 720
+  mRigidbody: {fileID: 5000000}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -116,17 +116,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   core: {fileID: 0}
   body: {fileID: 11400000}
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f066f36797680314dbfe0688775daabd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,7 +131,6 @@ MonoBehaviour:
   com: {x: 0, y: 0}
   mData: {fileID: 0}
   animator: {fileID: 0}
-  mDamageDetector: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

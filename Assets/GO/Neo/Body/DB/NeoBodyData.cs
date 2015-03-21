@@ -6,6 +6,11 @@ namespace HX
 	{
 		public NeoBodyType key { get; set; }
 
+		public NeoBody MakeBody()
+		{
+			return mechanicPrf.Instantiate().GetComponent<NeoBody>();
+		}
+
 #if UNITY_EDITOR
 		public void Build()
 		{
@@ -13,10 +18,5 @@ namespace HX
 				name = key.ToString();
 		}
 #endif
-
-		public NeoBody MakeBody()
-		{
-			return MakeMechanic().GetComponent<NeoBody>();
-		}
 	}
 }

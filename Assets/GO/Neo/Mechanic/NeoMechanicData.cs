@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FullInspector;
-using Gem;
 using UnityEngine;
 
 namespace HX
@@ -19,13 +18,6 @@ namespace HX
 		public GameObject constructorItemPrf;
 
 		public List<ScriptableObject> properties;
-
-		public NeoMechanic MakeMechanic()
-		{
-			var _mechanic = mechanicPrf.Instantiate();
-			_mechanic.Setup(this);
-			return _mechanic;
-		}
 
 		public T GetProperty<T>() where T : Object
 		{

@@ -13,10 +13,14 @@ namespace HX
 		public float speedLimit = 3;
 		public float angularSpeedLimit = 720;
 
+		[SerializeField] 
+		private Rigidbody2D mRigidbody;
+		public new Rigidbody2D rigidbody { get { return mRigidbody; } }
+
 		private void Awake()
 		{
-			GetComponent<Rigidbody2D>().mass = 0;
-			GetComponent<Rigidbody2D>().inertia = 0;
+			mRigidbody.mass = 0;
+			mRigidbody.inertia = 0;
 		}
 
 		public void Update()
@@ -34,6 +38,16 @@ namespace HX
 		private readonly Dictionary<HexCoor, MassData> mMassDatas = new Dictionary<HexCoor, MassData>();
 		private int mTotalMass;
 		private HexCoor mMassWeightedDoubleCoor;
+
+		public bool IsBelowSpeedLimit()
+		{
+			return mRigidbody.velocity.sqrMagnitude < speedLimit*speedLimit;
+		}
+
+		public bool IsBelowAngularSpeedLimit()
+		{
+			return Mathf.Abs(mRigidbody.angularVelocity) < angularSpeedLimit;
+		}
 
 		public void AddMass(int _mass, HexCoor _coor, HexIdx? _side = null)
 		{
@@ -57,18 +71,18 @@ namespace HX
 			if (! mIsMassDirty) return;
 			mIsMassDirty = false;
 
-			GetComponent<Rigidbody2D>().mass = mTotalMass;
-			GetComponent<Rigidbody2D>().centerOfMass = NeoHex.Position(mMassWeightedDoubleCoor)/2/mTotalMass;
+			mRigidbody.mass = mTotalMass;
+			mRigidbody.centerOfMass = NeoHex.Position(mMassWeightedDoubleCoor) / 2 / mTotalMass;
 
 			float _inertia = 0;
 			foreach (var _massData in mMassDatas)
 				_inertia += _massData.Value.mass*((Vector2) _massData.Key/2).sqrMagnitude;
-			GetComponent<Rigidbody2D>().inertia = _inertia;
+			mRigidbody.inertia = _inertia;
 		}
 
-		public static implicit operator Rigidbody2D(NeoRigidbody _self)
+		public static implicit operator Rigidbody2D(NeoRigidbody _this)
 		{
-			return _self.GetComponent<Rigidbody2D>();
+			return _this.mRigidbody;
 		}
 	}
 

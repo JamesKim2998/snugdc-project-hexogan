@@ -32,7 +32,7 @@ namespace HX.UI
 
 		public DragAndDrop MakeDragAndDrop()
 		{
-			var _mechanic = mData.MakeMechanic();
+			var _mechanic = mData.mechanicPrf.Instantiate();
 			var _dnd = NeoMechanicHelper.AddDragAndDrop(_mechanic);
 			_dnd.destroyIfFailed = true;
 			return _dnd;

@@ -5,28 +5,15 @@ namespace HX
 	[RequireComponent(typeof(NeoBody))]
 	public class NeoBodyBattery : MonoBehaviour
 	{
+		[SerializeField]
+		private NeoBody mBody;
+		public NeoBody body { get { return mBody; } }
 		public float energyLeft { get; private set; }
 		public NeoBodyBatteryData data { get; private set; }
 
-		void Start()
+		private void Awake()
 		{
-			GetComponent<NeoMechanic>().onSetupData += OnSetupData;
-		}
-
-		void OnDestroy()
-		{
-			GetComponent<NeoMechanic>().onSetupData -= OnSetupData;
-		}
-
-		private void OnSetupData(NeoMechanic _mechanic)
-		{
-			if (data)
-			{
-				Debug.LogWarning("Trying to setup data again. Ignore.");
-				return;
-			}
-
-			data = _mechanic.data.GetProperty<NeoBodyBatteryData>();
+			data = body.data.GetProperty<NeoBodyBatteryData>();
 			energyLeft = data.capacity;
 		}
 	}

@@ -4,6 +4,10 @@ namespace HX
 {
 	public class NeoArmMotor : MonoBehaviour
 	{
+		[SerializeField]
+		private NeoArm mArm;
+		public NeoArm arm { get { return mArm; }}
+
 		public int thrust;
 		public Animator animator;
 

@@ -40,7 +40,7 @@ namespace HX
 		{
 			base.OnInspectorGUI();
 
-			if (!target.parent)
+			if (target.parent == null)
 			{
 				Handles.color = Color.red;
 

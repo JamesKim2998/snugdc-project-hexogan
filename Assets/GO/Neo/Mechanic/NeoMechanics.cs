@@ -5,23 +5,14 @@ using UnityEngine;
 
 namespace HX
 {
-	public class NeoMechanics : MonoBehaviour
+	public class NeoMechanics
 	{
-		private NeoRigidbody mBody;
-		public NeoRigidbody body
-		{
-			get { return mBody; }
-			set
-			{
-				if (body == value) return;
-				mBody = value;
-				motors.body = body;
-				emitters.neoBody = body;
-			}
-		}
+		public readonly Neo neo;
+		public NeoRigidbody body { get { return neo.body; } }
+		public readonly NeoArmMotors motors;
+		public readonly NeoArmEmitters emitters;
 
-		public NeoArmMotors motors { get; private set; }
-		public NeoArmEmitters emitters { get; private set; }
+		public Transform transform { get { return neo.transform; } }
 
 		private readonly HexGraph<NeoBody> mBodies = new HexGraph<NeoBody>();
 		private readonly List<NeoArm> mArms = new List<NeoArm>();
@@ -29,25 +20,20 @@ namespace HX
 		private bool mMassDirty = false;
 		private bool mIslandDirty = false;
 
-		void Awake()
+		public NeoMechanics(Neo _neo)
 		{
-			motors = gameObject.AddComponent<NeoArmMotors>();
-			emitters = gameObject.AddComponent<NeoArmEmitters>();
+			neo = _neo;
+			motors = new NeoArmMotors(body);
+			emitters = new NeoArmEmitters(neo.GetInstanceID(), body);
 		}
 
-		void OnDestroy()
-		{
-			Destroy(motors);
-			Destroy(emitters);
-		}
-
-		void Update()
+		public void Update()
 		{
 			if (mIslandDirty)
 			{
 				var _island = mBodies.RemoveIslands();
-				foreach (var _cell in _island)
-					Remove(_cell.data, false);
+				foreach (var _node in _island)
+					Remove(_node.data, false);
 				mIslandDirty = false;
 			}
 
@@ -182,7 +168,6 @@ namespace HX
 				Remove(_body.Value.data, false);
 
 			mBodies.Clear();
-			Destroy(this);
 		}
 
 		public void Build()
@@ -198,5 +183,9 @@ namespace HX
 			_transform.localPosition = _pos;
 		}
 
+		public static implicit operator bool(NeoMechanics _this)
+		{
+			return _this != null;
+		}
 	}
 }

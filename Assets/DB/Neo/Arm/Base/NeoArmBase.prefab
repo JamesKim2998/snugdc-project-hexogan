@@ -72,7 +72,6 @@ MonoBehaviour:
   com: {x: 0, y: 0}
   mData: {fileID: 0}
   animator: {fileID: 0}
-  mDamageDetector: {fileID: 0}
   type: 0
 --- !u!212 &21200000
 SpriteRenderer:

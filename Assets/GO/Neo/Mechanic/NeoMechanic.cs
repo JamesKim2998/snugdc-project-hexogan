@@ -1,5 +1,4 @@
-﻿using System;
-using Gem;
+﻿using Gem;
 using UnityEngine;
 
 namespace HX
@@ -11,13 +10,7 @@ namespace HX
 
 		[SerializeField]
 		private NeoMechanicData mData;
-		public NeoMechanicData data 
-		{ 
-			get { return mData; }
-			private set { mData = value; }
-		}
-
-		public Action<NeoMechanic> onSetupData;
+		public NeoMechanicData data { get { return mData; } }
 
 		public HexCoor coor { get; private set; }
 
@@ -29,37 +22,17 @@ namespace HX
 
 		private void Awake()
 		{
-			animator = GetComponent<Animator>();
 			EnableRigidbody();
 			mDamageDetector = gameObject.AddComponent<DamageDetector>();
 			mDamageDetector.onDetect += Damage;
-			if (mData) DoSetup(mData);
+			cohesionLeft = data.cohesion;
+			durabilityLeft = data.durability;
 		}
 
 		private void OnDestroy()
 		{
 			mIsDestroying = true;
-			mDamageDetector.onDetect -= Damage;
 			Detach();
-		}
-
-		public void Setup(NeoMechanicData _data)
-		{
-			if (data)
-			{
-				Debug.LogError("trying to setup data again. ignore.");
-				return;
-			}
-
-			DoSetup(_data);
-			data = _data;
-		}
-
-		private void DoSetup(NeoMechanicData _data)
-		{
-			cohesionLeft = _data.cohesion;
-			durabilityLeft = _data.durability;
-			if (onSetupData != null) onSetupData(this);
 		}
 
 		#endregion
@@ -75,10 +48,12 @@ namespace HX
 			{
 				if (parent == value)
 					return;
+
 				mParent = value;
-				if (mParent)
+
+				if (mParent != null)
 				{
-					mDamageDetector.owner = mParent.GetInstanceID();
+					mDamageDetector.owner = mParent.neo.GetInstanceID();
 				}
 				else
 				{
@@ -94,13 +69,13 @@ namespace HX
 		{
 			if (parent)
 			{
-				Debug.LogWarning("Already parent exists! Ignore.");
+				Debug.LogWarning("already parent exists! ignore.");
 				return false;
 			}
 
 			if (! _parent)
 			{
-				Debug.LogWarning("Trying to set null parent! Use detach instead. Ignore.");
+				Debug.LogWarning("trying to set null parent! use detach instead. ignore.");
 				return false;
 			}
 

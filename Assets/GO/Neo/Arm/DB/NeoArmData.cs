@@ -6,16 +6,18 @@ namespace HX
 	{
 		public NeoArmType key { get; set; }
 
+		public NeoArm MakeArm()
+		{
+			return mechanicPrf.Instantiate().GetComponent<NeoArm>();
+		}
+
+#if UNITY_EDITOR
 		public void Build()
 		{
 			if (name == "")
 				name = key.ToString();
 		}
-
-		public NeoArm MakeArm()
-		{
-			return MakeMechanic().GetComponent<NeoArm>();
-		}
+#endif
 
 	}
 }

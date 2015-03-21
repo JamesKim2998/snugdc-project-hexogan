@@ -103,9 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mass: 1
   com: {x: .0599999987, y: 0}
-  mData: {fileID: 0}
-  animator: {fileID: 0}
-  mDamageDetector: {fileID: 0}
+  mData: {fileID: 11400000, guid: 121cb3618bb895f41b245809b7668bbb, type: 2}
+  animator: {fileID: 9500000}
   type: 1
 --- !u!114 &11400002
 MonoBehaviour:
@@ -118,6 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b977401bff7d5ba4e8bc5a7c8a4ecab6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mArm: {fileID: 11400000}
   thrust: 100
   animator: {fileID: 9500000}
 --- !u!212 &21200000

@@ -12,19 +12,21 @@ namespace HX
 
 		void Awake()
 		{
-			mechanics = gameObject.AddComponent<NeoMechanics>();
-			mechanics.body = body;
+			mechanics = new NeoMechanics(this);
 		}
 
 		void Start()
 		{
-			mechanics.Add(core.GetComponent<NeoBody>(), HexCoor.ZERO);
+			mechanics.Add(core.body, HexCoor.ZERO);
+		}
+
+		void Update()
+		{
+			mechanics.Update();
 		}
 
 		public void Motor(float _thrustNormal, float _driftNormal)
 		{
-			if (!mechanics) return;
-
 			if (_thrustNormal > -0.01f)
 				mechanics.motors.Motor(_thrustNormal, _driftNormal);
 			else
@@ -33,7 +35,6 @@ namespace HX
 
 		public void Shoot()
 		{
-			if (!mechanics) return;
 			mechanics.emitters.Shoot();
 		}
 	}

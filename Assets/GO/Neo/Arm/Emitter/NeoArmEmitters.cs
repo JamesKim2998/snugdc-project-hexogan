@@ -1,31 +1,24 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace HX
 {
-	public class NeoArmEmitters : MonoBehaviour
+	public class NeoArmEmitters
 	{
-		public int neoID;
-		public NeoRigidbody mNeoBody;
-		public NeoRigidbody neoBody
-		{
-			get { return mNeoBody; }
-			set
-			{
-				if (mNeoBody == value) return;
-				mNeoBody = value;
-				foreach (var _emitter in mEmitters)
-					_emitter.emitter.ownerBody = neoBody;
-			}
-		}
+		private readonly int mInstanceID;
+		public readonly NeoRigidbody body;
 
 		private readonly HashSet<NeoArmEmitter> mEmitters = new HashSet<NeoArmEmitter>();
 
+		public NeoArmEmitters(int _instanceID, NeoRigidbody _body)
+		{
+			mInstanceID = _instanceID;
+			body = _body;
+		}
 
 		public void Add(NeoArmEmitter _arm)
 		{
-			_arm.emitter.owner = neoID;
-			_arm.emitter.ownerBody = neoBody;
+			_arm.emitter.owner = mInstanceID;
+			_arm.emitter.ownerBody = body;
 			mEmitters.Add(_arm);
 		}
 

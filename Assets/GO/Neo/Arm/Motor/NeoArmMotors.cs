@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace HX
 {
-	public class NeoArmMotors : MonoBehaviour
+	public class NeoArmMotors
 	{
-		public NeoRigidbody body;
+		public readonly NeoRigidbody body;
 
 		#region thrust
 		private interface IThrust
@@ -17,10 +17,11 @@ namespace HX
 			void Clear();
 		}
 
-		private class Thrust : IThrust
+		private struct Thrust : IThrust
 		{
 			private int mTotal;
-			private Vector2 mWeighted = Vector2.zero;
+			private Vector2 mWeighted;
+
 			public void Add(int _thrust, Vector2 _position)
 			{
 				mTotal += _thrust;
@@ -52,7 +53,7 @@ namespace HX
 			}
 		}
 
-		private class Drift : IThrust
+		private struct Drift : IThrust
 		{
 			private float mTotal;
 
@@ -85,12 +86,12 @@ namespace HX
 		{
 			public NeoArmMotor motor;
 			public Vector2 position;
-			public HexIdx side { get { return motor.GetComponent<NeoArm>().side; } }
+			public HexIdx side { get { return motor.arm.side; } }
 		}
 
 		private class MotorDatas
 		{
-			private readonly List<MotorData> m_Datas = new List<MotorData>();
+			private readonly List<MotorData> mDatas = new List<MotorData>();
 			private readonly IThrust mThrust;
 
 			public MotorDatas(IThrust _thrust)
@@ -101,7 +102,7 @@ namespace HX
 
 			public void Add(MotorData _motorData)
 			{
-				m_Datas.Add(_motorData);
+				mDatas.Add(_motorData);
 			}
 
 			public void ApplyPos(Rigidbody2D _rigidbody, float _factor) { mThrust.ApplyPos(_rigidbody, _factor); }
@@ -110,7 +111,7 @@ namespace HX
 			public void BuildThrust(Vector2 _com)
 			{
 				mThrust.Clear();
-				foreach (var _data in m_Datas)
+				foreach (var _data in mDatas)
 					mThrust.Add(_data.motor.thrust, _data.position - _com);
 			}
 
@@ -119,7 +120,7 @@ namespace HX
 				if (isRunning)
 					TurnOff();
 				mThrust.Clear();
-				m_Datas.Clear();
+				mDatas.Clear();
 			}
 
 			public bool isRunning { get; private set; }
@@ -142,7 +143,7 @@ namespace HX
 
 				isRunning = true;
 
-				foreach (var _data in m_Datas)
+				foreach (var _data in mDatas)
 					_data.motor.TurnOn();
 			}
 
@@ -156,7 +157,7 @@ namespace HX
 
 				isRunning = false;
 
-				foreach (var _data in m_Datas)
+				foreach (var _data in mDatas)
 					_data.motor.TurnOff();
 			}
 		}
@@ -167,6 +168,11 @@ namespace HX
 		private readonly MotorDatas mDriftLs = new MotorDatas(new Drift());
 		private readonly MotorDatas mDriftRs = new MotorDatas(new Drift());
 		#endregion
+
+		public NeoArmMotors(NeoRigidbody _body)
+		{
+			body = _body;
+		}
 
 		#region add/remove
 
@@ -192,6 +198,8 @@ namespace HX
 			mDriftRs.Clear();
 		}
 
+		private const float THRESHOLD = 0.001f;
+
 		public void Motor(float _thrustNormal, float _driftNormal)
 		{
 			mThrusts.Motor(_thrustNormal);
@@ -199,20 +207,20 @@ namespace HX
 			mDriftLs.Motor(-_driftNormal);
 			mDriftRs.Motor(_driftNormal);
 
-			if (GetComponent<Rigidbody2D>().velocity.sqrMagnitude < body.speedLimit * body.speedLimit)
+			if (body.IsBelowSpeedLimit())
 			{
-				if (_thrustNormal > 0.001f)
-					mThrusts.ApplyPos(GetComponent<Rigidbody2D>(), _thrustNormal);
-				else if (_thrustNormal < -0.001f)
-					mDrags.ApplyNeg(GetComponent<Rigidbody2D>(), -_thrustNormal);
+				if (_thrustNormal > THRESHOLD)
+					mThrusts.ApplyPos(body, _thrustNormal);
+				else if (_thrustNormal < -THRESHOLD)
+					mDrags.ApplyNeg(body, -_thrustNormal);
 			}
 
-			if (Mathf.Abs(GetComponent<Rigidbody2D>().angularVelocity) < body.angularSpeedLimit)
+			if (body.IsBelowAngularSpeedLimit())
 			{
-				if (_driftNormal > 0.001f)
-					mDriftRs.ApplyNeg(GetComponent<Rigidbody2D>(), _driftNormal);
-				else if (_driftNormal < -0.001f)
-					mDriftLs.ApplyPos(GetComponent<Rigidbody2D>(), -_driftNormal);
+				if (_driftNormal > THRESHOLD)
+					mDriftRs.ApplyNeg(body, _driftNormal);
+				else if (_driftNormal < -THRESHOLD)
+					mDriftLs.ApplyPos(body, -_driftNormal);
 			}
 		}
 
@@ -220,7 +228,7 @@ namespace HX
 		{
 			ClearThrusts();
 
-			var _com = body.GetComponent<Rigidbody2D>().centerOfMass;
+			var _com = body.rigidbody.centerOfMass;
 
 			foreach (var _motorData in mMotors)
 			{

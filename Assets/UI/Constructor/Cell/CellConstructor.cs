@@ -15,10 +15,10 @@ namespace HX.UI
 
 		void Start()
 		{
-			foreach (var _data in CellPlasmDatabase.g)
-				plasmGrid.Add(MakeItem(_data));
-			foreach (var _data in CellWallDatabase.g)
-				wallGrid.Add(MakeItem(_data));
+			foreach (var _data in CellPlasmDB.g)
+				plasmGrid.Add(MakeItem(_data.Value));
+			foreach (var _data in CellWallDB.g)
+				wallGrid.Add(MakeItem(_data.Value));
 
 			plasmGrid.Reposition();
 			wallGrid.Reposition();

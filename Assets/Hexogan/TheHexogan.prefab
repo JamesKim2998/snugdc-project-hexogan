@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &162958
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 498234}
+  - 114: {fileID: 11432060}
+  m_Layer: 0
+  m_Name: TheHexogan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &498234
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162958}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!114 &11432060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 162958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2828384bac8608d44a4facd8b6432f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emitterDB: {fileID: 11400000, guid: efcbd2431e7692d429a2b62be9e31926, type: 2}
+  projDB: {fileID: 11400000, guid: 68e33ca2117934d43b96ff62f11b54f4, type: 2}
+  neoConst: {fileID: 11400000, guid: fc0e8317924d8d140a81b25d96d64fef, type: 2}
+  neoArmDB: {fileID: 11400000, guid: d7b2e3f8fd360094ba099161421415a0, type: 2}
+  neoBodyDB: {fileID: 11400000, guid: 18d781f53f3549144b13d23957c80ac0, type: 2}
+  cellDB: {fileID: 11400000, guid: e877b5d304a7a0b44bf11a7b37089b65, type: 2}
+  cellPlasmDB: {fileID: 11400000, guid: a11c9d05cb4a22b46989b4b8651016ce, type: 2}
+  cellWallDB: {fileID: 11400000, guid: 60c64e6b408e58a40be152925effa132, type: 2}
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 162958}
+  m_IsPrefabParent: 1

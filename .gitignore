@@ -108,5 +108,7 @@ Thumbs.db
 
 *.sln
 *.dwlt
+/Binary
 /Assets/UnityVS
 /Assets/UnityVS.meta
+/Assets/NGUI/Examples

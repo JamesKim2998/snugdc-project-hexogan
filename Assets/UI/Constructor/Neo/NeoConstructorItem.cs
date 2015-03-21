@@ -5,26 +5,26 @@ namespace HX.UI
 {
 	public class NeoConstructorItem : IConstructorItem
 	{
-		private readonly NeoMechanicData m_Data;
+		private readonly NeoMechanicData mData;
 
 		public NeoConstructorItem(NeoMechanicData _data)
 		{
-			m_Data = _data;
+			mData = _data;
 		}
 
-		public string name { get { return m_Data.name_; } }
+		public string name { get { return mData.name; } }
 
 		public GameObject MakeItem()
 		{
-			if (m_Data.constructorItemPrf)
+			if (mData.constructorItemPrf)
 			{
-				return (GameObject) Object.Instantiate(m_Data.constructorItemPrf);
+				return (GameObject) Object.Instantiate(mData.constructorItemPrf);
 			}
 			else
 			{
 				var _item = new GameObject(name);
 				var _renderer = _item.AddComponent<UI2DSprite>();
-				_renderer.sprite2D = m_Data.sprite;
+				_renderer.sprite2D = mData.sprite;
 				_renderer.MakePixelPerfect();
 				return _item;
 			}
@@ -32,7 +32,7 @@ namespace HX.UI
 
 		public DragAndDrop MakeDragAndDrop()
 		{
-			var _mechanic = m_Data.MakeMechanic();
+			var _mechanic = mData.MakeMechanic();
 			var _dnd = NeoMechanicHelper.AddDragAndDrop(_mechanic);
 			_dnd.destroyIfFailed = true;
 			return _dnd;

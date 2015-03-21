@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7a783524fc971459c13ced757c754d, type: 3}
+  m_Name: EmitterDB
+  m_EditorClassIdentifier: 
+  _objectReferences:
+  - {fileID: 11400000, guid: ae4dfdb4994bba643b2167e3dfa7ed75, type: 2}
+  _serializedStateKeys:
+  - editorDic
+  _serializedStateValues:
+  - '{"GUN":0}'

@@ -5,28 +5,28 @@ namespace HX.UI
 {
 	public class CellConstructorItem : IConstructorItem
 	{
-		private readonly CellPartData m_Data;
+		private readonly CellPartData mData;
 		public CellGrid cellGrid;
 		public Cell cellPrf;
 
 		public CellConstructorItem(CellPartData _data)
 		{
-			m_Data = _data;
+			mData = _data;
 		}
 
-		public string name { get { return m_Data.name_;  } }
+		public string name { get { return mData.name;  } }
 
 		public GameObject MakeItem()
 		{
-			if (m_Data.constructorItemPrf)
+			if (mData.constructorItemPrf)
 			{
-				return (GameObject)Object.Instantiate(m_Data.constructorItemPrf);
+				return Object.Instantiate(mData.constructorItemPrf);
 			}
 			else
 			{
 				var _item = new GameObject(name);
 				var _renderer = _item.AddComponent<UI2DSprite>();
-				_renderer.sprite2D = m_Data.sprite;
+				_renderer.sprite2D = mData.sprite;
 				_renderer.MakePixelPerfect();
 				_renderer.transform.localScale = new Vector3(0.4f, 0.4f, 1);
 				return _item;
@@ -35,7 +35,7 @@ namespace HX.UI
 
 		public DragAndDrop MakeDragAndDrop()
 		{
-			var _cellPart = m_Data.MakeGO();
+			var _cellPart = mData.MakeGO();
 			var _dnd = CellHelper.AddDragAndDrop(_cellPart);
 			_dnd.cellPrf = cellPrf;
 			_dnd.cellGrid = cellGrid;

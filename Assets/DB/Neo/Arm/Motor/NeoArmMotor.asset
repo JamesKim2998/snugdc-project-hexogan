@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722fe4efae2074c4ea000ab4dd5a30ce, type: 3}
+  m_Name: NeoArmMotor
+  m_EditorClassIdentifier: 
+  name: 
+  sprite: {fileID: 21300000, guid: 68d44c77eb7a94647a1173280613cf9e, type: 3}
+  mechanicPrf: {fileID: 11400000, guid: e8a168c8bfbf3754c96f812444c7a291, type: 2}
+  durability: 5
+  cohesion: 5
+  constructorItemPrf: {fileID: 0}
+  properties: []

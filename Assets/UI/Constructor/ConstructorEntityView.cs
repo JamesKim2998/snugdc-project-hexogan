@@ -9,7 +9,7 @@ namespace HX.UI
 		public GameObject itemPivot;
 		public UILabel nameLabel;
 
-		public Action postPressDown;
+		public Action onPressDown;
 
 		public void Setup(IConstructorItem _data)
 		{
@@ -20,7 +20,7 @@ namespace HX.UI
 
 		public void ListenPressDown()
 		{
-			if (postPressDown != null) postPressDown();
+			if (onPressDown != null) onPressDown();
 		}
 	}
 }

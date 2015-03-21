@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 687f5d9348938e04a9a85bb4a316ff71, type: 3}
+  m_Name: NeoBodyDB
+  m_EditorClassIdentifier: 
+  _objectReferences:
+  - {fileID: 11400000, guid: abe48a7add857f44783860a2dacd562c, type: 2}
+  - {fileID: 11400000, guid: e2a0452054757094983d9e910dfd8c97, type: 2}
+  _serializedStateKeys:
+  - editorDic
+  _serializedStateValues:
+  - '{"BASE":0,"CORE":1}'

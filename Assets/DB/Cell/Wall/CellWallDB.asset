@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536be037915c6c44cb6575f594298269, type: 3}
+  m_Name: CellWallDB
+  m_EditorClassIdentifier: 
+  _objectReferences:
+  - {fileID: 11400000, guid: 5b00c057cd3356143814131cb3aecaa7, type: 2}
+  - {fileID: 11400000, guid: 783c8a51662d0ec498a22f66017d5a22, type: 2}
+  _serializedStateKeys:
+  - editorDic
+  _serializedStateValues:
+  - '{"BASE":0,"NIDDLE":1}'

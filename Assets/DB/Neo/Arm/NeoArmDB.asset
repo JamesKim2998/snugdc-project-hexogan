@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cccf5ce97ceee7a4986a04b1ed317da9, type: 3}
+  m_Name: NeoArmDB
+  m_EditorClassIdentifier: 
+  _objectReferences:
+  - {fileID: 11400000, guid: 121cb3618bb895f41b245809b7668bbb, type: 2}
+  - {fileID: 11400000, guid: de0de29b45feda24cbf60baf4680c4cf, type: 2}
+  _serializedStateKeys:
+  - editorDic
+  _serializedStateValues:
+  - '{"MOTOR":0,"EMITTER":1}'

@@ -4,32 +4,32 @@ namespace HX.UI
 {
 	public class ConstructorEntityController : MonoBehaviour
 	{
-		private ConstructorEntityView m_View;
-		private IConstructorItem m_Item;
+		private ConstructorEntityView mView;
+		private IConstructorItem mItem;
 
 		public void SetView(ConstructorEntityView _view)
 		{
-			if (m_View) m_View.postPressDown -= ListenPressDown;
+			if (mView) mView.onPressDown -= OnPressDown;
 
-			m_View = _view;
+			mView = _view;
 
-			if (m_View)
+			if (mView)
 			{
-				m_View.postPressDown += ListenPressDown;
-				if (m_Item != null) m_View.Setup(m_Item);
+				mView.onPressDown += OnPressDown;
+				if (mItem != null) mView.Setup(mItem);
 			}
 		}
 
 		public void SetItem(IConstructorItem _item)
 		{
-			m_Item = _item;
-			if (m_View) m_View.Setup(m_Item);
+			mItem = _item;
+			if (mView) mView.Setup(mItem);
 		}
 
-		void ListenPressDown()
+		void OnPressDown()
 		{
-			if (m_Item == null) return;
-			var _dnd = m_Item.MakeDragAndDrop();
+			if (mItem == null) return;
+			var _dnd = mItem.MakeDragAndDrop();
 			_dnd.ForcedStick();
 			_dnd.offset = Vector2.zero;
 		}

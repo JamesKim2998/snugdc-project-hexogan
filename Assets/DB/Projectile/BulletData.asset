@@ -1,0 +1,14 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a21fe8b881b4e4384d39f3177c3cca, type: 3}
+  m_Name: BulletData
+  m_EditorClassIdentifier: 
+  projectilePrf: {fileID: 11400000, guid: 4fdb9ee3aa50c8240b3c43efefa4de7b, type: 2}

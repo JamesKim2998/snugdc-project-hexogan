@@ -1,6 +1,5 @@
 ﻿using Gem;
 using UnityEngine;
-using System.Collections;
 
 namespace HX.UI
 {
@@ -13,10 +12,10 @@ namespace HX.UI
 
 		void Start()
 		{
-			foreach (var _data in NeoBodyDatabase.g)
-				bodyGrid.Add(new NeoConstructorItem(_data));
-			foreach (var _data in NeoArmDatabase.g)
-				armGrid.Add(new NeoConstructorItem(_data));
+			foreach (var _data in NeoBodyDB.g)
+				bodyGrid.Add(new NeoConstructorItem(_data.Value));
+			foreach (var _data in NeoArmDB.g)
+				armGrid.Add(new NeoConstructorItem(_data.Value));
 
 			bodyGrid.Reposition();
 			armGrid.Reposition();

@@ -527,36 +527,36 @@ MonoBehaviour:
   neo: {fileID: 1898811800}
   editorBodies:
   - coor:
-      p: 1
-      q: 0
+      mP: 0
+      mQ: 1
     body: 1
   - coor:
-      p: 0
-      q: 1
+      mP: 1
+      mQ: 0
     body: 1
   - coor:
-      p: 1
-      q: -1
+      mP: 1
+      mQ: -1
     body: 1
   editorArms:
   - bodyCoor:
-      p: 1
-      q: 0
+      mP: 1
+      mQ: 0
     bodySide: 0
     arm: 1
   - bodyCoor:
-      p: 0
-      q: 0
+      mP: 0
+      mQ: 0
     bodySide: 2
     arm: 1
   - bodyCoor:
-      p: 0
-      q: 0
+      mP: 0
+      mQ: 0
     bodySide: 4
     arm: 1
   - bodyCoor:
-      p: 0
-      q: 0
+      mP: 0
+      mQ: 0
     bodySide: 3
     arm: 1
 --- !u!1001 &1185201991
@@ -999,13 +999,13 @@ MonoBehaviour:
   grid: {fileID: 2033507180}
   cellDatas:
   - coor:
-      p: 0
-      q: 0
+      mP: 0
+      mQ: 0
     plasm: 0
     wall: 1
   - coor:
-      p: 2
-      q: 0
+      mP: 1
+      mQ: 0
     plasm: 0
     wall: 2
 --- !u!114 &2023993170

@@ -10,13 +10,18 @@ namespace Gem
 		public static readonly HexCoor ZERO = new HexCoor(0, 0);
 		private static readonly float SQRT_3 = Mathf.Sqrt(3);
 
-		public HexP p;
-		public HexQ q;
+		[SerializeField]
+		private int mP;
+		[SerializeField]
+		private int mQ;
+
+		public HexP p { get { return (HexP)mP; } set { mP = (int)value; } }
+		public HexQ q { get { return (HexQ)mQ; } set { mQ = (int)value; } }
 
 		public HexCoor(HexP _p, HexQ _q)
 		{
-			p = _p;
-			q = _q;
+			mP = (int)_p;
+			mQ = (int)_q;
 		}
 
 		public HexCoor(HexIdx i)
@@ -34,12 +39,12 @@ namespace Gem
 				case HexIdx.BR: _p = 1; _q = -1; break;
 
 				default:
-					L.E("invalid idx " + i + ".");
+					L.E("invalid idx " + i);
 					break;
 			}
 
-			p = (HexP)_p;
-			q = (HexQ)_q;
+			mP = _p;
+			mQ = _q;
 		}
 
 		public static HexCoor Round(Vector2 _val)
@@ -68,7 +73,7 @@ namespace Gem
 
 		public override string ToString()
 		{
-			return "( " + p + ", " + q + " )";
+			return "( " + mP + ", " + mQ + " )";
 		}
 
 		#region equality op

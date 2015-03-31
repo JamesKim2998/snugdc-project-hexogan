@@ -35,13 +35,13 @@ namespace HX
 			}
 		}
 
-		protected virtual bool IsLocatable(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexIdx _side)
+		protected virtual bool IsLocatable(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexEdge _side)
 		{
 			return !_body.GetNeighbor(_side);
 		}
 
-		protected abstract void Locate(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexIdx _side);
-		protected abstract bool Attach(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexIdx _side);
+		protected abstract void Locate(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexEdge _side);
+		protected abstract bool Attach(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexEdge _side);
 
 		bool Pivot(bool _attach = false)
 		{

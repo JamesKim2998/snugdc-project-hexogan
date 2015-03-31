@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Gem;
+﻿using Gem;
 using UnityEngine;
 
 namespace HX
@@ -8,11 +7,11 @@ namespace HX
 	{
 		#region plasm
 
-		private CellPlasm m_Plasm;
+		private CellPlasm mPlasm;
 
 		public CellPlasm plasm
 		{
-			get { return m_Plasm; }
+			get { return mPlasm; }
 			set
 			{
 				if (plasm == value)
@@ -24,24 +23,24 @@ namespace HX
 					return;
 				}
 
-				var _plasmOld = m_Plasm;
-				m_Plasm = value;
+				var _plasmOld = mPlasm;
+				mPlasm = value;
 
 				if (plasm)
 				{
 					plasm.transform.SetParentWithoutScale(transform);
 					plasm.transform.localPosition = Vector3.zero;
-					plasm.postDecay += ListenPlasmDecay;
+					plasm.postDecay += OnPlasmDecay;
 					if (wall) plasm.SetDamagable(false);
 				}
 				else
 				{
-					_plasmOld.postDecay -= ListenPlasmDecay;
+					_plasmOld.postDecay -= OnPlasmDecay;
 				}
 			}
 		}
 
-		private void ListenPlasmDecay(CellPlasm _plasm)
+		private void OnPlasmDecay(CellPlasm _plasm)
 		{
 			plasm = null;
 			Destroy(this, CellConst.CELL_DECAY_DELAY);
@@ -51,11 +50,11 @@ namespace HX
 
 		#region wall
 
-		private CellWall m_Wall;
+		private CellWall mWall;
 
 		public CellWall wall
 		{
-			get { return m_Wall; }
+			get { return mWall; }
 			set
 			{
 				if (wall == value)
@@ -67,25 +66,25 @@ namespace HX
 					return;
 				}
 
-				var _wallOld = m_Wall;
-				m_Wall = value;
+				var _wallOld = mWall;
+				mWall = value;
 
 				if (wall)
 				{
 					wall.transform.SetParentIdentity(transform);
 					wall.transform.localPosition = Vector3.zero;
-					wall.postDecay += ListenWallDecay;
+					wall.postDecay += OnWallDecay;
 					if (plasm) plasm.SetDamagable(false);
 				}
 				else
 				{
-					_wallOld.postDecay -= ListenWallDecay;
+					_wallOld.postDecay -= OnWallDecay;
 					if (plasm) plasm.SetDamagable(true);
 				}
 			}
 		}
 
-		private void ListenWallDecay(CellWall _wall)
+		private void OnWallDecay(CellWall _wall)
 		{
 			wall = null;
 		}
@@ -94,11 +93,12 @@ namespace HX
 
 		public CellMembrain membrain;
 
-		#region parent
+		#region grid
 
 		public CellGrid grid { get; private set; }
+		public HexNode<Cell> node { get; private set; }
 
-		public bool SetGrid(CellGrid _grid)
+		public bool SetGrid(CellGrid _grid, HexNode<Cell> _node)
 		{
 			if (grid)
 			{
@@ -113,6 +113,7 @@ namespace HX
 			}
 
 			grid = _grid;
+			node = _node;
 
 			return true;
 		}
@@ -120,46 +121,9 @@ namespace HX
 		public void DetachGrid()
 		{
 			grid = null;
+			node = null;
 		}
 
 		#endregion
-
-		#region neighbor
-
-		private readonly Cell[] m_Neighbors = new Cell[6];
-
-		public Cell GetNeighbor(int _side)
-		{
-			return m_Neighbors[_side];
-		}
-
-		public IEnumerator<Cell> GetNeighbors()
-		{
-			for (int _side = 0; _side != 6; ++_side)
-				yield return GetNeighbor(_side);
-		}
-
-		public void SetNeighbor(Cell _cell, int _side)
-		{
-			var _neighbor = GetNeighbor(_side);
-			if (_neighbor && _cell)
-			{
-				Debug.LogError("There is already mechanic in side " + _side + ". Ignore.");
-				return;
-			}
-
-			m_Neighbors[_side] = _cell;
-		}
-
-		public void RemoveNeighbor(int _side)
-		{
-			var _neighbor = GetNeighbor(_side);
-			if (!_neighbor) return;
-
-			SetNeighbor(null, _side);
-		}
-
-		#endregion
-
 	}
 }

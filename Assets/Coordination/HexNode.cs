@@ -46,7 +46,7 @@ namespace Gem
 			return false;
 		}
 
-		public HexNode<T> GetNeighbor(HexIdx _idx)
+		public HexNode<T> GetNeighbor(HexEdge _idx)
 		{
 			return mNeighbors[(int)_idx];
 		}
@@ -67,7 +67,7 @@ namespace Gem
 			}
 		}
 
-		public void Connect(HexNode<T> _node, HexIdx _idx)
+		public void Connect(HexNode<T> _node, HexEdge _idx)
 		{
 			if (GetNeighbor(_idx) != null)
 			{
@@ -79,7 +79,7 @@ namespace Gem
 			_node.mNeighbors[(int)_idx.Opposite()] = this;
 		}
 
-		public void Disconnect(HexIdx _idx)
+		public void Disconnect(HexEdge _idx)
 		{
 			if (GetNeighbor(_idx) == null)
 			{
@@ -94,7 +94,7 @@ namespace Gem
 
 		public void DisconnectAll()
 		{
-			foreach (var i in HexHelper.GetIdxes())
+			foreach (var i in HexHelper.GetEdges())
 			{
 				var _neighbor = GetNeighbor(i);
 				if (_neighbor != null)

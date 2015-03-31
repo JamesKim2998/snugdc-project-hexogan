@@ -58,7 +58,7 @@ namespace HX
 				: null;
 		}
 
-		void Add(NeoMechanic _mechanic, HexCoor _coor, HexIdx? _side = null)
+		void Add(NeoMechanic _mechanic, HexCoor _coor, HexEdge? _side = null)
 		{
 			_mechanic.collider.enabled = false;
 			_mechanic.SetParent(this, _coor);
@@ -111,13 +111,13 @@ namespace HX
 			{
 				++_side;
 				if (_neighbor == null) continue;
-				_body.AddBody(_neighbor.data, (HexIdx)_side);
+				_body.AddBody(_neighbor.data, (HexEdge)_side);
 			}
 
 			return true;
 		}
 
-		public void Add(NeoArm _arm, HexCoor _coor, HexIdx _side)
+		public void Add(NeoArm _arm, HexCoor _coor, HexEdge _side)
 		{
 			var _body = mBodies[_coor];
 			if (_body == null) return;
@@ -134,7 +134,7 @@ namespace HX
 			if (_emitter) emitters.Add(_emitter);
 		}
 
-		private void RemoveMechanic(NeoMechanic _mechanic, HexCoor _coor, HexIdx? _side = null)
+		private void RemoveMechanic(NeoMechanic _mechanic, HexCoor _coor, HexEdge? _side = null)
 		{
 			_mechanic.Detach();
 			body.AddMass(-_mechanic.mass, _coor, _side);

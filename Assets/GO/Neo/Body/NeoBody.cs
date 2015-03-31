@@ -18,18 +18,18 @@ namespace HX
 			mechanicType = NeoMechanicType.BODY;
 		}
 
-		public NeoMechanic GetNeighbor(HexIdx _side)
+		public NeoMechanic GetNeighbor(HexEdge _side)
 		{
 			return mNeighbors[(int)_side];
 		}
 
 		public IEnumerator<NeoMechanic> GetNeighbors()
 		{
-			foreach (var i in HexHelper.GetIdxes())
+			foreach (var i in HexHelper.GetEdges())
 				yield return GetNeighbor(i);
 		}
 
-		private void SetNeighbor(HexIdx _side, NeoMechanic _mechanic)
+		private void SetNeighbor(HexEdge _side, NeoMechanic _mechanic)
 		{
 			var _neighbor = GetNeighbor(_side);
 			if (_neighbor && _mechanic)
@@ -46,7 +46,7 @@ namespace HX
 				RemoveCohesion(_neighbor);
 		}
 
-		public void RemoveNeighbor(HexIdx _side)
+		public void RemoveNeighbor(HexEdge _side)
 		{
 			var _neighbor = GetNeighbor(_side);
 			if (!_neighbor) return;
@@ -63,7 +63,7 @@ namespace HX
 		#endregion
 
 		#region mechanic neighbor
-		public void AddBody(NeoBody _body, HexIdx _side)
+		public void AddBody(NeoBody _body, HexEdge _side)
 		{
 			if (GetNeighbor(_side) == _body)
 				return;
@@ -72,7 +72,7 @@ namespace HX
 			_body.AddBody(this, _side.Opposite());
 		}
 
-		public void AddArm(NeoArm _arm, HexIdx _side)
+		public void AddArm(NeoArm _arm, HexEdge _side)
 		{
 			SetNeighbor(_side, _arm);
 			_arm.Attach(this, _side);
@@ -80,7 +80,7 @@ namespace HX
 
 		public override void Detach()
 		{
-			foreach (var i in HexHelper.GetIdxes())
+			foreach (var i in HexHelper.GetEdges())
 				RemoveNeighbor(i);
 			base.Detach();
 		}

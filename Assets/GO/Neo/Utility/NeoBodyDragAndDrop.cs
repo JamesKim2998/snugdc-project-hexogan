@@ -4,7 +4,7 @@ namespace HX
 {
 	public class NeoBodyDragAndDrop : NeoMechanicDragAndDrop
 	{
-		protected override bool IsLocatable(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexIdx _side)
+		protected override bool IsLocatable(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexEdge _side)
 		{
 			if (!base.IsLocatable(_mechanics, _body, _coor, _side))
 				return false;
@@ -12,7 +12,7 @@ namespace HX
 			var _coorSide = (HexCoor)_side;
 			var _locateCoor = _coor + _coorSide;
 
-			foreach (var i in HexHelper.GetIdxes())
+			foreach (var i in HexHelper.GetEdges())
 			{
 				if (i == _side.Opposite())
 					continue;
@@ -27,7 +27,7 @@ namespace HX
 			return true;
 		}
 
-		protected override void Locate(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexIdx _side)
+		protected override void Locate(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexEdge _side)
 		{
 			var _posNew = _mechanics.transform.localToWorldMatrix.MultiplyPoint(NeoHex.Position(_coor) + NeoHex.Side(_side) * 2);
 			var _posOld = transform.position;
@@ -40,7 +40,7 @@ namespace HX
 			transform.eulerAngles = _angleOld;
 		}
 
-		protected override bool Attach(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexIdx _side)
+		protected override bool Attach(NeoMechanics _mechanics, NeoBody _body, HexCoor _coor, HexEdge _side)
 		{
 			_mechanics.Add(GetComponent<NeoBody>(), _coor + _side);
 			return true;

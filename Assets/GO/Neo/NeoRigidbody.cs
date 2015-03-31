@@ -50,7 +50,7 @@ namespace HX
 			return Mathf.Abs(mRigidbody.angularVelocity) < angularSpeedLimit;
 		}
 
-		public void AddMass(int _mass, HexCoor _coor, HexIdx? _side = null)
+		public void AddMass(int _mass, HexCoor _coor, HexEdge? _side = null)
 		{
 			mIsMassDirty = true;
 

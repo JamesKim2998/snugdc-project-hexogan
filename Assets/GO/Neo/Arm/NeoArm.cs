@@ -8,7 +8,7 @@ namespace HX
 		public NeoArmType type;
 
 		public NeoBody body { get; private set; }
-		public HexIdx side { get; private set; }
+		public HexEdge side { get; private set; }
 
 		protected override void Awake()
 		{
@@ -16,7 +16,7 @@ namespace HX
 			mechanicType = NeoMechanicType.ARM;
 		}
 
-		public bool Attach(NeoBody _body, HexIdx _side)
+		public bool Attach(NeoBody _body, HexEdge _side)
 		{
 			if (body)
 			{
@@ -54,11 +54,11 @@ namespace HX
 			return true;
 		}
 
-		public static void LocateSide(Transform _transform, HexIdx _idx)
+		public static void LocateSide(Transform _transform, HexEdge _idx)
 		{
 			_transform.localPosition = NeoHex.Side(_idx);
 			var _angles = _transform.localEulerAngles;
-			_angles.z = _idx.ToDegree();
+			_angles.z = _idx.ToDeg();
 			_transform.localEulerAngles = _angles;
 		}
 

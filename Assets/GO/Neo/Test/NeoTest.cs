@@ -20,7 +20,7 @@ namespace HX
 		public class ArmData
 		{
 			public HexCoor bodyCoor;
-			public HexIdx bodySide;
+			public HexEdge bodySide;
 			public NeoArmType arm;
 		}
 

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Alba.Framework.Collections;
+using UnityEngine;
 
 namespace Gem
 {
 	public class HexGraph<T> : IEnumerable<KeyValuePair<HexCoor, HexNode<T>>>
 	{
+		public static readonly float TAN_30 = Mathf.Tan(Mathf.PI / 6);
+
 		public bool allowIsland = false;
 		private readonly BiDictionary<HexCoor, HexNode<T>> mNodes = new BiDictionary<HexCoor, HexNode<T>>();
 
@@ -51,7 +54,7 @@ namespace Gem
 
 		public struct Neighbor
 		{
-			public HexIdx side;
+			public HexEdge side;
 			public HexNode<T> node;
 		}
 
@@ -62,7 +65,7 @@ namespace Gem
 			{
 				HexNode<T> _node;
 				if (TryGet(_neighbor, out _node))
-					yield return new Neighbor { node = _node, side = (HexIdx)_side };
+					yield return new Neighbor { node = _node, side = (HexEdge)_side };
 				++_side;
 			}
 		}
@@ -159,6 +162,71 @@ namespace Gem
 			foreach (var _cell in mNodes)
 				_cell.Value.DisconnectAll();
 			mNodes.Clear();
+		}
+
+		public IEnumerable<KeyValuePair<HexCoor, HexNode<T>>> Overlaps(Rect _rect, bool _includeEmpty)
+		{
+			var _bl = HexCoor.Round(_rect.min);
+			var _tr = HexCoor.Round(_rect.max);
+
+			var _blOffset = _bl - _rect.min;
+			var _trOffset = _tr - _rect.max;
+
+			HexQ _firstQ;
+			HexQ _lastQ;
+
+			if (_blOffset.y <= 0.5f*TAN_30)
+				_firstQ = _bl.q;
+			else
+				_firstQ = _bl.q - 1;
+
+			if (_trOffset.y >= -0.5f*TAN_30)
+				_lastQ = _tr.q;
+			else
+				_lastQ = _tr.q + 1;
+
+			for (var q = _firstQ; q <= _lastQ; ++q)
+			{
+				int _bottomToLine = (int)q - (int)_bl.q;
+				int _topToLine = (int)_tr.q - (int)q;
+
+				HexP _firstP;
+				HexP _lastP;
+
+				if (_bottomToLine%2 == 0)
+				{
+					_firstP = _bl.p - _bottomToLine/2;
+				}
+				else
+				{
+					_firstP = _bl.p - (_bottomToLine - 1)/2;
+					if (_blOffset.x > 0)
+						_firstP -= 1;
+				}
+
+				if (_topToLine%2 == 0)
+				{
+					_lastP = _tr.p + _topToLine/2;
+				}
+				else
+				{
+					_lastP = _tr.p + (_topToLine - 1)/2;
+					if (_trOffset.x < 0)
+						_lastP += 1;
+				}
+
+				for (var p = _firstP; p <= _lastP; ++p)
+				{
+					var _coor = new HexCoor(p, q);
+					HexNode<T> _node;
+					TryGet(_coor, out _node);
+
+					if (!_includeEmpty && (_node == null))
+						continue;
+
+					yield return new KeyValuePair<HexCoor, HexNode<T>>(_coor, _node);
+				}
+			}
 		}
 	}
 }

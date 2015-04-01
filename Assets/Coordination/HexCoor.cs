@@ -47,6 +47,12 @@ namespace Gem
 			mQ = _q;
 		}
 
+		public HexCoor(TiledSharp.Coor _coor, uint _height)
+		{
+			mQ = (int)(_height - _coor.Y - 1);
+			mP = (int)(_coor.X - mQ/2);
+		}
+
 		public static HexCoor Round(Vector2 _val)
 		{
 			var _q = _val.y/(SQRT_3/2f);
@@ -74,6 +80,13 @@ namespace Gem
 		public override string ToString()
 		{
 			return "( " + mP + ", " + mQ + " )";
+		}
+		
+		public TiledSharp.Coor ToTiledCoor(uint _height)
+		{
+			var x = (uint)(mP + mQ / 2);
+			var y = (uint)(_height - mQ - 1);
+			return new TiledSharp.Coor(x, y);
 		}
 
 		#region equality op
@@ -107,6 +120,7 @@ namespace Gem
 		#endregion
 
 		#region conversion op
+
 		public static implicit operator HexCoor(HexEdge _val)
 		{
 			return new HexCoor(_val);

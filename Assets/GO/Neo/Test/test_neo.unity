@@ -573,17 +573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 2033507180}
-  cellDatas:
-  - coor:
-      mP: 0
-      mQ: 0
-    plasm: 0
-    wall: 1
-  - coor:
-      mP: 1
-      mQ: 0
-    plasm: 0
-    wall: 2
+  tmx: TMX/test.tmx
 --- !u!1001 &1326794543
 Prefab:
   m_ObjectHideFlags: 0
@@ -736,7 +726,7 @@ Transform:
   m_GameObject: {fileID: 1846601301}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 10, z: 0}
-  m_LocalScale: {x: .00305810408, y: .00305810408, z: .00305810408}
+  m_LocalScale: {x: .00374531839, y: .00374531839, z: .00374531839}
   m_Children:
   - {fileID: 991626194}
   - {fileID: 1293236601}

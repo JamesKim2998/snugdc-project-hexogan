@@ -6,16 +6,16 @@ namespace HX
 	public static class CellHelper
 	{
 
-		public static Cell MakeCell(CellPlasmType _plasmType, CellWallType _wallType = CellWallType.NONE)
+		public static Cell MakeCell(CellData _data)
 		{
 			var _cell = CellDB.g.cellPrf.Instantiate();
 
-			var _plasm = CellPlasmDB.g[_plasmType].MakePlasm();
+			var _plasm = CellPlasmDB.g[_data.plasm].MakePlasm();
 			_cell.plasm = _plasm;
 
-			if (_wallType != CellWallType.NONE)
+			if (_data.wall != CellWallType.NONE)
 			{
-				var _wall = CellWallDB.g[_wallType].MakeWall();
+				var _wall = CellWallDB.g[_data.wall].MakeWall();
 				_cell.wall = _wall;
 			}
 

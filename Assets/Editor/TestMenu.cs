@@ -6,7 +6,7 @@ namespace HX
 	{
 		private const string NEO = "Assets/GO/Neo/Test/test_neo.unity";
 
-		[MenuItem("HX/Test/Neo/NeoTest")]
+		[MenuItem("HX/Test/NeoTest")]
 		private static void NeoTest()
 		{
 			EditorSceneHelper.Transfer(NEO);

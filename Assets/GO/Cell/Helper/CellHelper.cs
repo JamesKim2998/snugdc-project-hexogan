@@ -1,5 +1,4 @@
 ﻿using Gem;
-using UnityEngine;
 
 namespace HX
 {
@@ -20,15 +19,6 @@ namespace HX
 			}
 
 			return _cell;
-		}
-
-		public static CellPartDragAndDrop AddDragAndDrop(GameObject _cellPart)
-		{
-			if (_cellPart.GetComponent<CellPlasm>())
-				return _cellPart.gameObject.AddComponent<CellPlasmDragAndDrop>();
-			else if (_cellPart.GetComponent<CellWall>())
-				return _cellPart.gameObject.AddComponent<CellWallDragAndDrop>();
-			return null;
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace HX.UI
 			var _ctrl = _view.gameObject.AddComponent<ConstructorEntityController>();
 			_ctrl.SetView(_view);
 			_ctrl.SetItem(_item);
-			_ctrl.transform.SetParentIdentity(grid.transform);
+			_ctrl.transform.SetParent(grid.transform, false);
 		}
 
 		public void Reposition()

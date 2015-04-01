@@ -18,7 +18,7 @@ namespace HX.UI
 		{
 			if (mData.constructorItemPrf)
 			{
-				return (GameObject) Object.Instantiate(mData.constructorItemPrf);
+				return Object.Instantiate(mData.constructorItemPrf);
 			}
 			else
 			{

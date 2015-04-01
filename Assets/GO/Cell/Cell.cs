@@ -91,8 +91,6 @@ namespace HX
 
 		#endregion
 
-		public CellMembrain membrain;
-
 		#region grid
 
 		public CellGrid grid { get; private set; }

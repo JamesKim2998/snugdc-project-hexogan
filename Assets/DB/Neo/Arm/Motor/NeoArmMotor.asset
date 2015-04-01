@@ -11,7 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722fe4efae2074c4ea000ab4dd5a30ce, type: 3}
   m_Name: NeoArmMotor
   m_EditorClassIdentifier: 
-  name: 
+  _objectReferences: []
+  _serializedStateKeys:
+  - key
+  - properties
+  _serializedStateValues:
+  - 1
+  - '[]'
+  name: MOTOR
   sprite: {fileID: 21300000, guid: 68d44c77eb7a94647a1173280613cf9e, type: 3}
   mechanicPrf: {fileID: 11400000, guid: e8a168c8bfbf3754c96f812444c7a291, type: 2}
   durability: 5

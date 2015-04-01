@@ -11,7 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 722fe4efae2074c4ea000ab4dd5a30ce, type: 3}
   m_Name: NeoArmEmitter
   m_EditorClassIdentifier: 
-  name: 
+  _objectReferences: []
+  _serializedStateKeys:
+  - key
+  - properties
+  _serializedStateValues:
+  - 2
+  - '[]'
+  name: EMITTER
   sprite: {fileID: 21300000, guid: 64feb30c3faff3b40b2b8b80d57bafce, type: 3}
   mechanicPrf: {fileID: 11400002, guid: 469782bf3a7685d4e80409a5fb9efa7f, type: 2}
   durability: 5

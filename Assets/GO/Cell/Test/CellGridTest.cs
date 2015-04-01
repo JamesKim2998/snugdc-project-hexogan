@@ -1,16 +1,27 @@
 ﻿#if UNITY_EDITOR
-
 using UnityEngine;
+using Gem;
 
 namespace HX
 {
-	public class CellTest : MonoBehaviour
+	public class CellGridTest : MonoBehaviour
 	{
 		public CellGrid grid;
 		public string tmx;
 
 		void Start()
 		{
+			Load();
+		}
+
+		public void Load()
+		{
+			if (!grid.empty)
+			{
+				L.E("grid should be empty.");
+				return;
+			}
+
 			var _map = new TiledSharp.Map(tmx);
 			var _gridData = new CellGridData(_map);
 

@@ -7,6 +7,9 @@ namespace HX
 {
 	public class CellGrid : MonoBehaviour, IEnumerable<KeyValuePair<HexCoor, Cell>>
 	{
+		public bool empty { get { return mCells.empty; } }
+		public int count { get { return mCells.count; } }
+
 		private readonly HexGraph<Cell> mCells = new HexGraph<Cell>();
 
 		public bool TryGet(HexCoor _coor, out HexNode<Cell> _out)
@@ -35,15 +38,22 @@ namespace HX
 			return _node;
 		}
 
-		public bool IsRemovable(Cell _cell)
+		public bool IsDetachable(Cell _cell)
 		{
 			return _cell.grid == this;
 		}
 
-		public void Remove(Cell _cell)
+		public void Detach(Cell _cell)
 		{
-			if (!IsRemovable(_cell)) return;
+			if (!IsDetachable(_cell)) return;
 			_cell.DetachGrid();
+		}
+
+		public void DestroyAll()
+		{
+			foreach (var kv in mCells)
+				Destroy(kv.Value.data.gameObject);
+			mCells.Clear();
 		}
 
 		public IEnumerable<KeyValuePair<HexCoor, Cell>> Overlaps(Rect _rect, bool _includeEmpty)

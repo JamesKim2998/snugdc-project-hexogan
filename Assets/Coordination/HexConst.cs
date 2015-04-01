@@ -31,8 +31,12 @@ namespace Gem
 
 	public static class HexHelper
 	{
-		public static readonly float COS_30 = Mathf.Cos(Mathf.PI/6);
-		public static readonly float COS_60 = Mathf.Cos(Mathf.PI/3);
+		public static readonly float SIN_30 = Mathf.Sin(Mathf.PI / 6);
+		public static readonly float SIN_60 = Mathf.Sin(Mathf.PI / 3);
+		public static readonly float COS_30 = Mathf.Cos(Mathf.PI / 6);
+		public static readonly float COS_60 = Mathf.Cos(Mathf.PI / 3);
+		public static readonly float TAN_30 = Mathf.Tan(Mathf.PI / 6);
+		public static readonly float TAN_60 = Mathf.Tan(Mathf.PI / 3);
 
 		public static HexVertex Next(this HexVertex _this)
 		{

@@ -7,9 +7,6 @@ namespace HX
 	[CustomEditor(typeof(CellGrid))]
 	public class CellGridEditor : Editor<CellGrid>
 	{
-		private CellPlasmType mPlasm;
-		private bool mIsAddingPlasm;
-
 		Vector2 Transform(Vector2 _val)
 		{
 			return target.transform.TransformPoint(_val);
@@ -49,33 +46,9 @@ namespace HX
 				DrawCell(_kv.Key, Color.gray, _width < 8);
 		}
 
-		void DrawMouse()
-		{
-			if (mIsAddingPlasm)
-			{
-				var _data = CellPlasmDB.g[mPlasm];
-				var _sprite = _data.sprite;
-
-			}
-		}
-
 		void OnSceneGUI()
 		{
 			DrawGrid();
-			DrawMouse();
-		}
-
-		public override void OnInspectorGUI()
-		{
-			base.OnInspectorGUI();
-
-// 			EditorGUILayout.PropertyField(new Rect(0, 0, 0, 0), HexCoor.ZERO, "coor");
-// 			var _coorVector = EditorGUILayout.Vector2Field("coor", Vector2.zero);
-// 			var _coor = new HexCoor(HexCoor.ZERO (HexP) _coorVector.x, (HexQ) _coorVector.y);
-
-			mPlasm = (CellPlasmType)EditorGUILayout.EnumPopup("Plasm", CellPlasmType.BASE);
-			if (GUILayout.Button("Add Plasm"))
-				mIsAddingPlasm = true;
 		}
 	}
 }

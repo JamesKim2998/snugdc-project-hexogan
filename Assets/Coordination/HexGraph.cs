@@ -8,7 +8,8 @@ namespace Gem
 {
 	public class HexGraph<T> : IEnumerable<KeyValuePair<HexCoor, HexNode<T>>>
 	{
-		public static readonly float TAN_30 = Mathf.Tan(Mathf.PI / 6);
+		public bool empty { get { return mNodes.Empty(); } }
+		public int count { get { return mNodes.Count; } }
 
 		public bool allowIsland = false;
 		private readonly BiDictionary<HexCoor, HexNode<T>> mNodes = new BiDictionary<HexCoor, HexNode<T>>();
@@ -175,12 +176,12 @@ namespace Gem
 			HexQ _firstQ;
 			HexQ _lastQ;
 
-			if (_blOffset.y <= 0.5f*TAN_30)
+			if (_blOffset.y <= 0.5f * HexHelper.TAN_30)
 				_firstQ = _bl.q;
 			else
 				_firstQ = _bl.q - 1;
 
-			if (_trOffset.y >= -0.5f*TAN_30)
+			if (_trOffset.y >= -0.5f * HexHelper.TAN_30)
 				_lastQ = _tr.q;
 			else
 				_lastQ = _tr.q + 1;

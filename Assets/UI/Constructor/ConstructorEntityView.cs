@@ -1,12 +1,11 @@
 ﻿using System;
-using Gem;
 using UnityEngine;
 
 namespace HX.UI
 {
 	public class ConstructorEntityView : MonoBehaviour
 	{
-		public GameObject itemPivot;
+		public Vector2 itemPosition;
 		public UILabel nameLabel;
 
 		public Action onPressDown;
@@ -15,7 +14,8 @@ namespace HX.UI
 		{
 			nameLabel.text = _data.name;
 			var _item = _data.MakeItem();
-			_item.transform.SetParentIdentity(itemPivot.transform);
+			_item.transform.SetParent(transform, false);
+			_item.transform.localPosition = itemPosition;
 		}
 
 		public void ListenPressDown()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gem;
+using HX.UI;
 using UnityEngine;
 
 namespace HX
@@ -18,6 +19,8 @@ namespace HX
 		public CellDB cellDB;
 		public CellPlasmDB cellPlasmDB;
 		public CellWallDB cellWallDB;
+
+		public UI.UIDB uiDB;
 
 		void Awake()
 		{
@@ -38,6 +41,7 @@ namespace HX
 			CellDB.g = cellDB;
 			CellPlasmDB.g = cellPlasmDB;
 			CellWallDB.g = cellWallDB;
+			UIDB.g = uiDB;
 		}
 
 		public IEnumerable<IDB> GetDBs()

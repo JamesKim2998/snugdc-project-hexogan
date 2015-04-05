@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926ef74c4c6e3154fa22d9c5e0ebf7dd, type: 3}
+  m_Name: UIDB
+  m_EditorClassIdentifier: 
+  _objectReferences:
+  - {fileID: 11400000, guid: 11effc426df0a304a9e6b3d7890b2afb, type: 2}
+  _serializedStateKeys:
+  - anatomies
+  _serializedStateValues:
+  - '{"HUMAN":0}'
+  anatomyVertexPrf: {fileID: 11425162, guid: 7361e711825ea174d9402b1f84aa5387, type: 2}
+  anatomyConnectionPrf: {fileID: 11495192, guid: 99863c5e6fb72a043becffb5630d53c8,
+    type: 2}

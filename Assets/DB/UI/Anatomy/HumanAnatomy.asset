@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61c0fc2d39e65d845b97d5ad04ddf814, type: 3}
+  m_Name: HumanAnatomy
+  m_EditorClassIdentifier: 
+  _objectReferences:
+  - {fileID: 11400000, guid: e52418ef7d1eac143b1ae16154143dbb, type: 2}
+  - {fileID: 11400000, guid: 90ac18c00861a9449b2b83f5813922cd, type: 2}
+  - {fileID: 11400000, guid: 0a62e118a63cd244a9f5e28336a6427c, type: 2}
+  - {fileID: 11400000, guid: e52418ef7d1eac143b1ae16154143dbb, type: 2}
+  - {fileID: 11400000, guid: 90ac18c00861a9449b2b83f5813922cd, type: 2}
+  - {fileID: 11400000, guid: 90ac18c00861a9449b2b83f5813922cd, type: 2}
+  - {fileID: 11400000, guid: 0a62e118a63cd244a9f5e28336a6427c, type: 2}
+  _serializedStateKeys:
+  - key
+  - vertexs
+  - conns
+  _serializedStateValues:
+  - 1
+  - '{"HUMAN_HEAD":0,"HUMAN_BREAST":1,"HUMAN_FOOT":2}'
+  - '[{"a":3,"b":4},{"a":5,"b":6}]'
+  key: 1
+  conns:
+  - a: {fileID: 11400000, guid: e52418ef7d1eac143b1ae16154143dbb, type: 2}
+    b: {fileID: 11400000, guid: 90ac18c00861a9449b2b83f5813922cd, type: 2}
+  - a: {fileID: 11400000, guid: 90ac18c00861a9449b2b83f5813922cd, type: 2}
+    b: {fileID: 11400000, guid: 0a62e118a63cd244a9f5e28336a6427c, type: 2}

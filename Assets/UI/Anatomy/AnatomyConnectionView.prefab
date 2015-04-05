@@ -151,8 +151,8 @@ MonoBehaviour:
   updateAnchors: 1
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 100
-  mHeight: 100
+  mWidth: 5
+  mHeight: 5
   mDepth: 0
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
@@ -168,8 +168,8 @@ MonoBehaviour:
   rightType: 1
   bottomType: 1
   topType: 1
-  mAtlas: {fileID: 0}
-  mSpriteName: 
+  mAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
+  mSpriteName: Smooth
   mFillCenter: 1
 --- !u!1001 &100100000
 Prefab:

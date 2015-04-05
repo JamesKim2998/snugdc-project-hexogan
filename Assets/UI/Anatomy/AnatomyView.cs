@@ -57,7 +57,7 @@ namespace HX.UI
 
 		private readonly Highlights mHighlights = new Highlights();
 
-		public Action<AnatomyVertexView> onSelect;
+		public Action<AnatomyVertexView> onSelectVertex;
 
 		public void Setup(AnatomyData _data)
 		{
@@ -126,7 +126,7 @@ namespace HX.UI
 					mHighlights.Add(_connCluster.vertex);
 			}
 
-			onSelect.CheckAndCall(v);
+			onSelectVertex.CheckAndCall(v);
 		}
 	}
 }

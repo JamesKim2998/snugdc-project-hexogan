@@ -12,7 +12,7 @@ namespace HX
 	public class OrganData : ScriptableObject
 	{
 		public OrganKey key;
-		public string tmx { get { return key.ToString(); } }
+		public string tmx { get { return key + ".tmx"; } }
 
 		public Vector2 vertexPosition;
 

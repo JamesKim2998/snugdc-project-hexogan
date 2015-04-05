@@ -22,7 +22,10 @@ namespace HX
 				return;
 			}
 
-			var _map = new TiledSharp.Map(tmx);
+
+			var _doc = new TiledSharp.Document(tmx);
+
+			var _map = new TiledSharp.Map(_doc);
 			var _gridData = new CellGridData(_map);
 
 			foreach (var kv in _gridData.cells)

@@ -18,7 +18,7 @@ namespace HX
 		}
 
 		public AnatomyKey key;
-		public string tmxDir { get { return key.ToString(); } }
+		public string tmxDir { get { return "TMX/" + key + "/"; } }
 		public Dictionary<OrganKey, OrganData> vertexs;
 
 		public List<Conn> conns;

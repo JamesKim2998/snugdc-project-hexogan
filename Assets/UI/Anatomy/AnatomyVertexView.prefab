@@ -127,8 +127,8 @@ MonoBehaviour:
   rightType: 1
   bottomType: 1
   topType: 1
-  mAtlas: {fileID: 11400000, guid: f95e07e3d350bf748b0c42b453a69d2e, type: 2}
-  mSpriteName: Beveled Outline
+  mAtlas: {fileID: 11410136, guid: 10adc3eb70a86d84e8ea433acd9eb5ac, type: 2}
+  mSpriteName: circle
   mFillCenter: 1
 --- !u!1001 &100100000
 Prefab:

@@ -15,6 +15,8 @@ namespace HX
 
 		public Transform transform { get { return neo.transform; } }
 
+		public Rect boundingRect { get; private set; }
+
 		private readonly HexGraph<NeoBody> mBodies = new HexGraph<NeoBody>();
 		private readonly List<NeoArm> mArms = new List<NeoArm>();
 
@@ -222,8 +224,35 @@ namespace HX
 			Build();
 		}
 
+		private struct BoundingRectMaker
+		{
+			private Rect mRect;
+			public Rect rect { get { return mRect; } }
+
+			public void Add(Vector2 p)
+			{
+				const float _xMargin = NeoConst.HEX_P / 2;
+				const float _yMargin = 1.5f * NeoConst.HEX_SIDE;
+
+				if (p.x - _xMargin < rect.xMin)
+					mRect.xMin = p.x - _xMargin;
+				if (p.x + _xMargin > rect.xMax)
+					mRect.xMax = p.x + _xMargin;
+
+				if (p.y - _yMargin < rect.yMin)
+					mRect.yMin = p.y - _yMargin;
+				if (p.y + _yMargin > rect.yMax)
+					mRect.yMax = p.y + _yMargin;
+			}
+		}
+
 		public void Build()
 		{
+			var _boundingRectMaker = new BoundingRectMaker();
+			foreach (var kv in mBodies)
+				_boundingRectMaker.Add(NeoHex.Position(kv.Key));
+			boundingRect = _boundingRectMaker.rect;
+
 			motors.BuildThrust();
 		}
 

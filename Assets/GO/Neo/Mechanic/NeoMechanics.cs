@@ -205,6 +205,23 @@ namespace HX
 			mMechanicsDirty.Clear();
 		}
 
+		public void Build(NeoStructure _structure)
+		{
+			foreach (var _body in _structure.bodies)
+			{
+				var _bodyGO = NeoBodyDB.g[_body.type].MakeBody();
+				Add(_bodyGO, _body.coor);
+			}
+
+			foreach (var _arm in _structure.arms)
+			{
+				var _armGO = NeoArmDB.g[_arm.type].MakeArm();
+				Add(_armGO, _arm.coor, _arm.side);
+			}
+
+			Build();
+		}
+
 		public void Build()
 		{
 			motors.BuildThrust();

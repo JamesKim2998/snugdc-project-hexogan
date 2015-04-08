@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Gem
 {
 	[Serializable]
+	[JsonObject(MemberSerialization.OptIn)]
 	public struct HexCoor : IEquatable<HexCoor>
 	{
 		public static readonly HexCoor ZERO = new HexCoor(0, 0);
@@ -12,10 +14,14 @@ namespace Gem
 
 		[SerializeField]
 		private int mP;
+
 		[SerializeField]
 		private int mQ;
 
+		[JsonProperty]
 		public HexP p { get { return (HexP)mP; } set { mP = (int)value; } }
+
+		[JsonProperty]
 		public HexQ q { get { return (HexQ)mQ; } set { mQ = (int)value; } }
 
 		public HexCoor(HexP _p, HexQ _q)

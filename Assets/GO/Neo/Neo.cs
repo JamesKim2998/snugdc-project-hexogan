@@ -13,10 +13,6 @@ namespace HX
 		void Awake()
 		{
 			mechanics = new NeoMechanics(this);
-		}
-
-		void Start()
-		{
 			mechanics.Add(core.body, HexCoor.ZERO);
 		}
 

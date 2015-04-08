@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gem
 {
+	[Serializable]
 	public enum HexVertex
 	{
 		TR, T, LT, 
 		LB, L, BR, 
 	}
 
+	[Serializable]
 	public enum HexEdge
 	{
 		R, TR, TL, 

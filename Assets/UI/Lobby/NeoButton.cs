@@ -1,9 +1,10 @@
-﻿using Gem;
+﻿using System;
+using Gem;
 using UnityEngine;
 
 namespace HX.UI
 {
-	public class NeoViewController : MonoBehaviour
+	public class NeoButton : MonoBehaviour
 	{
 		private const float MAX_WIDTH = 0.75f;
 		private const float MAX_HEIGHT = 0.75f;
@@ -11,6 +12,8 @@ namespace HX.UI
 		private const float ANGULAR_VELOCITY = -15/60f;
 
 		[SerializeField] private Neo mNeo;
+
+		public Action onClick;
 
 		void Update()
 		{
@@ -40,6 +43,11 @@ namespace HX.UI
 				var _scale = MAX_HEIGHT / _boundingRect.height;
 				transform.SetLScale(_scale < 1 ? _scale : 1);
 			}
+		}
+
+		public void OnClick()
+		{
+			onClick.CheckAndCall();
 		}
 	}
 }

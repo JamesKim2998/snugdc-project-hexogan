@@ -11,6 +11,8 @@ namespace HX.UI
 		[SerializeField] private UIButton mGameStartButton;
 
 		[SerializeField] private Neo mNeo;
+		[SerializeField] private NeoButton mNeoButton;
+		[SerializeField] private NeoTransitionAnimator mNeoTransitionAnimator;
 
 		private WorldTransitionData mTransition;
 
@@ -27,6 +29,8 @@ namespace HX.UI
 			mGameStartButton.onClick.Add(new EventDelegate(OnClickStartButton));
 
 			mNeo.mechanics.Build(DisketManager.saveData.neoStructure);
+
+			mNeoButton.onClick += () => mNeoTransitionAnimator.PlayIn(() => mNeoButton.enabled = false);
 		}
 
 		void OnClickStartButton()

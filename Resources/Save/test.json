@@ -1,0 +1,21 @@
+{
+	"neoStructure": {
+		"bodies": [
+			{
+				"type": "BASE",
+				"coor": { "p": 1, "q": 0 }
+			},
+			{
+				"type": "BASE",
+				"coor": { "p": 2, "q": 0 }
+			}
+		],
+		"arms": [
+			{
+				"type": "MOTOR",
+				"coor": { "p": 0, "q": 0 },
+				"side": "L"
+			}
+		]
+	}
+}

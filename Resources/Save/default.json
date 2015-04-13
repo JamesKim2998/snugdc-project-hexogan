@@ -1,12 +1,6 @@
 {
 	"neoStructure": {
 		"bodies": [],
-		"arms": [
-			{
-				"type": "MOTOR",
-				"coor": { "p": 0, "q": 0 },
-				"side": "L"
-			}
-		]
+		"arms": []
 	}
 }

@@ -26,20 +26,12 @@ namespace HX
 
 		#region construct/destruct
 
-		private bool mIsDestroying;
-
 		protected virtual void Awake()
 		{
 			mDamageDetector = gameObject.AddComponent<DamageDetector>();
 			mDamageDetector.onDetect += Damage;
 			cohesionLeft = data.cohesion;
 			durabilityLeft = data.durability;
-		}
-
-		private void OnDestroy()
-		{
-			mIsDestroying = true;
-			Detach();
 		}
 
 		#endregion
@@ -95,8 +87,7 @@ namespace HX
 
 		public virtual void Detach()
 		{
-			if (!mIsDestroying)
-				AddRigidBody();
+			AddRigidBody();
 			parent = null;
 		}
 

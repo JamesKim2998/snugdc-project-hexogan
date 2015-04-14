@@ -31,8 +31,9 @@ namespace HX.UI
 		void SetCameraPosition(Vector2 _pos)
 		{
 			mUICamera.transform.SetLPos(_pos);
-			const float _ratio = 4f/Const.RESOLUTION_Y;
-			mWorldCamera.transform.SetLPos(_pos * _ratio);
+			var _sizeRatio = mWorldCamera.orthographicSize/mUICamera.orthographicSize;
+			var _ratio = 4f/Const.RESOLUTION_Y*_sizeRatio;
+			mWorldCamera.transform.SetLPos(_pos*_ratio);
 		}
 
 		void MoveCameraBy(Vector2 _delta)

@@ -42,6 +42,7 @@ MonoBehaviour:
   emitterDB: {fileID: 11400000, guid: efcbd2431e7692d429a2b62be9e31926, type: 2}
   projDB: {fileID: 11400000, guid: 68e33ca2117934d43b96ff62f11b54f4, type: 2}
   neoConst: {fileID: 11400000, guid: fc0e8317924d8d140a81b25d96d64fef, type: 2}
+  neoDB: {fileID: 11400000, guid: 50a0285ab6965c844b79869bb0ed666f, type: 2}
   neoArmDB: {fileID: 11400000, guid: d7b2e3f8fd360094ba099161421415a0, type: 2}
   neoBodyDB: {fileID: 11400000, guid: 18d781f53f3549144b13d23957c80ac0, type: 2}
   cellDB: {fileID: 11400000, guid: e877b5d304a7a0b44bf11a7b37089b65, type: 2}

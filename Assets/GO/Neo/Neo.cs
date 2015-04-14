@@ -5,20 +5,33 @@ namespace HX
 {
 	public class Neo : MonoBehaviour
 	{
-		public NeoBodyCore core;
-
 		public NeoRigidbody body;
 		public NeoMechanics mechanics { get; private set; }
+
+		[SerializeField] private NeoBodyCore mCore;
+		public NeoBodyCore core { get { return mCore; } }
 
 		void Awake()
 		{
 			mechanics = new NeoMechanics(this);
-			mechanics.Add(core.body, HexCoor.ZERO);
+			if (core) DoSetCore();
 		}
 
 		void Update()
 		{
 			mechanics.Update();
+		}
+
+		public void SetCore(NeoBodyCore _core)
+		{
+			D.Assert(mCore == null);
+			mCore = _core;
+			DoSetCore();
+		}
+
+		void DoSetCore()
+		{
+			mechanics.Add(core.body, HexCoor.ZERO);
 		}
 
 		public void Motor(float _thrustNormal, float _driftNormal)

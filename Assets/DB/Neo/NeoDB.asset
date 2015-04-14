@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c7a1a0faaf80b2478fa69afa5b05203, type: 3}
+  m_Name: NeoDB
+  m_EditorClassIdentifier: 
+  neoPrf: {fileID: 11400002, guid: f3b1b913309a75b4087d97800f0f563d, type: 2}
+  neoBodyCorePrf: {fileID: 11400002, guid: 513837b0ebf55b94a88c08b64b026305, type: 2}

@@ -14,6 +14,7 @@ namespace HX
 		public EmitterDB emitterDB;
 		public ProjectileDB projDB;
 		public NeoConst neoConst;
+		public NeoDB neoDB;
 		public NeoArmDB neoArmDB;
 		public NeoBodyDB neoBodyDB;
 		public CellDB cellDB;
@@ -36,6 +37,7 @@ namespace HX
 			EmitterDB.g = emitterDB;
 			ProjectileDB.g = projDB;
 			NeoConst.g = neoConst;
+			NeoDB.g = neoDB;
 			NeoArmDB.g = neoArmDB;
 			NeoBodyDB.g = neoBodyDB;
 			CellDB.g = cellDB;

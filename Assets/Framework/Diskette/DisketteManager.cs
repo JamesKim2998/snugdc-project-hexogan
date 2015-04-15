@@ -2,7 +2,7 @@
 
 namespace HX
 {
-	public static class DisketManager
+	public static class DisketteManager
 	{
 		private const string DEFAULT_SAVE_FILE = "default";
 

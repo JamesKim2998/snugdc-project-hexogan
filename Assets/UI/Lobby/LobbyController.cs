@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HX.UI
 {
-	public class MainController : MonoBehaviour
+	public class LobbyController : MonoBehaviour
 	{
 		[SerializeField]
 		private AnatomyData mAnatomyData;

@@ -1,5 +1,4 @@
-﻿using System;
-using Gem;
+﻿using Gem;
 using UnityEngine;
 
 namespace HX.UI
@@ -21,8 +20,6 @@ namespace HX.UI
 		private NeoButton mNeoButton;
 
 		private WorldTransitionData mTransition;
-
-		public Action onNeoButtonClicked;
 
 		void Start()
 		{
@@ -53,9 +50,9 @@ namespace HX.UI
 			mTransition.tmxPath = mAnatomy.data.tmxDir + v.data.tmx;
 		}
 
-		void OnClickNeoButton()
+		static void OnClickNeoButton()
 		{
-			onNeoButtonClicked.CheckAndCall();
+			TransitionManager.StartGarage();
 		}
 	}
 }

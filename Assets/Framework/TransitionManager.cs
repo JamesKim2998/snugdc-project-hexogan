@@ -11,17 +11,35 @@ namespace HX
 
 	public static class TransitionManager
 	{
+		public const string SCENE_GARAGE = "Garage";
+
 		public static bool isWorldDirty { get; private set; }
 
 		public static WorldTransitionData world { get; private set; }
 
-		public static void StartWorld(WorldTransitionData _data)
+		private static bool BeforeStart()
 		{
 			if (Application.isLoadingLevel)
 			{
 				L.E("transition on going");
-				return;
+				return false;
 			}
+
+			return true;
+		}
+
+		public static void StartGarage()
+		{
+			if (!BeforeStart())
+				return;
+
+			Application.LoadLevel(SCENE_GARAGE);
+		}
+
+		public static void StartWorld(WorldTransitionData _data)
+		{
+			if (!BeforeStart())
+				return;
 
 			isWorldDirty = true;
 			world = _data;

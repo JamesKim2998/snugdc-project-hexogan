@@ -41,7 +41,7 @@ namespace HX
 			private void Apply(Rigidbody2D _rigidbody, float _factor)
 			{
 				if (mTotal == 0) return;
-				var _thrust = _rigidbody.transform.TransformDirection(new Vector2 { x = _factor * mTotal });
+				var _thrust = _rigidbody.transform.TransformVector(new Vector2 { x = _factor * mTotal });
 				var _position = _rigidbody.transform.TransformPoint(mWeighted / mTotal);
 				_rigidbody.AddForceAtPosition(_thrust, _position);
 			}

@@ -8,14 +8,13 @@ namespace HX
 	public class NeoMechanicData : BaseScriptableObject
 	{
 		public new string name;
-		public Sprite sprite;
 
 		public NeoMechanic mechanicPrf;
 
 		public int durability = 5;
 		public int cohesion = 5;
 
-		public GameObject constructorItemPrf;
+		public GameObject materialPrf;
 
 		public List<ScriptableObject> properties;
 

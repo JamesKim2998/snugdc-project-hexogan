@@ -1,30 +1,28 @@
 ﻿using Gem;
 using UnityEngine;
 
-namespace HX.UI
+namespace HX.UI.Constructor
 {
 	public class NeoConstructor : MonoBehaviour
 	{
-		public ConstructorGrid bodyGrid;
-		public ConstructorGrid armGrid;
-
-		public MouseActor hammerPrf;
+		[SerializeField] private StashGrid mBodyStash;
+		[SerializeField] private StashGrid mArmStash;
+		[SerializeField] private Hammer mHammerPrf;
 
 		void Start()
 		{
 			foreach (var _data in NeoBodyDB.g)
-				bodyGrid.Add(new NeoConstructorItem(_data.Value));
+				mBodyStash.Add(_data.Value);
 			foreach (var _data in NeoArmDB.g)
-				armGrid.Add(new NeoConstructorItem(_data.Value));
+				mArmStash.Add(_data.Value);
 
-			bodyGrid.Reposition();
-			armGrid.Reposition();
+			mBodyStash.Reposition();
+			mArmStash.Reposition();
 		}
 
 		public void PickHammer()
 		{
-			var _hammer = hammerPrf.Instantiate();
-			_hammer.gameObject.AddComponent<NeoConstructorHammer>();
+			mHammerPrf.Instantiate();
 		}
 	}
 

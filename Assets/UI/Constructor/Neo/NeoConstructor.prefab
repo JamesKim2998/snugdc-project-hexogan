@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 5
   m_Name: ArmGrid
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
@@ -30,7 +30,7 @@ GameObject:
   m_Layer: 5
   m_Name: BodyGrid
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
@@ -75,9 +75,9 @@ GameObject:
   - 4: {fileID: 400008}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400012}
-  - 65: {fileID: 6500000}
+  - 61: {fileID: 6186952}
   m_Layer: 5
-  m_Name: hammer
+  m_Name: Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -109,7 +109,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400006}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &400002
 Transform:
   m_ObjectHideFlags: 1
@@ -121,7 +121,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 400006}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &400004
 Transform:
   m_ObjectHideFlags: 1
@@ -129,7 +129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -400, y: -200, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400006}
@@ -146,8 +146,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 400000}
   - {fileID: 400002}
+  - {fileID: 400000}
   m_Father: {fileID: 400004}
   m_RootOrder: 0
 --- !u!4 &400008
@@ -175,18 +175,19 @@ Transform:
   - {fileID: 400008}
   m_Father: {fileID: 400004}
   m_RootOrder: 1
---- !u!65 &6500000
-BoxCollider:
+--- !u!61 &6186952
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100008}
+  m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 30, y: 30, z: 0}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 30, y: 30}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -294,9 +295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c9e2da0d1edfe45badddd9aadbc34a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyGrid: {fileID: 11400008}
-  armGrid: {fileID: 11400010}
-  hammerPrf: {fileID: 11400004, guid: 3d2c7f528beca1249b76e588203a9742, type: 2}
+  mBodyStash: {fileID: 11400008}
+  mArmStash: {fileID: 11400010}
+  mHammerPrf: {fileID: 11483316, guid: 3d2c7f528beca1249b76e588203a9742, type: 2}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -309,7 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 11400000}
-  viewPrf: {fileID: 11400008, guid: 1cae78e39600bb947aece04596910fd5, type: 2}
+  cellPrf: {fileID: 11400008, guid: 1cae78e39600bb947aece04596910fd5, type: 2}
 --- !u!114 &11400010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -322,7 +323,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 11400002}
-  viewPrf: {fileID: 11400008, guid: 1cae78e39600bb947aece04596910fd5, type: 2}
+  cellPrf: {fileID: 11400008, guid: 1cae78e39600bb947aece04596910fd5, type: 2}
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1

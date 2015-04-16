@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 5
-  m_Name: name
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25,11 +25,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400006}
-  - 65: {fileID: 6500000}
+  - 61: {fileID: 6163834}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
   m_Layer: 5
-  m_Name: ConstructorEntityView
+  m_Name: MaterialCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,18 +60,19 @@ Transform:
   - {fileID: 400000}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!65 &6500000
-BoxCollider:
+--- !u!61 &6163834
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100004}
+  m_Enabled: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 50, y: 80, z: 1}
-  m_Center: {x: 0, y: 40, z: 0}
+  m_Size: {x: 35.9999962, y: 16}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -108,7 +109,7 @@ MonoBehaviour:
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepAspectRatio: 0
-  aspectRatio: 2.5
+  aspectRatio: 2.25
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   mFont: {fileID: 0}
@@ -150,11 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onHoverOver: []
   onHoverOut: []
-  onPress:
-  - mTarget: {fileID: 11400008}
-    mMethodName: ListenPressDown
-    mParameters: []
-    oneShot: 0
+  onPress: []
   onRelease: []
   onSelect: []
   onDeselect: []
@@ -184,11 +181,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 100004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2cb7793f2a0f0b41bdbccefa10f6daa, type: 3}
+  m_Script: {fileID: 11500000, guid: 7989f081834463c4ebfcac53c10abb25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemPosition: {x: 0, y: 50}
-  nameLabel: {fileID: 11400000}
+  mItemPosition: {x: 0, y: 0}
+  mNameLabel: {fileID: 11400000}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

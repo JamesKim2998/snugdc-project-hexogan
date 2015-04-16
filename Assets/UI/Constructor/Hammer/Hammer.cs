@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 
-namespace HX.UI
+namespace HX.UI.Constructor
 {
 	[RequireComponent(typeof(MouseActor))]
-	public class NeoConstructorHammer : MonoBehaviour
+	public class Hammer : MonoBehaviour
 	{
-		public void Start()
+		[SerializeField] private MouseActor mActor;
+
+		void Start()
 		{
-			var _hammer = GetComponent<MouseActor>();
-			_hammer.act = DoSmash;
-			_hammer.mask = LayerBits.NEO;
+			mActor.act = DoSmash;
+			mActor.mask = LayerBits.NEO;
 		}
 
 		private static bool DoSmash(GameObject _target)

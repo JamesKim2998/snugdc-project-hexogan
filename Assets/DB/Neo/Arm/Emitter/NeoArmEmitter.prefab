@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed7053d04d6496f45a96f4140d1b0c04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mArm: {fileID: 11400002}
   emitterType: 1
-  animator: {fileID: 9500000}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1

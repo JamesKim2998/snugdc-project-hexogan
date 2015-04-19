@@ -19,9 +19,8 @@ MonoBehaviour:
   - 2
   - '[]'
   name: EMITTER
-  sprite: {fileID: 21300000, guid: 64feb30c3faff3b40b2b8b80d57bafce, type: 3}
   mechanicPrf: {fileID: 11400002, guid: 469782bf3a7685d4e80409a5fb9efa7f, type: 2}
   durability: 5
   cohesion: 5
-  constructorItemPrf: {fileID: 0}
+  mMaterialPrf: {fileID: 116184, guid: fba6e7f0fdbe4e34eb1c55eb8b09964e, type: 2}
   properties: []

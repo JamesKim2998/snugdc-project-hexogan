@@ -1,4 +1,5 @@
 ﻿using Gem;
+using UnityEngine;
 
 namespace HX.UI.Garage
 {
@@ -31,15 +32,10 @@ namespace HX.UI.Garage
 
 		protected override void Locate(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)
 		{
-			var _posNew = _mechanics.transform.localToWorldMatrix.MultiplyPoint(NeoHex.Position(_body.coor) + NeoHex.Side(_side) * 2);
-			var _posOld = transform.position;
-			_posNew.z = _posOld.z;
-			transform.position = _posNew;
-
-			var _angleNew = _body.transform.eulerAngles.z;
-			var _angleOld = transform.eulerAngles;
-			_angleOld.z = _angleNew;
-			transform.eulerAngles = _angleOld;
+			var _posGlobal = _mechanics.transform.localToWorldMatrix.MultiplyPoint(NeoHex.Position(_body.coor) + NeoHex.Side(_side) * 2);
+			var _posNew = GarageController.g.WorldToUI(_posGlobal);
+			transform.SetPos((Vector2)_posNew);
+			transform.SetEulerZ(_body.transform.eulerAngles.z);
 		}
 
 		protected override bool Attach(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)

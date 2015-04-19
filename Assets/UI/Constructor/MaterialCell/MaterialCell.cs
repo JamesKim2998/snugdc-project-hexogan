@@ -25,6 +25,8 @@ namespace HX.UI.Constructor
 		public MaterialDND MakeDragAndDrop()
 		{
 			var _material = mData.materialPrf.Instantiate();
+			_material.transform.SetParent(GarageController.g.uiRoot.transform, false);
+
 			MaterialDND _dnd = null;
 
 			switch (mData.mechanicType)

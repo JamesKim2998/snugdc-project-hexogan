@@ -113,5 +113,17 @@ namespace HX.UI
 		{
 			Possess(!isPossessed);
 		}
+
+		public Vector2 WorldToUI(Vector2 _globalPos)
+		{
+			var _viewport = worldCamera.WorldToViewportPoint(_globalPos);
+			return uiCamera.ViewportToWorldPoint(_viewport);
+		}
+
+		public Vector2 UIToWorld(Vector2 _globalPos)
+		{
+			var _viewport = uiCamera.WorldToViewportPoint(_globalPos);
+			return worldCamera.ViewportToWorldPoint(_viewport);
+		}
 	}
 }

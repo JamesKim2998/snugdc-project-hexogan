@@ -19,9 +19,8 @@ MonoBehaviour:
   - 1
   - '[]'
   name: BASE
-  sprite: {fileID: 21300000, guid: b5c340c61472ab64aa9af68c1ac22e85, type: 3}
   mechanicPrf: {fileID: 11400000, guid: 4b2e5689d44ce4c43a47a784e5294fd6, type: 2}
   durability: 5
   cohesion: 5
-  constructorItemPrf: {fileID: 0}
+  mMaterialPrf: {fileID: 100770, guid: e1d5b58c588acf24396753a065f12d78, type: 2}
   properties: []

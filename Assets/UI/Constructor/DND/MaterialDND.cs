@@ -5,11 +5,16 @@ namespace HX.UI.Garage
 {
 	public abstract class MaterialDND : DragAndDrop
 	{
+		protected void Start()
+		{
+			base.Start();
+			camera = GarageController.g.uiCamera;
+		}
+
 		protected override void DoMouseDown()
 		{
 			base.DoMouseDown();
 			transform.position += Vector3.back;
-			GetComponent<Collider2D>().isTrigger = true;
 		}
 
 		protected override void DoMouseDrag()
@@ -36,9 +41,9 @@ namespace HX.UI.Garage
 		bool Pivot(bool _attach)
 		{
 			var _screenPos = Input.mousePosition + (Vector3)offset;
-			var _worldPos = Camera.main.ScreenToWorldPoint(_screenPos);
+			var _worldMousePos = GarageController.g.worldCamera.ScreenToWorldPoint(_screenPos);
 
-			var _overlaps = Physics2D.OverlapCircleAll(_worldPos, 0.1f, NeoConst.g.mechanicDropMask, -0.1f, 0.1f);
+			var _overlaps = Physics2D.OverlapCircleAll(_worldMousePos, 0.1f, NeoConst.g.mechanicDropMask, -0.1f, 0.1f);
 
 			foreach (var _overlap in _overlaps)
 			{
@@ -50,7 +55,8 @@ namespace HX.UI.Garage
 
 				var _bodyCoor = _body.coor;
 
-				var _hexPos = _mechanics.transform.worldToLocalMatrix.MultiplyPoint(transform.position);
+				var _worldPos = GarageController.g.UIToWorld(transform.position);
+				var _hexPos = _mechanics.transform.worldToLocalMatrix.MultiplyPoint(_worldPos);
 				var _side = NeoHex.Side(_hexPos, _bodyCoor);
 
 				if (!IsLocatable(_mechanics, _body, _side))

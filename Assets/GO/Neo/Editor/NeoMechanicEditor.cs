@@ -23,17 +23,6 @@ namespace HX
 				if (GUILayout.Button("Detach"))
 					target.parent.Remove(target);
 			}
-			else
-			{
-				if (!target.gameObject.GetComponent<Gem.DragAndDrop>())
-				{
-					if (GUILayout.Button("Drag and drop"))
-					{
-						target.gameObject.AddComponent<Gem.DragAndDrop>();
-						NeoMechanicHelper.AddDragAndDrop(target);
-					}
-				}
-			}
 		}
 
 		public void OnSceneGUI()

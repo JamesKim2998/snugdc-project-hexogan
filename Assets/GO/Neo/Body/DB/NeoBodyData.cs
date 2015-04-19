@@ -6,6 +6,11 @@ namespace HX
 	{
 		public NeoBodyType key { get; set; }
 
+		public override NeoMechanicType mechanicType
+		{
+			get { return NeoMechanicType.BODY; }
+		}
+
 		public NeoBody MakeBody()
 		{
 			return mechanicPrf.Instantiate().GetComponent<NeoBody>();
@@ -18,5 +23,6 @@ namespace HX
 				name = key.ToString();
 		}
 #endif
+
 	}
 }

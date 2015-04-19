@@ -1,4 +1,5 @@
 ﻿using Gem;
+using HX.UI.Garage;
 using UnityEngine;
 
 namespace HX.UI.Constructor
@@ -16,23 +17,34 @@ namespace HX.UI.Constructor
 
 			mNameLabel.text = _data.name;
 
-			// todo
-// 			var _item = mData.materialPrf.Instantiate();
-// 			_item.transform.SetParent(transform, false);
-// 			_item.transform.localPosition = mItemPosition;
+			var _item = mData.materialPrf.Instantiate();
+			_item.transform.SetParent(transform, false);
+			_item.transform.localPosition = mItemPosition;
 		}
 
-		public DragAndDrop MakeDragAndDrop()
+		public MaterialDND MakeDragAndDrop()
 		{
-			return null;
-			// todo
-// 			var _material = mData.materialPrf.Instantiate();
-// 			var _dnd = NeoMechanicHelper.AddDragAndDrop(_material);
-// 			_dnd.destroyIfFailed = true;
-// 			return _dnd;
+			var _material = mData.materialPrf.Instantiate();
+			MaterialDND _dnd = null;
+
+			switch (mData.mechanicType)
+			{
+				case NeoMechanicType.BODY:
+					var _bodyDND = _material.AddComponent<MaterialBodyDND>();
+					_bodyDND.type = ((NeoBodyData)mData).key;
+					_dnd = _bodyDND;
+					break;
+				case NeoMechanicType.ARM:
+					var _armDND = _material.AddComponent<MaterialArmDND>();
+					_armDND.type = ((NeoArmData)mData).key;
+					_dnd = _armDND;
+					break;
+			}
+
+			return _dnd;
 		}
 
-		void OnClick()
+		public void OnPressCell()
 		{
 			if (mData == null) return;
 			var _dnd = MakeDragAndDrop();

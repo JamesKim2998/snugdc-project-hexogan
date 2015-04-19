@@ -6,6 +6,11 @@ namespace HX
 	{
 		public NeoArmType key { get; set; }
 
+		public override NeoMechanicType mechanicType
+		{
+			get { return NeoMechanicType.ARM; }
+		}
+
 		public NeoArm MakeArm()
 		{
 			return mechanicPrf.Instantiate().GetComponent<NeoArm>();

@@ -5,8 +5,10 @@ using UnityEngine;
 
 namespace HX
 {
-	public class NeoMechanicData : BaseScriptableObject
+	public abstract class NeoMechanicData : BaseScriptableObject
 	{
+		public abstract NeoMechanicType mechanicType { get; }
+
 		public new string name;
 
 		public NeoMechanic mechanicPrf;
@@ -14,7 +16,13 @@ namespace HX
 		public int durability = 5;
 		public int cohesion = 5;
 
-		public GameObject materialPrf;
+		public GameObject mMaterialPrf;
+
+		// note: it need to be compared explicitly.
+		public GameObject materialPrf
+		{
+			get { return (mMaterialPrf != null) ? mMaterialPrf : mechanicPrf.gameObject; }
+		}
 
 		public List<ScriptableObject> properties;
 

@@ -22,7 +22,8 @@ namespace HX.UI.Constructor
 
 		public void PickHammer()
 		{
-			mHammerPrf.Instantiate();
+			var _hammer = mHammerPrf.Instantiate();
+			_hammer.transform.SetParent(GarageController.g.uiRoot.transform, false);
 		}
 	}
 

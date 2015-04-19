@@ -23,7 +23,7 @@ namespace HX
 			return mNeighbors[(int)_side];
 		}
 
-		public IEnumerator<NeoMechanic> GetNeighbors()
+		public IEnumerable<NeoMechanic> GetNeighbors()
 		{
 			foreach (var i in HexHelper.GetEdges())
 				yield return GetNeighbor(i);

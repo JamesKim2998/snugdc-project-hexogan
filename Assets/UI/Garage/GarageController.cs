@@ -6,21 +6,44 @@ namespace HX.UI
 	public class GarageController : MonoBehaviour
 	{
 		private const float NEO_ANGULAR_VELOCITY = 5;
-		private const float CAMERA_DEFAULT_SIZE = 0.02f;
-		private const float CAMERA_POSSESS_SIZE = 0.03f;
+		private const float CAMERA_DEFAULT_SIZE = 1f;
+		private const float CAMERA_POSSESS_SIZE = 3f;
+
+		public static GarageController g { get; private set; }
 
 		public bool isPossessed { get { return mNeoController != null; } }
 
 		private Neo mNeo;
 		private NeoController mNeoController;
 
-		[SerializeField] private GameObject mWorld;
+		public GameObject uiRoot { get { return mUIRoot; } }
+		public Camera uiCamera { get { return mUICamera; } }
+
+		public GameObject worldRoot { get { return mWorldRoot; } }
+		public Camera worldCamera { get { return mWorldCamera; } }
+		
+		[SerializeField] private GameObject mUIRoot;
+		[SerializeField] private Camera mUICamera;
+		[SerializeField] private GameObject mWorldRoot;
 		[SerializeField] private Camera mWorldCamera;
 		[SerializeField] private Transform mNeoRoot;
 
 		void Start()
 		{
 			ReplaceNeo();
+
+			if (!g)
+				g = this;
+			else
+				D.Assert(false);
+		}
+
+		void OnDestory()
+		{
+			if (g == this)
+				g = null;
+			else 
+				D.Assert(false);
 		}
 
 		void Update()
@@ -71,7 +94,7 @@ namespace HX.UI
 
 			if (_val)
 			{
-				mNeo.transform.SetParent(mWorld.transform);
+				mNeo.transform.SetParent(mWorldRoot.transform);
 				mNeoController = gameObject.AddComponent<NeoController>();
 				mNeoController.neo = mNeo;
 			}

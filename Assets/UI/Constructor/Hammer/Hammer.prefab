@@ -42,6 +42,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a44c43c17f5b464697b50ca6bc86c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 0}
+  offset: {x: 0, y: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -107,9 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93e4806bb0da3c74a9b66d2261227aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 0}
   mask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!114 &11483316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -121,6 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7bf070c93e5f54a969721d01bb16cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mFollow: {fileID: 11400000}
   mActor: {fileID: 11400004}
 --- !u!1001 &100100000
 Prefab:

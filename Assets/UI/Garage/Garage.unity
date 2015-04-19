@@ -328,7 +328,11 @@ MonoBehaviour:
   pressedSprite2D: {fileID: 0}
   disabledSprite2D: {fileID: 0}
   pixelSnap: 0
-  onClick: []
+  onClick:
+  - mTarget: {fileID: 1460374895}
+    mMethodName: OnClickPossessButton
+    mParameters: []
+    oneShot: 0
 --- !u!61 &1068173688
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -341,7 +345,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 104, y: 98}
+  m_Size: {x: 94, y: 56}
 --- !u!114 &1068173689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,13 +376,13 @@ MonoBehaviour:
   updateAnchors: 1
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 100
-  mHeight: 100
+  mWidth: 94
+  mHeight: 56
   mDepth: 0
-  autoResizeBoxCollider: 0
+  autoResizeBoxCollider: 1
   hideIfOffScreen: 0
   keepAspectRatio: 0
-  aspectRatio: 1
+  aspectRatio: 1.67857146
   mType: 0
   mFillDirection: 4
   mFillAmount: 1
@@ -389,8 +393,8 @@ MonoBehaviour:
   rightType: 1
   bottomType: 1
   topType: 1
-  mAtlas: {fileID: 0}
-  mSpriteName: 
+  mAtlas: {fileID: 11410136, guid: 10adc3eb70a86d84e8ea433acd9eb5ac, type: 2}
+  mSpriteName: rect
   mFillCenter: 1
 --- !u!4 &1068173690
 Transform:
@@ -399,7 +403,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1068173686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -59, y: 220, z: 0}
+  m_LocalPosition: {x: -84, y: 197, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1135716077}
@@ -443,7 +447,7 @@ GameObject:
   m_Layer: 0
   m_Name: NeoRoot
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
@@ -454,10 +458,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1161535243}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2008747468}
+  m_Father: {fileID: 1767722248}
   m_RootOrder: 1
 --- !u!1001 &1243459640
 Prefab:
@@ -544,8 +548,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701ef42652b7396489c2ac3a9782deb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mWorld: {fileID: 2008747467}
-  mWorldCamera: {fileID: 2126131194}
+  mUIRoot: {fileID: 1742742755}
+  mUICamera: {fileID: 1670347798}
+  mWorldRoot: {fileID: 1767722247}
+  mWorldCamera: {fileID: 240781796}
   mNeoRoot: {fileID: 1161535244}
 --- !u!1001 &1552440845
 Prefab:
@@ -717,7 +723,7 @@ Transform:
   m_GameObject: {fileID: 1742742755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: .00467289705, y: .00467289705, z: .00467289705}
+  m_LocalScale: {x: .00404040422, y: .00404040422, z: .00404040422}
   m_Children:
   - {fileID: 1670347796}
   - {fileID: 1135716077}
@@ -813,7 +819,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1767722248}
   m_Layer: 0
-  m_Name: UI World
+  m_Name: WorldRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -826,126 +832,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1767722247}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: 0}
-  m_LocalScale: {x: .5, y: .5, z: 1}
-  m_Children:
-  - {fileID: 240781797}
-  - {fileID: 1823182366}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
---- !u!1 &1823182364
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1823182366}
-  m_Layer: 0
-  m_Name: GarageRoot
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &1823182366
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1823182364}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1767722248}
-  m_RootOrder: 1
---- !u!1 &2008747467
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2008747468}
-  m_Layer: 0
-  m_Name: World
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &2008747468
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2008747467}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -6, z: 0}
-  m_LocalScale: {x: .00999999978, y: .00999999978, z: 1}
   m_Children:
-  - {fileID: 2126131193}
+  - {fileID: 240781797}
   - {fileID: 1161535244}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
---- !u!1 &2126131192
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2126131193}
-  - 20: {fileID: 2126131194}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2126131193
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2126131192}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2008747468}
-  m_RootOrder: 0
---- !u!20 &2126131194
-Camera:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2126131192}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 4
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: .5
-    height: .5
-  near clip plane: .300000012
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 1
-  orthographic size: .00999999978
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_HDR: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: .0219999999
+  m_RootOrder: 3

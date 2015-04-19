@@ -13,7 +13,11 @@ namespace HX.UI.Garage
 		[SerializeField] private CameraController mCameraController;
 		[SerializeField] private GameObject mUIRoot;
 		[SerializeField] private GameObject mWorldRoot;
+
 		[SerializeField] private Transform mNeoRoot;
+
+		[SerializeField] private NeoConstructor mConstructor;
+		private float mConstructorRivetX;
 
 		public bool isRiveted { get { return mNeoController == null; } }
 		public bool isPossessed { get { return mNeoController != null; } }
@@ -28,6 +32,8 @@ namespace HX.UI.Garage
 		void Start()
 		{
 			ReplaceNeo();
+
+			mConstructorRivetX = mConstructor.transform.localPosition.x;
 
 			if (!g)
 				g = this;
@@ -47,17 +53,31 @@ namespace HX.UI.Garage
 		{
 			if (isRiveted)
 				UpdateRivetd();
+			else
+				UpdatePossessed();
 		}
 
 		void UpdateRivetd()
 		{
 			var _dt = Time.deltaTime;
+			var _lerp = 2 * _dt;
 
 			mNeoRoot.transform.SetLPosX(mCameraController.world.orthographicSize * NEO_ROOT_REL_POS);
 			mNeoRoot.transform.AddLEulerZ(_dt * NEO_ANGULAR_VELOCITY);
 
 			var _targetPos = CalNeoRivetPosition();
-			mNeo.transform.SetLPos(Vector2.Lerp(mNeo.transform.localPosition, _targetPos, 2 * _dt));
+			mNeo.transform.SetLPos(Vector2.Lerp(mNeo.transform.localPosition, _targetPos, _lerp));
+
+			var _constructorLerp = 4 * _dt;
+			mConstructor.transform.LerpLPosX(mConstructorRivetX, _constructorLerp);
+		}
+
+		void UpdatePossessed()
+		{
+			var _dt = Time.deltaTime;
+			var _lerp = 2 * _dt;
+
+			mConstructor.transform.LerpLPosX(Const.RESOLUTION_X/2, _lerp);
 		}
 
 		Vector2 CalNeoRivetPosition()

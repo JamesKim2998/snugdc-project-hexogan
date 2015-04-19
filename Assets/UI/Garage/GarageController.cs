@@ -1,7 +1,7 @@
 ﻿using Gem;
 using UnityEngine;
 
-namespace HX.UI
+namespace HX.UI.Garage
 {
 	public class GarageController : MonoBehaviour
 	{

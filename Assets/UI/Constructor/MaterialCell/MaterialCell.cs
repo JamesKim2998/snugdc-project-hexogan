@@ -1,8 +1,7 @@
 ﻿using Gem;
-using HX.UI.Garage;
 using UnityEngine;
 
-namespace HX.UI.Constructor
+namespace HX.UI.Garage
 {
 	public class MaterialCell : MonoBehaviour
 	{

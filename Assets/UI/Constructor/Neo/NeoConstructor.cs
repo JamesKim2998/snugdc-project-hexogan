@@ -1,7 +1,7 @@
 ﻿using Gem;
 using UnityEngine;
 
-namespace HX.UI.Constructor
+namespace HX.UI.Garage
 {
 	public class NeoConstructor : MonoBehaviour
 	{

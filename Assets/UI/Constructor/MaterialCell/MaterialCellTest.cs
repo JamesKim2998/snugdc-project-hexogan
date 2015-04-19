@@ -2,7 +2,7 @@
 
 using UnityEngine;
 
-namespace HX.UI.Constructor
+namespace HX.UI.Garage
 {
 	public class NeoMaterialCellTest : MonoBehaviour
 	{

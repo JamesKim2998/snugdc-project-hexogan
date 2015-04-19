@@ -33,7 +33,7 @@ namespace HX.UI.Garage
 		protected override void Locate(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)
 		{
 			var _posGlobal = _mechanics.transform.localToWorldMatrix.MultiplyPoint(NeoHex.Position(_body.coor) + NeoHex.Side(_side) * 2);
-			var _posNew = GarageController.g.WorldToUI(_posGlobal);
+			var _posNew = GarageController.g.camera.WorldToUI(_posGlobal);
 			transform.SetPos((Vector2)_posNew);
 			transform.SetEulerZ(_body.transform.eulerAngles.z);
 		}

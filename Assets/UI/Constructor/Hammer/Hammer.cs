@@ -9,11 +9,11 @@ namespace HX.UI.Garage
 
 		void Start()
 		{
-			mFollow.camera = GarageController.g.uiCamera;
+			mFollow.camera = GarageController.g.camera.ui;
 
 			mActor.act = DoSmash;
 			mActor.mask = LayerBits.NEO;
-			mActor.camera = GarageController.g.worldCamera;
+			mActor.camera = GarageController.g.camera.world;
 		}
 
 		// returns whether smash hit valid object.

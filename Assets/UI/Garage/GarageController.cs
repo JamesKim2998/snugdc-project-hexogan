@@ -5,28 +5,25 @@ namespace HX.UI.Garage
 {
 	public class GarageController : MonoBehaviour
 	{
+		private const float NEO_ROOT_REL_POS = -0.8f;
 		private const float NEO_ANGULAR_VELOCITY = 5;
-		private const float CAMERA_DEFAULT_SIZE = 1f;
-		private const float CAMERA_POSSESS_SIZE = 3f;
 
 		public static GarageController g { get; private set; }
+		
+		[SerializeField] private CameraController mCameraController;
+		[SerializeField] private GameObject mUIRoot;
+		[SerializeField] private GameObject mWorldRoot;
+		[SerializeField] private Transform mNeoRoot;
 
+		public bool isRiveted { get { return mNeoController == null; } }
 		public bool isPossessed { get { return mNeoController != null; } }
+
+		public new CameraController camera { get { return mCameraController; } }
+		public GameObject uiRoot { get { return mUIRoot; } }
+		public GameObject worldRoot { get { return mWorldRoot; } }
 
 		private Neo mNeo;
 		private NeoController mNeoController;
-
-		public GameObject uiRoot { get { return mUIRoot; } }
-		public Camera uiCamera { get { return mUICamera; } }
-
-		public GameObject worldRoot { get { return mWorldRoot; } }
-		public Camera worldCamera { get { return mWorldCamera; } }
-		
-		[SerializeField] private GameObject mUIRoot;
-		[SerializeField] private Camera mUICamera;
-		[SerializeField] private GameObject mWorldRoot;
-		[SerializeField] private Camera mWorldCamera;
-		[SerializeField] private Transform mNeoRoot;
 
 		void Start()
 		{
@@ -48,40 +45,41 @@ namespace HX.UI.Garage
 
 		void Update()
 		{
+			if (isRiveted)
+				UpdateRivetd();
+		}
+
+		void UpdateRivetd()
+		{
 			var _dt = Time.deltaTime;
 
-			if (!isPossessed)
-			{
-				mNeoRoot.transform.AddLEulerZ(_dt * NEO_ANGULAR_VELOCITY);
-			}
-			else
-			{
-				var _lerp = 4*_dt;
+			mNeoRoot.transform.SetLPosX(mCameraController.world.orthographicSize * NEO_ROOT_REL_POS);
+			mNeoRoot.transform.AddLEulerZ(_dt * NEO_ANGULAR_VELOCITY);
 
-				mWorldCamera.orthographicSize = Mathf.Lerp(mWorldCamera.orthographicSize, CAMERA_POSSESS_SIZE, _lerp);
+			var _targetPos = CalNeoRivetPosition();
+			mNeo.transform.SetLPos(Vector2.Lerp(mNeo.transform.localPosition, _targetPos, 2 * _dt));
+		}
 
-				var _neoTrans = mNeo.transform;
-				var _camTrans = mWorldCamera.transform;
-
-				var _newPos = Vector2.Lerp(_camTrans.position, _neoTrans.position, _lerp);
-				_camTrans.SetPos(_newPos);
-
-				var _newZ = Mathf.Lerp(_camTrans.eulerAngles.z, _neoTrans.eulerAngles.z, _lerp);
-				_camTrans.SetEulerZ(_newZ);
-			}
+		Vector2 CalNeoRivetPosition()
+		{
+			var _boundingRect = mNeo.mechanics.boundingRect;
+			return -_boundingRect.center;
 		}
 
 		void ReplaceNeo()
 		{
 			if (mNeo)
+			{
+				camera.neo = null;
 				Destroy(mNeo.gameObject);
+			}
 
 			mNeo = NeoUtil.InstantiateNeo();
 			mNeo.transform.SetParent(mNeoRoot, false);
 			mNeo.mechanics.Build(UserManager.neoStructure);
+			mNeo.transform.SetLPos(CalNeoRivetPosition());
 
-			var _boundingRect = mNeo.mechanics.boundingRect;
-			mNeo.transform.localPosition = -_boundingRect.center;
+			camera.neo = mNeo;
 		}
 
 		void Possess(bool _val)
@@ -97,33 +95,20 @@ namespace HX.UI.Garage
 				mNeo.transform.SetParent(mWorldRoot.transform);
 				mNeoController = gameObject.AddComponent<NeoController>();
 				mNeoController.neo = mNeo;
+				camera.ZoomIn();
 			}
 			else
 			{
 				Destroy(mNeoController);
 				mNeoController = null;
 				ReplaceNeo();
-
-				mWorldCamera.transform.SetLPos(Vector2.zero);
-				mWorldCamera.orthographicSize = CAMERA_DEFAULT_SIZE;
+				camera.ZoomOut();
 			}
 		}
 
 		public void OnClickPossessButton()
 		{
 			Possess(!isPossessed);
-		}
-
-		public Vector2 WorldToUI(Vector2 _globalPos)
-		{
-			var _viewport = worldCamera.WorldToViewportPoint(_globalPos);
-			return uiCamera.ViewportToWorldPoint(_viewport);
-		}
-
-		public Vector2 UIToWorld(Vector2 _globalPos)
-		{
-			var _viewport = uiCamera.WorldToViewportPoint(_globalPos);
-			return worldCamera.ViewportToWorldPoint(_viewport);
 		}
 	}
 }

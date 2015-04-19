@@ -458,7 +458,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1161535243}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1767722248}
@@ -518,6 +518,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1460374894}
   - 114: {fileID: 1460374895}
+  - 114: {fileID: 1460374896}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -548,11 +549,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701ef42652b7396489c2ac3a9782deb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mCameraController: {fileID: 1460374896}
   mUIRoot: {fileID: 1742742755}
-  mUICamera: {fileID: 1670347798}
   mWorldRoot: {fileID: 1767722247}
-  mWorldCamera: {fileID: 240781796}
   mNeoRoot: {fileID: 1161535244}
+--- !u!114 &1460374896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1460374893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d0a79e215818f4986094f0d331cd7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mUI: {fileID: 1670347798}
+  mWorld: {fileID: 240781796}
 --- !u!1001 &1552440845
 Prefab:
   m_ObjectHideFlags: 0

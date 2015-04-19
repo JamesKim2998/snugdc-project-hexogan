@@ -8,7 +8,7 @@ namespace HX.UI.Garage
 		protected void Start()
 		{
 			base.Start();
-			camera = GarageController.g.uiCamera;
+			camera = GarageController.g.camera.ui;
 		}
 
 		protected override void DoMouseDown()
@@ -40,10 +40,9 @@ namespace HX.UI.Garage
 
 		bool Pivot(bool _attach)
 		{
-			var _screenPos = Input.mousePosition + (Vector3)offset;
-			var _worldMousePos = GarageController.g.worldCamera.ScreenToWorldPoint(_screenPos);
+			var _globalMousePos = GarageController.g.camera.GetGlobalMousePosition(offset);
 
-			var _overlaps = Physics2D.OverlapCircleAll(_worldMousePos, 0.1f, NeoConst.g.mechanicDropMask, -0.1f, 0.1f);
+			var _overlaps = Physics2D.OverlapCircleAll(_globalMousePos, 0.1f, NeoConst.g.mechanicDropMask, -0.1f, 0.1f);
 
 			foreach (var _overlap in _overlaps)
 			{
@@ -55,7 +54,7 @@ namespace HX.UI.Garage
 
 				var _bodyCoor = _body.coor;
 
-				var _worldPos = GarageController.g.UIToWorld(transform.position);
+				var _worldPos = GarageController.g.camera.UIToWorld(transform.position);
 				var _hexPos = _mechanics.transform.worldToLocalMatrix.MultiplyPoint(_worldPos);
 				var _side = NeoHex.Side(_hexPos, _bodyCoor);
 

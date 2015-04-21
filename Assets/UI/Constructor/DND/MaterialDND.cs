@@ -5,7 +5,7 @@ namespace HX.UI.Garage
 {
 	public abstract class MaterialDND : DragAndDrop
 	{
-		protected void Start()
+		protected override void Start()
 		{
 			base.Start();
 			camera = GarageController.g.camera.ui;

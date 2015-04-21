@@ -1,14 +1,14 @@
 ﻿using Gem;
+using Newtonsoft.Json.Linq;
 
 namespace HX
 {
-	public static class DisketteManager
+	public static partial class DisketteManager
 	{
 		private const string DEFAULT_SAVE_FILE = "default";
 
-		public static bool isLoaded { get { return saveData != null; } }
+		public static bool isLoaded { get; private set; }
 		public static string filename { get; private set; }
-		public static SaveData saveData { get; private set; }
 
 		private static FullPath FullPath(string _filename)
 		{
@@ -23,15 +23,15 @@ namespace HX
 				return true;
 			}
 
-			SaveData _data;
-			if (!JsonHelper2.ObjectWithRaw(FullPath(_filename), out _data))
-			{
-				L.E("load " + _filename + " failed.");
+			JObject _data;
+			if (!JsonHelper2.Deserialize(FullPath(_filename), out _data))
 				return false;
-			}
+
+			if (!DoLoad(_data))
+				return false;
 
 			filename = _filename;
-			saveData = _data;
+			isLoaded = true;
 
 			return true;
 		}
@@ -58,7 +58,16 @@ namespace HX
 				return false;
 			}
 
-			return JsonHelper2.SerializeToFile(FullPath(filename), saveData);
+			var _data = DoSave();
+
+			if (_data == null)
+				return false;
+
+			// todo: must backup
+			if (!JsonHelper2.Serialize(FullPath(filename), _data))
+				return false;
+
+			return true;
 		}
 	}
 }

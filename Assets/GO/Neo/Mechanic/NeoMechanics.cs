@@ -207,17 +207,17 @@ namespace HX
 			mMechanicsDirty.Clear();
 		}
 
-		public void Build(NeoStructure _structure)
+		public void Build(NeoBlueprint _structure)
 		{
-			foreach (var _body in _structure.bodies)
+			foreach (var _body in _structure.GetBodyEnum())
 			{
-				var _bodyGO = NeoBodyDB.g[_body.type].MakeBody();
+				var _bodyGO = _body.assembly.staticData.MakeBody();
 				Add(_bodyGO, _body.coor);
 			}
 
-			foreach (var _arm in _structure.arms)
+			foreach (var _arm in _structure.GetArmEnum())
 			{
-				var _armGO = NeoArmDB.g[_arm.type].MakeArm();
+				var _armGO = _arm.assembly.staticData.MakeArm();
 				Add(_armGO, _arm.coor, _arm.side);
 			}
 

@@ -1,21 +1,30 @@
 {
-	"neoStructure": {
-		"bodies": [
-			{
-				"type": "BASE",
-				"coor": { "p": 1, "q": 0 }
+	"assembly": {
+		"allocID": 3,
+		
+		"storage": {
+			"bodies": {
+				"1": {
+					"type": "BASE"
+				}
 			},
-			{
-				"type": "BASE",
-				"coor": { "p": 2, "q": 0 }
+			"arms": {
+				"2": {
+					"type": "MOTOR"
+				}
 			}
-		],
-		"arms": [
-			{
-				"type": "MOTOR",
-				"coor": { "p": 0, "q": 0 },
-				"side": "L"
-			}
-		]
+		},
+		
+		"blueprint": {
+			"bodies": [],
+			
+			"arms": [
+				{
+					"assemblyID": 2,
+					"coor": { "p": 0, "q": 0 },
+					"side": "L"
+				}
+			]
+		}
 	}
 }

@@ -498,54 +498,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
---- !u!1 &992072546
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 992072547}
-  - 114: {fileID: 992072548}
-  m_Layer: 0
-  m_Name: NeoTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &992072547
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 992072546}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1889702013}
-  m_RootOrder: 0
---- !u!114 &992072548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 992072546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fc78977fff6876408683edaad780fb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mNeo: {fileID: 1898811800}
-  mStructure:
-    bodies: []
-    arms:
-    - type: 1
-      coor:
-        mP: 0
-        mQ: 0
-      side: 0
 --- !u!1001 &1185201991
 Prefab:
   m_ObjectHideFlags: 0
@@ -619,7 +571,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1889702013}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!114 &1323271258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,7 +691,7 @@ Transform:
   m_GameObject: {fileID: 1846601301}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 10, z: 0}
-  m_LocalScale: {x: .00465116277, y: .00465116277, z: .00465116277}
+  m_LocalScale: {x: .00438596494, y: .00438596494, z: .00438596494}
   m_Children:
   - {fileID: 991626194}
   - {fileID: 1293236601}
@@ -770,7 +722,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 992072547}
   - {fileID: 1323271257}
   m_Father: {fileID: 0}
   m_RootOrder: 2

@@ -1,5 +1,8 @@
-﻿namespace HX
+﻿using System;
+
+namespace HX
 {
+	[Serializable]
 	public enum NeoBodyType
 	{
 		BASE = 1,

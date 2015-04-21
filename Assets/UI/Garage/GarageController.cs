@@ -96,7 +96,7 @@ namespace HX.UI.Garage
 
 			mNeo = NeoUtil.InstantiateNeo();
 			mNeo.transform.SetParent(mNeoRoot, false);
-			mNeo.mechanics.Build(UserManager.neoStructure);
+			mNeo.mechanics.Build(AssemblyManager.blueprint);
 			mNeo.transform.SetLPos(CalNeoRivetPosition());
 
 			camera.neo = mNeo;

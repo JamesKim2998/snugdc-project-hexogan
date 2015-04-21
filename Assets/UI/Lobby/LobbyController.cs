@@ -28,7 +28,7 @@ namespace HX.UI
 
 			mGameStartButton.onClick.Add(new EventDelegate(OnClickStartButton));
 
-			mNeo.mechanics.Build(UserManager.neoStructure);
+			mNeo.mechanics.Build(AssemblyManager.blueprint);
 			mNeoButton.onClick += OnClickNeoButton;
 
 			mTransition.scene = "world";

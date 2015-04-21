@@ -10,8 +10,6 @@ namespace HX.UI
 		{
 			if (!DisketteManager.isLoaded)
 				DisketteManager.LoadOrDefault("test");
-
-			UserManager.neoStructure = DisketteManager.saveData.neoStructure;
 		}
 	}
 }

@@ -1,6 +1,30 @@
 {
-	"neoStructure": {
-		"bodies": [],
-		"arms": []
+	"assembly": {
+		"allocID": 3,
+		
+		"storage": {
+			"bodies": {
+				"1": {
+					"type": "BASE"
+				}
+			},
+			"arms": {
+				"2": {
+					"type": "MOTOR"
+				}
+			}
+		},
+		
+		"blueprint": {
+			"bodies": [],
+			
+			"arms": [
+				{
+					"assemblyID": 2,
+					"coor": { "p": 0, "q": 0 },
+					"side": "L"
+				}
+			]
+		}
 	}
 }

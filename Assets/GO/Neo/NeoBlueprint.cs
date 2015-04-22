@@ -79,9 +79,11 @@ namespace HX
 
 		private void Add(Body _body)
 		{
+			D.Assert(_body.assembly.availiable);
 			mBodies.allowIsland = true;
-			mBodies.TryAdd(_body.coor, new HexNode<Body>(_body));
+			var _ret = mBodies.TryAdd(_body.coor, new HexNode<Body>(_body));
 			mBodies.allowIsland = false;
+			if (_ret) _body.assembly.availiable = false;
 		}
 
 		public bool TryAdd(HexCoor _coor, HexEdge _side, ArmAssembly _assembly)
@@ -103,7 +105,9 @@ namespace HX
 
 		private void Add(Arm _arm)
 		{
-			mArms.TryAdd(_arm.coor, new HexNode<Arm>(_arm));
+			D.Assert(_arm.assembly.availiable);
+			if (mArms.TryAdd(_arm.coor, new HexNode<Arm>(_arm)))
+				_arm.assembly.availiable = false;
 		}
 
 		public IEnumerable<Body> GetBodyEnum()

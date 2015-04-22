@@ -20,11 +20,6 @@ namespace HX
 			blueprint = new NeoBlueprint();
 		}
 
-		public static bool TryAdd(HexCoor _coor, BodyAssembly _mechanic)
-		{
-			return blueprint.TryAdd(_coor, _mechanic);
-		}
-
 		public static bool Load(JObject _data)
 		{
 			try

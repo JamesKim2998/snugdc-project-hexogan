@@ -5,8 +5,6 @@ namespace HX.UI.Garage
 {
 	public class MaterialArmDND : MaterialDND
 	{
-		public NeoArmType type;
-
 		protected override void Locate(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)
 		{
 			var _posGlobal = _mechanics.transform.localToWorldMatrix.MultiplyPoint(NeoHex.Position(_body.coor) + NeoHex.Side(_side));
@@ -17,10 +15,10 @@ namespace HX.UI.Garage
 
 		protected override bool Attach(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)
 		{
-			var _data = NeoArmDB.g[type];
-			var _arm = NeoMechanicFactory.Create(_data);
-			_mechanics.Add(_arm, _body.coor, _side);
-			return true;
+			var _assembly = assembly as ArmAssembly;
+			D.Assert(_assembly != null);
+			var _arm = NeoMechanicFactory.Create(_assembly);
+			return _mechanics.Add(_arm, _body.coor, _side);
 		}
 	}
 }

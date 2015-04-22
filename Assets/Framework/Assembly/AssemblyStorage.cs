@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Gem;
 using Newtonsoft.Json.Linq;
 
@@ -43,14 +44,26 @@ namespace HX
 			_list.Add(_val);
 		}
 
-		public List<BodyAssembly> GetBodies(NeoBodyType _type)
+		public List<BodyAssembly> Get(NeoBodyType _type)
 		{
-			return mBodies.GetOrDefault(_type);
+			return mBodies.GetOrPut(_type);
 		}
 
-		public List<ArmAssembly> GetArms(NeoArmType _type)
+		public List<ArmAssembly> Get(NeoArmType _type)
 		{
-			return mArms.GetOrDefault(_type);
+			return mArms.GetOrPut(_type);
+		}
+
+		public IEnumerable<BodyAssembly> GetAvailable(NeoBodyType _type)
+		{
+			var _assemblies = Get(_type);
+			return _assemblies.Where(_obj => _obj.availiable);
+		}
+
+		public IEnumerable<ArmAssembly> GetAvailable(NeoArmType _type)
+		{
+			var _assemblies = Get(_type);
+			return _assemblies.Where(_obj => _obj.availiable);
 		}
 
 		public static AssemblyStorage Load(JObject _data)

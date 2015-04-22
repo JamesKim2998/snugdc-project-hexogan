@@ -1,4 +1,6 @@
-﻿using Gem;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Gem;
 using UnityEngine;
 
 namespace HX.UI.Garage
@@ -6,7 +8,7 @@ namespace HX.UI.Garage
 	public class MaterialCell : MonoBehaviour
 	{
 		[SerializeField] public Vector2 mItemPosition;
-		[SerializeField] public UILabel mNameLabel;
+		[SerializeField] public UILabel mCountLabel;
 
 		private NeoMechanicData mData;
 
@@ -14,34 +16,75 @@ namespace HX.UI.Garage
 		{
 			mData = _data;
 
-			mNameLabel.text = _data.name;
+			SetCount(GetAvailable().Count());
 
 			var _item = mData.materialPrf.Instantiate();
 			_item.transform.SetParent(transform, false);
 			_item.transform.localPosition = mItemPosition;
 		}
 
-		public MaterialDND MakeDragAndDrop()
+		private void SetCount(int _val)
 		{
-			var _material = mData.materialPrf.Instantiate();
-			_material.transform.SetParent(GarageController.g.uiRoot.transform, false);
+			mCountLabel.text = "x" + _val;
+		}
 
-			MaterialDND _dnd = null;
+		private IEnumerable<Assembly> GetAvailable()
+		{
+
+			var _storage = AssemblyManager.storage;
 
 			switch (mData.mechanicType)
 			{
 				case NeoMechanicType.BODY:
-					var _bodyDND = _material.AddComponent<MaterialBodyDND>();
-					_bodyDND.type = ((NeoBodyData)mData).key;
-					_dnd = _bodyDND;
-					break;
+				{
+					var _type = ((NeoBodyData)mData).key;
+					return _storage.GetAvailable(_type).Cast<Assembly>();
+				}
 				case NeoMechanicType.ARM:
-					var _armDND = _material.AddComponent<MaterialArmDND>();
-					_armDND.type = ((NeoArmData)mData).key;
-					_dnd = _armDND;
-					break;
+				{
+					var _type = ((NeoArmData)mData).key;
+					return _storage.GetAvailable(_type).Cast<Assembly>();
+				}
 			}
 
+			D.Assert(false);
+			return null;
+		}
+
+		private Assembly GetFirstAssembly()
+		{
+			return GetAvailable().FirstOrDefault();
+		}
+
+		private MaterialDND MakeDragAndDrop()
+		{
+			var _assembly = GetFirstAssembly();
+			if (_assembly == null)
+			{
+				L.E("assembly not found.");
+				return null;
+			}
+
+			var _material = mData.materialPrf.Instantiate();
+			_material.transform.SetParent(GarageController.g.uiRoot.transform, false);
+
+			MaterialDND _dnd;
+
+			switch (mData.mechanicType)
+			{
+				case NeoMechanicType.BODY:
+					_dnd = _material.AddComponent<MaterialBodyDND>();
+					break;
+				case NeoMechanicType.ARM:
+					_dnd = _material.AddComponent<MaterialArmDND>();
+					break;
+				default:
+					D.Assert(false);
+					Destroy(_material.gameObject);
+					return null;
+			}
+
+			_dnd.assembly = _assembly;
 			return _dnd;
 		}
 
@@ -49,6 +92,7 @@ namespace HX.UI.Garage
 		{
 			if (mData == null) return;
 			var _dnd = MakeDragAndDrop();
+			if (!_dnd) return;
 			_dnd.ForcedStick();
 			_dnd.offset = Vector2.zero;
 		}

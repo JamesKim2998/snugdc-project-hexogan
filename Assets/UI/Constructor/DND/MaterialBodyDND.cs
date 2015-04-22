@@ -5,8 +5,6 @@ namespace HX.UI.Garage
 {
 	public class MaterialBodyDND : MaterialDND
 	{
-		public NeoBodyType type;
-
 		protected override bool IsLocatable(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)
 		{
 			if (!base.IsLocatable(_mechanics, _body, _side))
@@ -40,10 +38,9 @@ namespace HX.UI.Garage
 
 		protected override bool Attach(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)
 		{
-			var _data = NeoBodyDB.g[type];
-			var _newBody = NeoMechanicFactory.Create(_data);
-			_mechanics.Add(_newBody, _body.coor + _side);
-			return true;
+			var _bodyAssembly = assembly as BodyAssembly;
+			var _newBody = NeoMechanicFactory.Create(_bodyAssembly);
+			return _mechanics.Add(_newBody, _body.coor + _side);
 		}
 	}
 }

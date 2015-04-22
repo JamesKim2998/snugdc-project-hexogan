@@ -15,7 +15,7 @@ namespace HX
 		public readonly AssemblyID id;
 		public readonly NeoMechanicData staticData;
 
-		public bool availiable;
+		public bool availiable = true;
 
 		protected Assembly(NeoMechanicData _staticData)
 		{

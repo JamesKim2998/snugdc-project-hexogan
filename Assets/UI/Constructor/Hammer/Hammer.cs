@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Gem;
+using UnityEngine;
 
 namespace HX.UI.Garage
 {
@@ -52,19 +53,31 @@ namespace HX.UI.Garage
 					return false;
 			}
 
+			OnDisassemble(_body);
+
 			if (_body.parent)
 				_body.parent.Remove(_body, true);
 			Destroy(_body.gameObject);
+
 			return true;
 		}
 
 
 		private static bool TryDestroyArm(NeoArm _arm)
 		{
+			OnDisassemble(_arm);
+
 			if (_arm.parent)
 				_arm.parent.Remove(_arm);
 			Destroy(_arm.gameObject);
+
 			return true;
+		}
+
+		private static void OnDisassemble(NeoMechanic _mechanic)
+		{
+			var _cmd = new DisassembleCommand { mechanic = _mechanic };
+			GarageEvents.onDisassemble.CheckAndCall(_cmd);
 		}
 	}
 }

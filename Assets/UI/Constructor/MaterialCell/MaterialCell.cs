@@ -18,11 +18,13 @@ namespace HX.UI.Garage
 		void Start()
 		{
 			GarageEvents.onAssemble += OnAssemble;
+			GarageEvents.onDisassemble += OnDisassemble;
 		}
 
 		void OnDestroy()
 		{
 			GarageEvents.onAssemble -= OnAssemble;
+			GarageEvents.onDisassemble -= OnDisassemble;
 		}
 
 		public void SetData(NeoMechanicData _data)
@@ -116,6 +118,11 @@ namespace HX.UI.Garage
 		}
 
 		public void OnAssemble(AssembleCommand _command)
+		{
+			Invoke("RefreshCount", 0);
+		}
+
+		private void OnDisassemble(DisassembleCommand _obj)
 		{
 			Invoke("RefreshCount", 0);
 		}

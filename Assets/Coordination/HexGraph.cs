@@ -116,8 +116,28 @@ namespace Gem
 		public void Remove(HexCoor _coor)
 		{
 			var _node = Get(_coor);
-			if (_node == null) return;
+
+			if (_node == null)
+			{
+				L.W("node for " + _coor + " not found.");
+				return;
+			}
+
 			Remove(_node);
+		}
+
+		public T GetAndRemove(HexCoor _coor)
+		{
+			var _node = Get(_coor);
+
+			if (_node == null)
+			{
+				L.W("node for " + _coor + " not found.");
+				return default(T);
+			}
+
+			Remove(_node);
+			return _node.data;
 		}
 
 		public void Remove(HexNode<T> _node)

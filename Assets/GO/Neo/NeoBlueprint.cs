@@ -41,26 +41,34 @@ namespace HX
 		private readonly HexGraph<Body> mBodies = new HexGraph<Body>();
 		private readonly HexGraph<Arm> mArms = new HexGraph<Arm>();
 
+		private readonly Dictionary<AssemblyID, HexCoor> mBodyToCoor = new Dictionary<AssemblyID, HexCoor>();
+		private readonly Dictionary<AssemblyID, HexCoor> mArmToCoor = new Dictionary<AssemblyID, HexCoor>(); 
+
 		public NeoBlueprint()
 		{
 			mBodies.allowIsland = false;
 			mArms.allowIsland = true;
 		}
 
-		private static bool BeforeAdd(Assembly _own)
+		private static bool BeforeAdd(Assembly _assembly)
 		{
-			if (!_own.availiable)
+			if (!_assembly.availiable)
 			{
-				L.E("mechanic is not available.");
+				L.E("assembly is not available.");
 				return false;
 			}
 
 			return true;
 		}
 
-		private static void MarkNotAvailable(Assembly _own)
+		private static void MarkAvailable(Assembly _assembly)
 		{
-			_own.availiable = false;
+			_assembly.availiable = true;
+		}
+
+		private static void MarkNotAvailable(Assembly _assembly)
+		{
+			_assembly.availiable = false;
 		}
 
 		public bool TryAdd(HexCoor _coor, BodyAssembly _assembly, bool _checkIsland = true)
@@ -69,23 +77,24 @@ namespace HX
 				return false;
 
 			var _data = new Body { coor = _coor, assembly = _assembly };
-			var _node = new HexNode<Body>(_data);
-
-			mBodies.allowIsland = !_checkIsland;
-			var _ret = mBodies.TryAdd(_coor, _node);
-			mBodies.allowIsland = false;
-
-			if (_ret) MarkNotAvailable(_assembly);
-			return _ret;
+			return Add(_data, _checkIsland);
 		}
 
-		private void Add(Body _body)
+		private bool Add(Body _body, bool _checkIsland)
 		{
 			D.Assert(_body.assembly.availiable);
-			mBodies.allowIsland = true;
+
+			mBodies.allowIsland = !_checkIsland;
 			var _ret = mBodies.TryAdd(_body.coor, new HexNode<Body>(_body));
 			mBodies.allowIsland = false;
-			if (_ret) _body.assembly.availiable = false;
+
+			if (_ret)
+			{
+				mBodyToCoor.Add(_body.assembly, _body.coor);
+				MarkNotAvailable(_body.assembly);
+			}
+
+			return _ret;
 		}
 
 		public bool TryAdd(HexCoor _coor, HexEdge _side, ArmAssembly _assembly)
@@ -98,18 +107,39 @@ namespace HX
 				return false;
 
 			var _data = new Arm { bodyCoor = _coor, side = _side, assembly = _assembly };
-			var _node = new HexNode<Arm>(_data);
+			return Add(_data);
+		}
 
-			var _ret = mArms.TryAdd(_data.armCoor, _node);
-			if (_ret) MarkNotAvailable(_assembly);
+		private bool Add(Arm _arm)
+		{
+			D.Assert(_arm.assembly.availiable);
+			var _ret = mArms.TryAdd(_arm.armCoor, new HexNode<Arm>(_arm));
+			if (_ret)
+			{
+				MarkNotAvailable(_arm.assembly);
+				mArmToCoor.Add(_arm.assembly, _arm.armCoor);
+			}
 			return _ret;
 		}
 
-		private void Add(Arm _arm)
+		public bool RemoveBody(AssemblyID _id)
 		{
-			D.Assert(_arm.assembly.availiable);
-			if (mArms.TryAdd(_arm.armCoor, new HexNode<Arm>(_arm)))
-				_arm.assembly.availiable = false;
+			HexCoor _coor;
+			if (!mBodyToCoor.TryGet(_id, out _coor))
+				return false;
+			var _body = mBodies.GetAndRemove(_coor);
+			MarkAvailable(_body.assembly);
+			return mBodyToCoor.TryRemove(_id);
+		}
+
+		public bool RemoveArm(AssemblyID _id)
+		{
+			HexCoor _coor;
+			if (!mArmToCoor.TryGet(_id, out _coor))
+				return false;
+			var _arm = mArms.GetAndRemove(_coor);
+			MarkAvailable(_arm.assembly);
+			return mArmToCoor.TryRemove(_id);
 		}
 
 		public IEnumerable<Body> GetBodyEnum()
@@ -136,7 +166,7 @@ namespace HX
 
 				var _tmp = _body;
 				_tmp.assembly = _assembly;
-				_ret.Add(_tmp);
+				_ret.Add(_tmp, false);
 			}
 
 			foreach (var _arm in _arms)

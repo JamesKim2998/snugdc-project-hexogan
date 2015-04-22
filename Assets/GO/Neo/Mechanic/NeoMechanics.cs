@@ -215,13 +215,13 @@ namespace HX
 			{
 				if (_body.type == NeoBodyType.CORE)
 					continue;
-				var _bodyGO = _body.assembly.staticData.MakeBody();
+				var _bodyGO = NeoMechanicFactory.Create(_body.assembly);
 				Add(_bodyGO, _body.coor);
 			}
 
 			foreach (var _arm in _structure.GetArmEnum())
 			{
-				var _armGO = _arm.assembly.staticData.MakeArm();
+				var _armGO = NeoMechanicFactory.Create(_arm.assembly);
 				Add(_armGO, _arm.bodyCoor, _arm.side);
 			}
 

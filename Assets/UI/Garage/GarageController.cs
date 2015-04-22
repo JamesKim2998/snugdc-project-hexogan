@@ -36,6 +36,7 @@ namespace HX.UI.Garage
 			mConstructorRivetX = mConstructor.transform.localPosition.x;
 
 			GarageEvents.onAssemble += OnAssemble;
+			GarageEvents.onDisassemble += OnDisassemble;
 
 			if (!g)
 				g = this;
@@ -51,6 +52,7 @@ namespace HX.UI.Garage
 				D.Assert(false);
 
 			GarageEvents.onAssemble -= OnAssemble;
+			GarageEvents.onDisassemble -= OnDisassemble;
 		}
 
 		void Update()
@@ -130,16 +132,35 @@ namespace HX.UI.Garage
 			}
 		}
 
-		public void OnAssemble(AssembleCommand _command)
+		public void OnAssemble(AssembleCommand _cmd)
 		{
-			var _assembly = _command.assembly;
+			var _assembly = _cmd.assembly;
 			switch (_assembly.mechanicType)
 			{
 				case NeoMechanicType.BODY:
-					AssemblyManager.blueprint.TryAdd(_command.coor, (BodyAssembly)_assembly);
+					AssemblyManager.blueprint.TryAdd(_cmd.coor, (BodyAssembly)_assembly);
 					break;
 				case NeoMechanicType.ARM:
-					AssemblyManager.blueprint.TryAdd(_command.body.coor, _command.side, (ArmAssembly)_assembly);
+					AssemblyManager.blueprint.TryAdd(_cmd.body.coor, _cmd.side, (ArmAssembly)_assembly);
+					break;
+				default:
+					D.Assert(false);
+					break;
+			}
+		}
+
+		public void OnDisassemble(DisassembleCommand _cmd)
+		{
+			var _mechanic = _cmd.mechanic;
+			var _assemblyID = _cmd.mechanic.assemblyID;
+
+			switch (_mechanic.mechanicType)
+			{
+				case NeoMechanicType.BODY:
+					AssemblyManager.blueprint.RemoveBody(_assemblyID);
+					break;
+				case NeoMechanicType.ARM:
+					AssemblyManager.blueprint.RemoveArm(_assemblyID);
 					break;
 				default:
 					D.Assert(false);

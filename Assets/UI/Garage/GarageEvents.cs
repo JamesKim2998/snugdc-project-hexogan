@@ -12,8 +12,14 @@ namespace HX.UI.Garage
 		public Assembly assembly;
 	}
 
+	public struct DisassembleCommand
+	{
+		public NeoMechanic mechanic;
+	}
+
 	public static class GarageEvents
 	{
 		public static Action<AssembleCommand> onAssemble;
+		public static Action<DisassembleCommand> onDisassemble;
 	}
 }

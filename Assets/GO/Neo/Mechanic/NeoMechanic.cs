@@ -7,6 +7,7 @@ namespace HX
 	public class NeoMechanic : MonoBehaviour
 	{
 		public NeoMechanicType mechanicType { get; protected set; }
+		public AssemblyID assemblyID;
 
 		public int mass = 1;
 		public Vector2 com = Vector2.zero;

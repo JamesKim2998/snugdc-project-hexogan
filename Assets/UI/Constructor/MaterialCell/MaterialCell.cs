@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Gem;
 using UnityEngine;
@@ -12,15 +13,32 @@ namespace HX.UI.Garage
 
 		private NeoMechanicData mData;
 
+		public Func<AssembleCommand, bool> confirmAssemble;
+
+		void Start()
+		{
+			GarageEvents.onAssemble += OnAssemble;
+		}
+
+		void OnDestroy()
+		{
+			GarageEvents.onAssemble -= OnAssemble;
+		}
+
 		public void SetData(NeoMechanicData _data)
 		{
 			mData = _data;
 
-			SetCount(GetAvailable().Count());
-
 			var _item = mData.materialPrf.Instantiate();
 			_item.transform.SetParent(transform, false);
 			_item.transform.localPosition = mItemPosition;
+
+			RefreshCount();
+		}
+
+		private void RefreshCount()
+		{
+			SetCount(GetAvailable().Count());
 		}
 
 		private void SetCount(int _val)
@@ -95,6 +113,11 @@ namespace HX.UI.Garage
 			if (!_dnd) return;
 			_dnd.ForcedStick();
 			_dnd.offset = Vector2.zero;
+		}
+
+		public void OnAssemble(AssembleCommand _command)
+		{
+			Invoke("RefreshCount", 0);
 		}
 	}
 }

@@ -13,12 +13,14 @@ namespace HX.UI.Garage
 			transform.SetEulerZ(_body.transform.eulerAngles.z + _side.ToDeg());
 		}
 
-		protected override bool Attach(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)
+		protected override bool DoAttach(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)
 		{
 			var _assembly = assembly as ArmAssembly;
 			D.Assert(_assembly != null);
 			var _arm = NeoMechanicFactory.Create(_assembly);
-			return _mechanics.Add(_arm, _body.coor, _side);
+			var _ret = _mechanics.Add(_arm, _body.coor, _side);
+			if (!_ret) Destroy(_arm.gameObject);
+			return _ret;
 		}
 	}
 }

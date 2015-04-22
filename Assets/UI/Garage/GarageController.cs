@@ -35,6 +35,8 @@ namespace HX.UI.Garage
 
 			mConstructorRivetX = mConstructor.transform.localPosition.x;
 
+			GarageEvents.onAssemble += OnAssemble;
+
 			if (!g)
 				g = this;
 			else
@@ -47,6 +49,8 @@ namespace HX.UI.Garage
 				g = null;
 			else 
 				D.Assert(false);
+
+			GarageEvents.onAssemble -= OnAssemble;
 		}
 
 		void Update()
@@ -123,6 +127,23 @@ namespace HX.UI.Garage
 				mNeoController = null;
 				ReplaceNeo();
 				camera.ZoomOut();
+			}
+		}
+
+		public void OnAssemble(AssembleCommand _command)
+		{
+			var _assembly = _command.assembly;
+			switch (_assembly.mechanicType)
+			{
+				case NeoMechanicType.BODY:
+					AssemblyManager.blueprint.TryAdd(_command.coor, (BodyAssembly)_assembly);
+					break;
+				case NeoMechanicType.ARM:
+					AssemblyManager.blueprint.TryAdd(_command.body.coor, _command.side, (ArmAssembly)_assembly);
+					break;
+				default:
+					D.Assert(false);
+					break;
 			}
 		}
 

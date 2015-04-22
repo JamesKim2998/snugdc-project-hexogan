@@ -213,6 +213,8 @@ namespace HX
 		{
 			foreach (var _body in _structure.GetBodyEnum())
 			{
+				if (_body.type == NeoBodyType.CORE)
+					continue;
 				var _bodyGO = _body.assembly.staticData.MakeBody();
 				Add(_bodyGO, _body.coor);
 			}
@@ -220,7 +222,7 @@ namespace HX
 			foreach (var _arm in _structure.GetArmEnum())
 			{
 				var _armGO = _arm.assembly.staticData.MakeArm();
-				Add(_armGO, _arm.coor, _arm.side);
+				Add(_armGO, _arm.bodyCoor, _arm.side);
 			}
 
 			Build();

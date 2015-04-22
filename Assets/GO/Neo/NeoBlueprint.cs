@@ -28,8 +28,10 @@ namespace HX
 			[JsonIgnore]
 			public NeoArmType type { get { return assembly.type; } }
 
-			public HexCoor coor;
+			public HexCoor bodyCoor;
 			public HexEdge side;
+
+			public HexCoor armCoor { get { return bodyCoor + side; } }
 
 			public AssemblyID assemblyID;
 			[JsonIgnore]
@@ -95,10 +97,10 @@ namespace HX
 			if (!mBodies.TryGet(_coor, out _body))
 				return false;
 
-			var _data = new Arm { coor = _coor, side = _side, assembly = _assembly };
+			var _data = new Arm { bodyCoor = _coor, side = _side, assembly = _assembly };
 			var _node = new HexNode<Arm>(_data);
-			
-			var _ret = mArms.TryAdd(_coor, _node);
+
+			var _ret = mArms.TryAdd(_data.armCoor, _node);
 			if (_ret) MarkNotAvailable(_assembly);
 			return _ret;
 		}
@@ -106,7 +108,7 @@ namespace HX
 		private void Add(Arm _arm)
 		{
 			D.Assert(_arm.assembly.availiable);
-			if (mArms.TryAdd(_arm.coor, new HexNode<Arm>(_arm)))
+			if (mArms.TryAdd(_arm.armCoor, new HexNode<Arm>(_arm)))
 				_arm.assembly.availiable = false;
 		}
 

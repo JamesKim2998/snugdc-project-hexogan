@@ -24,7 +24,7 @@ namespace HX
 		{
 			try
 			{
-				Assembly.sAllocID = (AssemblyID)(int)_data[ALLOC_ID];
+				Assembly.allocID = (AssemblyID)(int)_data[ALLOC_ID];
 
 				var _dataStorage = _data[STORAGE] as JObject;
 				if (_dataStorage != null)
@@ -53,7 +53,7 @@ namespace HX
 
 			try
 			{
-				_data[ALLOC_ID] = (int)Assembly.sAllocID;
+				_data[ALLOC_ID] = (int)Assembly.allocID;
 				_data[STORAGE] = storage.Save();
 				_data[BLUEPRINT] = blueprint.Save();
 			}

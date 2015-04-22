@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace HX.UI.Garage
 {
+
 	public abstract class MaterialDND : DragAndDrop
 	{
 		public Assembly assembly;
 
-		public Action<NeoMechanics, NeoBody, HexEdge, Assembly> onAttach;
- 
+		public static Func<AssembleCommand, bool> confirmAssemble;
+
 		protected override void Start()
 		{
 			base.Start();
@@ -41,7 +42,34 @@ namespace HX.UI.Garage
 		}
 
 		protected abstract void Locate(NeoMechanics _mechanics, NeoBody _body, HexEdge _side);
-		protected abstract bool Attach(NeoMechanics _mechanics, NeoBody _body, HexEdge _side);
+
+		private bool Attach(NeoMechanics _mechanics, NeoBody _body, HexEdge _side)
+		{
+			var _command = new AssembleCommand
+			{
+				mechanics = _mechanics,
+				body = _body,
+				side = _side,
+				assembly = assembly,
+			};
+
+			if (confirmAssemble != null)
+			{
+				if (confirmAssemble(_command))
+				{
+					L.W("confirm failed.");
+					return false;
+				}
+			}
+
+			var _success = DoAttach(_mechanics, _body, _side);
+			if (_success)
+				GarageEvents.onAssemble.CheckAndCall(_command);
+
+			return _success;
+		}
+
+		protected abstract bool DoAttach(NeoMechanics _mechanics, NeoBody _body, HexEdge _side);
 
 		private bool Pivot(bool _attach)
 		{
@@ -77,11 +105,7 @@ namespace HX.UI.Garage
 			Locate(_mechanics, _body, _side);
 
 			if (_attach)
-			{
-				var _success = Attach(_mechanics, _body, _side);
-				if (_success && (onAttach != null))
-					onAttach(_mechanics, _body, _side, assembly);
-			}
+				Attach(_mechanics, _body, _side);
 
 			return true;
 		}

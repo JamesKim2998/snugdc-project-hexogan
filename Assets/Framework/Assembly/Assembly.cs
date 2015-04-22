@@ -10,16 +10,18 @@ namespace HX
 
 	public class Assembly
 	{
-		public static AssemblyID sAllocID;
+		public static AssemblyID allocID;
 
 		public readonly AssemblyID id;
+
+		public NeoMechanicType mechanicType { get { return staticData.mechanicType; } }
 		public readonly NeoMechanicData staticData;
 
 		public bool availiable = true;
 
 		protected Assembly(NeoMechanicData _staticData)
 		{
-			id = sAllocID++;
+			id = allocID++;
 			staticData = _staticData;
 		}
 

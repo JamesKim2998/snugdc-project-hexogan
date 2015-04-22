@@ -89,7 +89,7 @@ namespace Gem
 				return false;
 			}
 
-			if (allowIsland && !Neighbors(_coor).Any())
+			if (!allowIsland && !Neighbors(_coor).Any())
 			{
 				L.E("there is no neighbor around " + _coor + ". ignore.");
 				return false;

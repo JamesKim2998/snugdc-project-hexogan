@@ -12,6 +12,11 @@ namespace HX
 
 		private readonly HexGraph<Cell> mCells = new HexGraph<Cell>();
 
+		void Awake()
+		{
+			mCells.allowIsland = true;
+		}
+
 		public bool TryGet(HexCoor _coor, out HexNode<Cell> _out)
 		{
 			return mCells.TryGet(_coor, out _out);

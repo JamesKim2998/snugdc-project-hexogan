@@ -17,7 +17,12 @@ namespace HX
 			}
 		}
 
-		void Setup(WorldTransitionData _data)
+		private void Setup(WorldTransitionData _data)
+		{
+			SetupGrid(_data.tmxPath);
+		}
+
+		public void SetupGrid(Path _tmxPath)
 		{
 			if (!mCellGrid.empty)
 			{
@@ -29,7 +34,7 @@ namespace HX
 
 			try
 			{
-				_doc = new TiledSharp.Document(_data.tmxPath);
+				_doc = new TiledSharp.Document(_tmxPath);
 			}
 			catch (Exception e)
 			{

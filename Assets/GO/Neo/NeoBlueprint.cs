@@ -18,8 +18,21 @@ namespace HX
 			public HexCoor coor;
 
 			public AssemblyID assemblyID;
+
 			[JsonIgnore]
-			public BodyAssembly assembly;
+			private BodyAssembly mAssembly;
+			[JsonIgnore]
+			public BodyAssembly assembly
+			{
+				get { return mAssembly; }
+				set
+				{
+					D.Assert(assemblyID == default(AssemblyID)
+						|| assemblyID == value);
+					assemblyID = value;
+					mAssembly = value;
+				}
+			}
 		}
 
 		[Serializable]
@@ -34,8 +47,21 @@ namespace HX
 			public HexCoor armCoor { get { return bodyCoor + side; } }
 
 			public AssemblyID assemblyID;
+
 			[JsonIgnore]
-			public ArmAssembly assembly;
+			private ArmAssembly mAssembly;
+			[JsonIgnore]
+			public ArmAssembly assembly
+			{
+				get { return mAssembly; }
+				set
+				{
+					D.Assert(assemblyID == default(AssemblyID) 
+						|| assemblyID == value);
+					assemblyID = value;
+					mAssembly = value;
+				}
+			}
 		}
 
 		private readonly HexGraph<Body> mBodies = new HexGraph<Body>();

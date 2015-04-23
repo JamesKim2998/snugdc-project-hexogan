@@ -11,8 +11,9 @@ namespace HX
 
 	public static class TransitionManager
 	{
+		public const string SCENE_LOBBY = "Lobby";
 		public const string SCENE_GARAGE = "Garage";
-
+		
 		public static bool isWorldDirty { get; private set; }
 
 		public static WorldTransitionData world { get; private set; }
@@ -28,12 +29,20 @@ namespace HX
 			return true;
 		}
 
+		private static void StartScene(string _scene)
+		{
+			if (!BeforeStart()) return;
+			Application.LoadLevel(_scene);
+		}
+
+		public static void StartLobby()
+		{
+			StartScene(SCENE_LOBBY);
+		}
+
 		public static void StartGarage()
 		{
-			if (!BeforeStart())
-				return;
-
-			Application.LoadLevel(SCENE_GARAGE);
+			StartScene(SCENE_GARAGE);
 		}
 
 		public static void StartWorld(WorldTransitionData _data)

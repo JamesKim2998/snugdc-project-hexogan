@@ -172,5 +172,10 @@ namespace HX.UI.Garage
 		{
 			Possess(!isPossessed);
 		}
+
+		public void OnClickLobbyButton()
+		{
+			TransitionManager.StartLobby();
+		}
 	}
 }

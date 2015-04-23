@@ -14,7 +14,15 @@ namespace HX
 		void Awake()
 		{
 			mechanics = new NeoMechanics(this);
-			if (core) DoSetCore();
+		}
+
+		void Start()
+		{
+			if (core)
+			{
+				var _parent = core.body.parent;
+				if (!_parent) DoSetCore();	
+			}
 		}
 
 		void Update()

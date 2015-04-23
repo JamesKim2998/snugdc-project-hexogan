@@ -96,7 +96,35 @@ namespace HX
 
 		public JObject Save()
 		{
-			return null;
+			var _ret = new JObject();
+			var _saveBodies = new JObject();
+			_ret["bodies"] = _saveBodies;
+			var _saveArms = new JObject();
+			_ret["arms"] = _saveArms;
+
+			foreach (var _bodies in mBodies)
+			{
+				foreach (var _body in _bodies.Value)
+				{
+					var _idStr = ((int) _body.id).ToString();
+					var _data = new JObject();
+					_body.Write(_data);
+					_saveBodies[_idStr] = _data;
+				}
+			}
+
+			foreach (var _arms in mArms)
+			{
+				foreach (var _arm in _arms.Value)
+				{
+					var _idStr = ((int)_arm.id).ToString();
+					var _data = new JObject();
+					_arm.Write(_data);
+					_saveArms[_idStr] = _data;
+				}
+			}
+
+			return _ret;
 		}
 
 		private static BodyAssembly MakeBody(string _key, JObject _data)

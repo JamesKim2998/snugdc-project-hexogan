@@ -36,6 +36,10 @@ namespace HX
 			
 		}
 
+		public virtual void Write(JObject _data)
+		{
+		}
+
 		public static implicit operator AssemblyID(Assembly _this)
 		{
 			return _this.id;
@@ -61,6 +65,12 @@ namespace HX
 		{
 			base.Read(_data);
 		}
+
+		public override void Write(JObject _data)
+		{
+			base.Write(_data);
+			_data["type"] = staticData.key.ToString();
+		}
 	}
 
 	public class ArmAssembly : Assembly
@@ -81,6 +91,12 @@ namespace HX
 		public override void Read(JObject _data)
 		{
 			base.Read(_data);
+		}
+
+		public override void Write(JObject _data)
+		{
+			base.Write(_data);
+			_data["type"] = staticData.key.ToString();
 		}
 	}
 

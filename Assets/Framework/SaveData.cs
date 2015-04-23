@@ -30,8 +30,7 @@ namespace HX
 			{
 				var _assembly = AssemblyManager.Save();
 				if (_assembly == null) break;
-				_data[ASSEMBLY] = _data;
-				
+				_data[ASSEMBLY] = _assembly;
 
 				return _data;
 			} while (false);

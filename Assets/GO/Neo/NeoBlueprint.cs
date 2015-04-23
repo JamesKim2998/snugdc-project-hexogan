@@ -186,8 +186,8 @@ namespace HX
 		public JObject Save()
 		{
 			var _ret = new JObject();
-			_ret["bodies"] = new JObject(mBodies.ToList());
-			_ret["arms"] = new JObject(mArms.ToList());
+			_ret["bodies"] = JToken.FromObject(mBodies.Select(x => x.Value.data).ToList());
+			_ret["arms"] = JToken.FromObject(mArms.Select(x => x.Value.data).ToList());
 			return _ret;
 		}
 	}

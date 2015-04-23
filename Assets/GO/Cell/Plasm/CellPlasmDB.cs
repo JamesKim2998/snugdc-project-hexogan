@@ -13,7 +13,7 @@ namespace HX
 				if (sGlobal == null)
 				{
 #if UNITY_EDITOR
-					sGlobal = Asset.Load<ScriptableObject>(new FullPath("Assets/DB/Cell/CellPlasmDB.asset")) as CellPlasmDB;
+					sGlobal = Asset.Load<ScriptableObject>(new Path("Assets/DB/Cell/CellPlasmDB.asset")) as CellPlasmDB;
 #endif
 				}
 

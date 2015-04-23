@@ -47,7 +47,7 @@ namespace HX.UI
 
 		void OnSelectAnatomyVertex(AnatomyVertexView v)
 		{
-			mTransition.tmxPath = mAnatomy.data.tmxDir + v.data.tmx;
+			mTransition.tmxPath = new Path(mAnatomy.data.tmxDir + v.data.tmx);
 		}
 
 		static void OnClickNeoButton()

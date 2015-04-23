@@ -6,7 +6,7 @@ namespace HX
 	public struct WorldTransitionData
 	{
 		public string scene;
-		public string tmxPath;
+		public Path tmxPath;
 	}
 
 	public static class TransitionManager

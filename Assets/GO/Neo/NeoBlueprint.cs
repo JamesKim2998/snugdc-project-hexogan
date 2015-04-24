@@ -178,6 +178,13 @@ namespace HX
 			return mArms.Select(_node => _node.Value.data);
 		}
 
+		public Neo Instantiate()
+		{
+			var _neo = NeoUtil.InstantiateNeo();
+			_neo.mechanics.Build(this);
+			return _neo;
+		}
+
 		public static NeoBlueprint Load(AssemblyStorage _storage, JObject _data)
 		{
 			var _ret = new NeoBlueprint();

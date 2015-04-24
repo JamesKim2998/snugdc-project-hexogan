@@ -11,7 +11,7 @@ namespace HX
 
 		public CellGridData(TiledSharp.Map _map)
 		{
-			foreach (var kv in _map.TraverseWithHexCoorAndTile("plasm"))
+			foreach (var kv in _map.TraverseWithCoorAndTile("plasm"))
 			{
 				CellPlasmType _type;
 				var _props = kv.Second.Properties;
@@ -21,7 +21,7 @@ namespace HX
 				cells[kv.First] = new CellData { plasm = _type };
 			}
 
-			foreach (var kv in _map.TraverseWithHexCoorAndTile("wall"))
+			foreach (var kv in _map.TraverseWithCoorAndTile("wall"))
 			{
 				CellWallType _type;
 				var _props = kv.Second.Properties;

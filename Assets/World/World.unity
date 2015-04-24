@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 945aa32cfbc597f45a7fd6fb4eb3b61b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mWorldRoot: {fileID: 1929245963}
   mCellGrid: {fileID: 923130637}
 --- !u!4 &446440920
 Transform:
@@ -169,7 +170,7 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 11e2151f302a28041ae0ed4ecec053d6, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &609841695
+--- !u!4 &609841695 stripped
 Transform:
   m_PrefabParentObject: {fileID: 498234, guid: 11e2151f302a28041ae0ed4ecec053d6, type: 2}
   m_PrefabInternal: {fileID: 609841694}
@@ -283,10 +284,50 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62c1456cdb3044242aa8f2e031784360, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &1529989981
+--- !u!4 &1529989981 stripped
 Transform:
   m_PrefabParentObject: {fileID: 482888, guid: 62c1456cdb3044242aa8f2e031784360, type: 2}
   m_PrefabInternal: {fileID: 1529989980}
+--- !u!1 &1631105658
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1631105659}
+  - 114: {fileID: 1631105660}
+  m_Layer: 0
+  m_Name: _debug
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &1631105659
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1631105658}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+--- !u!114 &1631105660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1631105658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d18c7ac2eda23a4fa5e5b1b4b8be855, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filename: test
 --- !u!1 &1929245962
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,7 +356,7 @@ Transform:
   - {fileID: 446440920}
   - {fileID: 923130636}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1 &2032458717
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,4 +440,4 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2

@@ -100,9 +100,8 @@ namespace HX.UI.Garage
 				Destroy(mNeo.gameObject);
 			}
 
-			mNeo = NeoUtil.InstantiateNeo();
+			mNeo = AssemblyManager.blueprint.Instantiate();
 			mNeo.transform.SetParent(mNeoRoot, false);
-			mNeo.mechanics.Build(AssemblyManager.blueprint);
 			mNeo.transform.SetLPos(CalNeoRivetPosition());
 
 			camera.neo = mNeo;

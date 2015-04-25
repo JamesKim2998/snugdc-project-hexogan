@@ -104,6 +104,7 @@ namespace HX
 			mNeo.transform.SetParent(mWorldRoot, false);
 			mNeo.transform.position = (Vector2)mStartPosition;
 			mNeoController = mNeo.AddComponent<NeoController>();
+			mNeoController.neo = mNeo;
 		}
 	}
 }

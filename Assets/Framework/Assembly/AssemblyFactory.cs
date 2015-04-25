@@ -5,22 +5,45 @@ namespace HX
 {
 	public static class AssemblyFactory
 	{
-		public static Assembly Make(JObject _data)
-		{
-			NeoMechanicType _type;
-			if (!_data.TryGetAndParse("type", out _type))
-				return null;
+		private static readonly JObject sBodyDic;
+		private static readonly JObject sArmDic;
 
+		static AssemblyFactory()
+		{
+			JToken _dic;
+			JsonHelper2.Deserialize(new Path("Resources/Object/assembly_piece.json"), out _dic);
+			sBodyDic = (JObject)_dic["bodies"];
+			sArmDic = (JObject)_dic["arms"];
+		}
+
+		public static Assembly MakeWithDic(NeoMechanicType _type, string _key)
+		{
 			switch (_type)
 			{
 				case NeoMechanicType.BODY:
-					return MakeBody(_data);
+					return MakeBodyWithDic(_key);
 				case NeoMechanicType.ARM:
-					return MakeArm(_data);
+					return MakeArmWithDic(_key);
 				default:
 					D.Assert(false);
 					return null;
 			}
+		}
+
+		public static BodyAssembly MakeBodyWithDic(string _key)
+		{
+			JToken _data;
+			if (!sBodyDic.TryGet(_key, out _data))
+				return null;
+			return MakeBody((JObject)_data);
+		}
+
+		public static ArmAssembly MakeArmWithDic(string _key)
+		{
+			JToken _data;
+			if (!sArmDic.TryGet(_key, out _data))
+				return null;
+			return MakeArm((JObject)_data);
 		}
 
 		public static BodyAssembly MakeBody(JObject _data)

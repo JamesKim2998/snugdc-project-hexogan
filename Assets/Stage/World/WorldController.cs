@@ -109,7 +109,7 @@ namespace HX
 		{
 			foreach (var _data in _datas.Objects)
 			{
-				var _obj = StageFactory.Spawn(_data);
+				var _obj = StageFactory.Spawn(_map, _data);
 				if (_obj == null)
 				{
 					L.W("fail to spawn " + _data.Name);

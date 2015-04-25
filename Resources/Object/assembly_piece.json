@@ -1,0 +1,18 @@
+{
+	"bodies": {
+		"base": {			
+			"type": "BASE"
+		}
+	},
+	"arms": {
+		"motor": {
+			"type": "MOTOR"
+		},
+		"emitter": {
+			"type": "EMITTER"
+		},
+		"harvester": {
+			"type": "HARVESTER"
+		}
+	}
+}

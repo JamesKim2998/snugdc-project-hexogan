@@ -29,7 +29,7 @@ namespace HX
 			StageEvents.onAcquireAssembly.CheckAndCall(_assembly);
 		}
 
-		public void Commit()
+		public void CommitAndSave()
 		{
 			if (isCommitted)
 			{
@@ -41,6 +41,8 @@ namespace HX
 
 			foreach (var _assembly in mAcquiredAssemblies)
 				AssemblyManager.storage.SpecifyAndAdd(_assembly);
+
+			DisketteManager.Save();
 		}
 	}
 }

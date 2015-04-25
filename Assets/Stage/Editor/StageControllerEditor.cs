@@ -15,7 +15,7 @@ namespace HX
 				return;
 
 			if (GUILayout.Button("commit"))
-				target.result.Commit();
+				target.result.CommitAndSave();	
 		}
 	}
 }

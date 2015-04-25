@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="hexagonal" renderorder="right-down" width="8" height="8" tilewidth="32" tileheight="32" hexsidelength="18" staggeraxis="y" staggerindex="even" nextobjectid="1">
+<map version="1.0" orientation="hexagonal" renderorder="right-down" width="8" height="8" tilewidth="32" tileheight="32" hexsidelength="18" staggeraxis="y" staggerindex="even" nextobjectid="3">
  <tileset firstgid="1" source="../TSX/marker.tsx"/>
  <tileset firstgid="2" source="../TSX/plasm.tsx"/>
  <tileset firstgid="3" source="../TSX/wall.tsx"/>
+ <tileset firstgid="5" source="../TSX/objects.tsx"/>
  <layer name="plasm" width="8" height="8">
   <data>
    <tile gid="0"/>
@@ -207,4 +208,11 @@
    <tile gid="0"/>
   </data>
  </layer>
+ <objectgroup name="obj">
+  <object id="2" gid="5" x="137" y="106.25">
+   <properties>
+    <property name="key" value="base"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>

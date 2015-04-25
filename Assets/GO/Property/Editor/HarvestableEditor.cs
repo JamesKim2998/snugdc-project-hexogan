@@ -19,6 +19,6 @@ namespace HX
 		}
 	}
 
-	[CustomEditor(typeof(AssemblyPieceHarvestable))]
-	public class AssemblyPieceHarvestableEditor : HarvestableEditor { }
+	[CustomEditor(typeof(AssemblyPiece))]
+	public class AssemblyPieceEditor : HarvestableEditor { }
 }

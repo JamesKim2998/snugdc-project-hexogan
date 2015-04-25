@@ -12,6 +12,7 @@ namespace HX
 		public NeoRigidbody body { get { return neo.body; } }
 		public readonly NeoArmMotors motors;
 		public readonly NeoArmEmitters emitters;
+		public readonly NeoArmHarvesters harvesters;
 
 		public Transform transform { get { return neo.transform; } }
 
@@ -29,6 +30,7 @@ namespace HX
 			neo = _neo;
 			motors = new NeoArmMotors(body);
 			emitters = new NeoArmEmitters(neo.GetInstanceID(), body);
+			harvesters = new NeoArmHarvesters();
 		}
 
 		public void Update()
@@ -135,6 +137,9 @@ namespace HX
 			var _emitter = _arm.GetComponent<NeoArmEmitter>();
 			if (_emitter) emitters.Add(_emitter);
 
+			var _harvester = _arm.GetComponent<NeoArmHarvester>();
+			if (_harvester) harvesters.Add(_harvester);
+
 			return true;
 		}
 
@@ -151,19 +156,14 @@ namespace HX
 
 			BeforeRemove(_arm);
 
-			switch (_arm.type)
-			{
-				case NeoArmType.MOTOR:
-					var _motor = _arm.GetComponent<NeoArmMotor>();
-					motors.Remove(_motor);
-					break;
-				case NeoArmType.EMITTER:
-					var _emitter = _arm.GetComponent<NeoArmEmitter>();
-					emitters.Remove(_emitter);
-					break;
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
+			var _motor = _arm.GetComponent<NeoArmMotor>();
+			if (_motor) motors.Remove(_motor);
+
+			var _emitter = _arm.GetComponent<NeoArmEmitter>();
+			if (_emitter) emitters.Remove(_emitter);
+
+			var _harvester = _arm.GetComponent<NeoArmHarvester>();
+			if (_harvester) harvesters.Remove(_harvester);
 
 			mArms.Remove(_arm);
 			RemoveMechanic(_arm, _arm.coor, _arm.side);

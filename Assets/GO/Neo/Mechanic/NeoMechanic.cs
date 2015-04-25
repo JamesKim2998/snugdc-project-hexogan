@@ -1,4 +1,5 @@
-﻿using Gem;
+﻿using System;
+using Gem;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace HX
 	public class NeoMechanic : MonoBehaviour
 	{
 		public NeoMechanicType mechanicType { get; protected set; }
-		public AssemblyID assemblyID;
+		[HideInInspector] public AssemblyID assemblyID;
 
 		public int mass = 1;
 		public Vector2 com = Vector2.zero;
@@ -23,6 +24,7 @@ namespace HX
 		public new Collider2D collider { get { return mCollider; }}
 		private Rigidbody2D mRigidbody;
 
+		[Obsolete]
 		public Animator animator;
 
 		#region construct/destruct

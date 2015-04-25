@@ -14,7 +14,8 @@ MonoBehaviour:
   _objectReferences:
   - {fileID: 11400000, guid: 121cb3618bb895f41b245809b7668bbb, type: 2}
   - {fileID: 11400000, guid: de0de29b45feda24cbf60baf4680c4cf, type: 2}
+  - {fileID: 11400000, guid: 25bbcacaa0b2d244db54a124ea3d1454, type: 2}
   _serializedStateKeys:
   - editorDic
   _serializedStateValues:
-  - '{"MOTOR":0,"EMITTER":1}'
+  - '{"MOTOR":0,"EMITTER":1,"HARVESTER":2}'

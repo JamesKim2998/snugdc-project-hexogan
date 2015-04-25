@@ -1,19 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using Gem;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HX
 {
-	[RequireComponent(typeof(Collider2D))]
 	public class HarvestField : MonoBehaviour
 	{
 		public float harvestRadius = 0.2f;
 		public float forceFactor = 1;
 
+		[SerializeField, UsedImplicitly] private Collider2D mCollider;
+		private readonly List<Harvestable> mTargets = new List<Harvestable>();
+
 		public Action<HarvestField, Harvestable> onHarvest;
 
-		private readonly List<Harvestable> mTargets = new List<Harvestable>();
+		public void TurnOn()
+		{
+			D.Assert(mTargets.Empty());
+			mCollider.enabled = true;
+			enabled = true;
+		}
+
+		public void TurnOff()
+		{
+			enabled = false;
+			mCollider.enabled = false;
+
+			foreach (var _target in mTargets)
+				if (_target) _target.TryExitAggro();
+			mTargets.Clear();	
+		}
 
 		void Update()
 		{

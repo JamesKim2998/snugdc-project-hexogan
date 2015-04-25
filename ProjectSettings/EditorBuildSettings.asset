@@ -10,4 +10,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UI/Garage/Garage.unity
   - enabled: 1
-    path: Assets/World/World.unity
+    path: Assets/Stage/World/World.unity

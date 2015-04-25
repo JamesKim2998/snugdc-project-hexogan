@@ -30,6 +30,22 @@ namespace HX
 			return (_out = (ArmAssembly)mDic.GetOrDefault(_id)) != null;
 		}
 
+		public void SpecifyAndAdd(Assembly _val)
+		{
+			switch (_val.mechanicType)
+			{
+				case NeoMechanicType.BODY:
+					Add((BodyAssembly)_val);
+					break;
+				case NeoMechanicType.ARM:
+					Add((ArmAssembly)_val);
+					break;
+				default:
+					L.E("undefined mechanic type: " + _val.mechanicType);
+					break;
+			}
+		}
+
 		public void Add(BodyAssembly _val)
 		{
 			mDic[_val] = _val;

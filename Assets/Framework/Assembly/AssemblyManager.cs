@@ -24,7 +24,7 @@ namespace HX
 		{
 			try
 			{
-				Assembly.allocID = (AssemblyID)(int)_data[ALLOC_ID];
+				Assembly.ResetAllocateID((AssemblyID)(int)_data[ALLOC_ID]);
 
 				var _dataStorage = _data[STORAGE] as JObject;
 				if (_dataStorage != null)

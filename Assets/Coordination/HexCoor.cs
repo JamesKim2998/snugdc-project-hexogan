@@ -10,7 +10,7 @@ namespace Gem
 	public struct HexCoor : IEquatable<HexCoor>
 	{
 		public static readonly HexCoor ZERO = new HexCoor(0, 0);
-		private static readonly float SQRT_3 = Mathf.Sqrt(3);
+		public static readonly float SQRT_3 = Mathf.Sqrt(3);
 
 		[SerializeField]
 		private int mP;
@@ -90,8 +90,8 @@ namespace Gem
 		
 		public TiledSharp.Coor ToTiledCoor(uint _height)
 		{
-			var x = (uint)(mP + mQ / 2);
-			var y = (uint)(_height - mQ - 1);
+			var x = mP + mQ / 2;
+			var y = (int)_height - mQ - 1;
 			return new TiledSharp.Coor(x, y);
 		}
 

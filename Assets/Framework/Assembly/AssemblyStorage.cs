@@ -146,31 +146,13 @@ namespace HX
 		private static BodyAssembly MakeBody(string _key, JObject _data)
 		{
 			var _id = AssemblyHelper.MakeID(_key);
-
-			NeoBodyType _type;
-			if (!EnumHelper.TryParse((string)_data["type"], out _type))
-				return null;
-
-			var _staticData = NeoBodyDB.g[_type];
-
-			var _assembly = new BodyAssembly(_id, _staticData);
-			_assembly.Read(_data);
-			return _assembly;
+			return AssemblyFactory.MakeBody(_id, _data);
 		}
 
 		private static ArmAssembly MakeArm(string _key, JObject _data)
 		{
 			var _id = AssemblyHelper.MakeID(_key);
-
-			NeoArmType _type;
-			if (!EnumHelper.TryParse((string)_data["type"], out _type))
-				return null;
-
-			var _staticData = NeoArmDB.g[_type];
-
-			var _assembly = new ArmAssembly(_id, _staticData);
-			_assembly.Read(_data);
-			return _assembly;
+			return AssemblyFactory.MakeArm(_id, _data);
 		}
 	}
 }

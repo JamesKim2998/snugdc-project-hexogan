@@ -11,6 +11,7 @@ namespace HX
 		[NonSerialized]
 		private static bool sIsInited;
 
+		public GODB goDB;
 		public EmitterDB emitterDB;
 		public ProjectileDB projDB;
 		public NeoConst neoConst;
@@ -34,6 +35,7 @@ namespace HX
 
 		void Init()
 		{
+			GODB.g = goDB;
 			EmitterDB.g = emitterDB;
 			ProjectileDB.g = projDB;
 			NeoConst.g = neoConst;

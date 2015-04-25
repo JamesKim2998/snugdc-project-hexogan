@@ -1,5 +1,6 @@
 ﻿using System;
 using Gem;
+using JetBrains.Annotations;
 using TiledSharp;
 using UnityEngine;
 
@@ -14,8 +15,10 @@ namespace HX
 		private Neo mNeo;
 		private NeoController mNeoController;
 
-		[SerializeField] private Transform mWorldRoot;
-		[SerializeField] private CellGrid mCellGrid;
+		[SerializeField, UsedImplicitly]
+		private Transform mWorldRoot;
+		[SerializeField, UsedImplicitly]
+		private CellGrid mCellGrid;
 
 		void Start()
 		{
@@ -62,6 +65,11 @@ namespace HX
 
 			SetupMarkers(_map);
 			SetupCellGrid(_map);
+
+			var _hexMapHeight = (uint)Mathf.RoundToInt(_map.HexMapHeight);
+			L.W(_hexMapHeight.ToString());
+			foreach (var _datas in _map.ObjectGroups)
+				SetupObjects(_map, _datas, _hexMapHeight);
 		}
 
 		private void SetupMarkers(Map _map)
@@ -97,6 +105,21 @@ namespace HX
 			}
 		}
 
+		private void SetupObjects(Map _map, ObjectGroup _datas, uint _mapHeight)
+		{
+			foreach (var _data in _datas.Objects)
+			{
+				var _obj = StageFactory.Spawn(_data);
+				if (_obj == null)
+				{
+					L.W("fail to spawn " + _data.Name);
+					continue;
+				}
+
+				_obj.transform.SetParent(mWorldRoot, false);
+				_obj.transform.localPosition = (Vector2)StageFactory.GetPosition(_map, _data, _mapHeight);
+			}
+		}
 
 		public void StartGame()
 		{

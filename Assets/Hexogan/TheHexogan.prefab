@@ -39,6 +39,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2828384bac8608d44a4facd8b6432f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goDB: {fileID: 11400000, guid: 09d15963ac5c82c43a0a9e8d8f1fe2bd, type: 2}
   emitterDB: {fileID: 11400000, guid: efcbd2431e7692d429a2b62be9e31926, type: 2}
   projDB: {fileID: 11400000, guid: 68e33ca2117934d43b96ff62f11b54f4, type: 2}
   neoConst: {fileID: 11400000, guid: fc0e8317924d8d140a81b25d96d64fef, type: 2}

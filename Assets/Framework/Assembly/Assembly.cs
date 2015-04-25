@@ -10,7 +10,7 @@ namespace HX
 
 	public class Assembly
 	{
-		public static AssemblyID allocID;
+		public static AssemblyID allocID { get; private set; }
 
 		public readonly AssemblyID id;
 
@@ -21,7 +21,7 @@ namespace HX
 
 		protected Assembly(NeoMechanicData _staticData)
 		{
-			id = allocID++;
+			id = AllocateID();
 			staticData = _staticData;
 		}
 
@@ -31,13 +31,17 @@ namespace HX
 			staticData = _staticData;
 		}
 
-		public virtual void Read(JObject _data)
+		public virtual void Read(JObject _data) { }
+		public virtual void Write(JObject _data) { }
+
+		public static AssemblyID AllocateID()
 		{
-			
+			return allocID++;
 		}
 
-		public virtual void Write(JObject _data)
+		public static void ResetAllocateID(AssemblyID _val)
 		{
+			allocID = _val;
 		}
 
 		public static implicit operator AssemblyID(Assembly _this)

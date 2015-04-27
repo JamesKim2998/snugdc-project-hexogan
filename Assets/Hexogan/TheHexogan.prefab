@@ -50,6 +50,7 @@ MonoBehaviour:
   cellPlasmDB: {fileID: 11400000, guid: a11c9d05cb4a22b46989b4b8651016ce, type: 2}
   cellWallDB: {fileID: 11400000, guid: 60c64e6b408e58a40be152925effa132, type: 2}
   uiDB: {fileID: 11400000, guid: 971ca7143a12d8f49b1eb1927fd16d36, type: 2}
+  stageUIDB: {fileID: 11400000, guid: 0afe82577bfa57445afd954ef12773f1, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

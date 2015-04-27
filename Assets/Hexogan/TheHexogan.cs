@@ -22,6 +22,7 @@ namespace HX
 		public CellWallDB cellWallDB;
 
 		public UI.UIDB uiDB;
+		public Stage.UIDB stageUIDB;
 
 		void Awake()
 		{
@@ -45,6 +46,7 @@ namespace HX
 			CellPlasmDB.g = cellPlasmDB;
 			CellWallDB.g = cellWallDB;
 			UI.UIDB.g = uiDB;
+			Stage.UIDB.g = stageUIDB;
 		}
 
 		public IEnumerable<IDB> GetDBs()

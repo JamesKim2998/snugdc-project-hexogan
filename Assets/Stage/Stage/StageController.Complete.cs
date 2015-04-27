@@ -1,4 +1,6 @@
-﻿namespace HX.Stage
+﻿using Gem;
+
+namespace HX.Stage
 {
 	public partial class StageController
 	{
@@ -20,6 +22,8 @@
 
 			DetachNeoController();
 			result.CommitAndSave();
+
+			UIController.g.popup.OpenResult();
 		}
 	}
 }

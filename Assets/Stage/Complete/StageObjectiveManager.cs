@@ -48,14 +48,17 @@ namespace HX.Stage
 			}
 		}
 
-		public void Stop()
+		public bool TryStop()
 		{
 			if (!isStarted)
-			{
-				L.E("not started.");
-				return;
-			}
+				return false;
 
+			Stop();
+			return true;
+		}
+
+		private void Stop() 
+		{
 			isStarted = false;
 
 			foreach (var kv in mObjectives)

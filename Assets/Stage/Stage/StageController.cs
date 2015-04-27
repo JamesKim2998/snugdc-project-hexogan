@@ -121,7 +121,7 @@ namespace HX.Stage
 			}
 
 			mState = StageState.STOP;
-			objective.Stop();
+			objective.TryStop();
 		}
 	}
 }

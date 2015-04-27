@@ -2,7 +2,7 @@
 using Gem.Expression;
 using UnityEngine;
 
-namespace HX
+namespace HX.Stage
 {
 	public partial class StageController
 	{

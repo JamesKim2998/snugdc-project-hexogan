@@ -7,7 +7,10 @@ namespace HX
 	{
 		STAGE_EVENT = 1,
 	}
+}
 
+namespace HX.Stage
+{
 	public class TriggerStageEvent : Trigger
 	{
 		private readonly StageEventType mStageEvent;

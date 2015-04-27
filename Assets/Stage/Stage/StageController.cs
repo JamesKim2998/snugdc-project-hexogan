@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace HX
+namespace HX.Stage
 {
 	public enum StageState
 	{

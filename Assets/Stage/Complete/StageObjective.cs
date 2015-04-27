@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace HX
+namespace HX.Stage
 {
 	public class StageObjective
 	{

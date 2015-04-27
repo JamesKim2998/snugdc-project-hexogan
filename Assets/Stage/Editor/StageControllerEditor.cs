@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace HX
+namespace HX.Stage
 {
 	[CustomEditor(typeof(StageController))]
 	public class StageControllerEditor : Editor<StageController>

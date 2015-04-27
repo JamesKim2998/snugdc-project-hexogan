@@ -1,7 +1,7 @@
 ﻿using Gem;
 using UnityEngine;
 
-namespace HX
+namespace HX.Stage
 {
 	public static class StageFactory
 	{

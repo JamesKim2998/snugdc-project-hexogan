@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 using TiledSharp;
 using UnityEngine;
 
-namespace HX
+namespace HX.Stage
 {
 	public class WorldMarker
 	{

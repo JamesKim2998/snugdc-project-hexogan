@@ -1,4 +1,4 @@
-﻿namespace HX
+﻿namespace HX.Stage
 {
 	public partial class StageController
 	{
@@ -17,6 +17,7 @@
 		private void Complete()
 		{
 			isCompleted = true;
+
 			DetachNeoController();
 			result.CommitAndSave();
 		}

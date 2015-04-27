@@ -8,8 +8,11 @@ namespace HX
 	{
 		STAGE_REACH = 1,
 	}
-	
 
+}
+
+namespace HX.Stage
+{
 	public sealed class ConditionStageReach : Condition
 	{
 		private readonly Expression mDestination;

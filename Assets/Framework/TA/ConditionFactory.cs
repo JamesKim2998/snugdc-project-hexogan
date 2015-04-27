@@ -14,7 +14,7 @@ namespace HX
 			switch (_type)
 			{
 				case ConditionType.STAGE_REACH:
-					return new ConditionStageReach(_def);
+					return new Stage.ConditionStageReach(_def);
 				default:
 					L.E(L.M.ENUM_UNDEFINED(_type));
 					return null;

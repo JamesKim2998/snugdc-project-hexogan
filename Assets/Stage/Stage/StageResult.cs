@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using Gem;
 
-namespace HX
+namespace HX.Stage
 {
 	public class StageResult
 	{

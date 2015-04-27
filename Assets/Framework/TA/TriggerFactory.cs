@@ -14,7 +14,7 @@ namespace HX
 			switch (_type)
 			{
 				case TriggerType.STAGE_EVENT:
-					return new TriggerStageEvent(_def);
+					return new Stage.TriggerStageEvent(_def);
 				default:
 					L.E(L.M.ENUM_UNDEFINED(_type));
 					return null;

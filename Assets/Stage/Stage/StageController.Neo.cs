@@ -20,5 +20,11 @@ namespace HX
 			mNeoController = neo.AddComponent<NeoController>();
 			mNeoController.neo = neo;
 		}
+
+		private void DetachNeoController()
+		{
+			if (mNeoController)
+				Destroy(mNeoController);
+		}
 	}
 }

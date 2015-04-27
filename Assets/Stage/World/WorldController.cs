@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Gem;
 using JetBrains.Annotations;
 using TiledSharp;
@@ -6,19 +7,30 @@ using UnityEngine;
 
 namespace HX
 {
+	public class WorldMarker
+	{
+		public readonly string key;
+		public readonly Vector2 position;
+
+		public WorldMarker(string _key, Vector2 _position)
+		{
+			key = _key;
+			position = _position;
+		}
+	}
+
 	public class WorldController : MonoBehaviour
 	{
 		private bool mIsSetuped;
 
 		private HexCoor mStartPosition;
 
-		private Neo mNeo;
-		private NeoController mNeoController;
-
 		[SerializeField, UsedImplicitly]
 		private Transform mWorldRoot;
 		[SerializeField, UsedImplicitly]
 		private CellGrid mCellGrid;
+
+		private readonly Dictionary<string, WorldMarker> mMarkers = new Dictionary<string, WorldMarker>();
 
 		void Start()
 		{
@@ -27,6 +39,14 @@ namespace HX
 				Setup(TransitionManager.world);
 				TransitionManager.MarkWorldNotDirty();
 			}
+		}
+
+		public Neo InstantiateNeo()
+		{
+			var _neo = AssemblyManager.blueprint.Instantiate();
+			_neo.transform.SetParent(mWorldRoot, false);
+			_neo.transform.position = (Vector2)mStartPosition;
+			return _neo;
 		}
 
 		private void Setup(WorldTransitionData _data)
@@ -67,26 +87,25 @@ namespace HX
 			SetupCellGrid(_map);
 
 			var _hexMapHeight = (uint)Mathf.RoundToInt(_map.HexMapHeight);
-			L.W(_hexMapHeight.ToString());
 			foreach (var _datas in _map.ObjectGroups)
-				SetupObjects(_map, _datas, _hexMapHeight);
+				SetupObjects(_datas, _hexMapHeight);
 		}
 
-		private void SetupMarkers(Map _map)
+		private void SetupMarkers(TiledSharp.Map _map)
 		{
 			foreach (var kv in _map.TraverseWithCoorAndTile("marker"))
 			{
-				MarkerType _markerType;
+				WorldMarkerType _markerType;
 				var _tile = kv.Second;
-				if (!_tile.Properties.TryGetAndParse("type", out _markerType))
+				if (!_tile.Properties.TryGetAndParse("marker_type", out _markerType))
 					continue;
 
 				var _coor = kv.First;
 
 				switch (_markerType)
 				{
-					case MarkerType.START_POSITION:
-						mStartPosition = new LevelMarkerStartPosition(_coor, _tile);
+					case WorldMarkerType.START_POSITION:
+						mStartPosition = new WorldMarkerStartPosition(_coor, _tile);
 						break;
 					default:
 						L.W(L.M.ENUM_UNDEFINED(_markerType));
@@ -105,29 +124,48 @@ namespace HX
 			}
 		}
 
-		private void SetupObjects(Map _map, ObjectGroup _datas, uint _mapHeight)
+		private void SetupObjects(ObjectGroup _datas, uint _mapHeight)
 		{
 			foreach (var _data in _datas.Objects)
-			{
-				var _obj = StageFactory.Spawn(_map, _data);
-				if (_obj == null)
-				{
-					L.W("fail to spawn " + _data.Name);
-					continue;
-				}
-
-				_obj.transform.SetParent(mWorldRoot, false);
-				_obj.transform.localPosition = (Vector2)StageFactory.GetPosition(_map, _data, _mapHeight);
-			}
+				SpawnObject(_data, _mapHeight);
 		}
 
-		public void StartGame()
+		private void SpawnObject(TiledSharp.ObjectGroup.Object _data, uint _mapHeight)
 		{
-			mNeo = AssemblyManager.blueprint.Instantiate();
-			mNeo.transform.SetParent(mWorldRoot, false);
-			mNeo.transform.position = (Vector2)mStartPosition;
-			mNeoController = mNeo.AddComponent<NeoController>();
-			mNeoController.neo = mNeo;
+			var _type = StageFactory.GetType(_data);
+			var _position = (Vector2)StageFactory.GetPosition(_data, _mapHeight);
+
+			switch (_type)
+			{
+				case GOType.WORLD_MARKER:
+					AddMarker(_data, _position);
+					return;
+			}
+
+			var _obj = StageFactory.Spawn(_type, _data);
+			if (_obj == null)
+			{
+				L.W("fail to spawn " + _data.Name);
+				return;
+			}
+
+			_obj.transform.SetParent(mWorldRoot, false);
+			_obj.transform.localPosition = _position;
+
+		}
+
+		public void AddMarker(TiledSharp.ObjectGroup.Object _data, Vector2 _position)
+		{
+			string _key;
+			if (!_data.Properties.TryGet("key", out _key)) return;
+			mMarkers.Add(_key, new WorldMarker(_key, _position));
+		}
+
+		public WorldMarker FindMarker(string _key)
+		{
+			WorldMarker _marker;
+			mMarkers.TryGet(_key, out _marker);
+			return _marker;
 		}
 	}
 }

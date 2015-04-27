@@ -9,9 +9,9 @@ namespace HX
 		private const int MAP_TILE_SIDE = 18;
 		private const float MAP_TILE_MARGIN = (MAP_TILE_WIDTH - MAP_TILE_SIDE)/2f;
 
-		public static Vector2 GetPosition(TiledSharp.Map _map, TiledSharp.ObjectGroup.Object _data, uint _mapHeight)
+		public static Vector2 GetPosition(TiledSharp.ObjectGroup.Object _data, uint _mapHeight)
 		{
-			var _tile = _map.FindTile(_data.Tile.Gid);
+			var _tile = _data.TilesetTile;
 			var _tileWidth = _tile.Image.Width.GetValueOrDefault(0);
 			var _tileHeight = _tile.Image.Height.GetValueOrDefault(0);
 
@@ -21,13 +21,16 @@ namespace HX
 			return new Vector2(x, y);
 		}
 
-		public static GameObject Spawn(TiledSharp.Map _map, TiledSharp.ObjectGroup.Object _data)
+		public static GOType GetType(TiledSharp.ObjectGroup.Object _data)
 		{
-			var _tile = _map.FindTile(_data.Tile.Gid);
-
 			GOType _type;
-			if (!_tile.Properties.TryGetAndParse("type", out _type))
-				return null;
+			var _properties = _data.TilesetTile.Properties;
+			return _properties.TryGetAndParse("type", out _type) ? _type : default(GOType);
+		}
+
+		public static GameObject Spawn(GOType _type, TiledSharp.ObjectGroup.Object _data)
+		{
+			var _tile = _data.TilesetTile;
 
 			switch (_type)
 			{

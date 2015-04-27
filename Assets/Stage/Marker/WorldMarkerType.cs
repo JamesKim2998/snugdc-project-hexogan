@@ -1,6 +1,6 @@
 ﻿namespace HX
 {
-	public enum MarkerType
+	public enum WorldMarkerType
 	{
 		START_POSITION,
 	}

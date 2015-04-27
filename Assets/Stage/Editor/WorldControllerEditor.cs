@@ -22,9 +22,6 @@ namespace HX
 				if (GUILayout.Button("load"))
 					target.SetupGrid(new Path(mTmxPath));
 			}
-
-			if (GUILayout.Button("start"))
-				target.StartGame();
 		}
 	}
 }

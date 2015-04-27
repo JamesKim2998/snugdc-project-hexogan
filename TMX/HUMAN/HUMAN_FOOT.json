@@ -1,0 +1,18 @@
+{
+	"objectives": {
+		"reach_body": {
+			"trigger": {
+				"type": "STAGE_EVENT",
+				"event": "AFTER_UPDATE"
+			},
+			"condition": {
+				"type": "STAGE_REACH",
+				"position": {
+					"op": "BIND_STAGE",
+					"args": [ "MARKER_POSITION", "destination" ]
+				},
+				"radius": 0.5
+			}
+		}
+	}
+}

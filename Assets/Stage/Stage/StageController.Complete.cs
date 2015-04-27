@@ -1,6 +1,4 @@
-﻿using Gem;
-
-namespace HX
+﻿namespace HX
 {
 	public partial class StageController
 	{
@@ -19,7 +17,7 @@ namespace HX
 		private void Complete()
 		{
 			isCompleted = true;
-			L.W("complete");
+			result.CommitAndSave();
 		}
 	}
 }

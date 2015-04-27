@@ -16,7 +16,7 @@ namespace HX
 				return;
 			}
 
-			neo = world.InstantiateNeo();
+			neo = world.SpawnNeo();
 			mNeoController = neo.AddComponent<NeoController>();
 			mNeoController.neo = neo;
 		}

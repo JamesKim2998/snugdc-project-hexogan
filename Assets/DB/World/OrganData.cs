@@ -12,8 +12,7 @@ namespace HX
 	public class OrganData : ScriptableObject
 	{
 		public OrganKey key;
-		public string tmx { get { return key + ".tmx"; } }
-
+		
 		public Vector2 vertexPosition;
 
 		public static implicit operator OrganKey(OrganData _this)

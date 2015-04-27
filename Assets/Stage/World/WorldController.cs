@@ -32,16 +32,7 @@ namespace HX
 
 		private readonly Dictionary<string, WorldMarker> mMarkers = new Dictionary<string, WorldMarker>();
 
-		void Start()
-		{
-			if (TransitionManager.isWorldDirty)
-			{
-				Setup(TransitionManager.world);
-				TransitionManager.MarkWorldNotDirty();
-			}
-		}
-
-		public Neo InstantiateNeo()
+		public Neo SpawnNeo()
 		{
 			var _neo = AssemblyManager.blueprint.Instantiate();
 			_neo.transform.SetParent(mWorldRoot, false);
@@ -49,7 +40,7 @@ namespace HX
 			return _neo;
 		}
 
-		private void Setup(WorldTransitionData _data)
+		public void Setup(Path _tmxPath)
 		{
 			if (mIsSetuped)
 			{
@@ -58,16 +49,6 @@ namespace HX
 			}
 
 			mIsSetuped = true;
-			SetupGrid(_data.tmxPath);
-		}
-
-		public void SetupGrid(Path _tmxPath)
-		{
-			if (!mCellGrid.empty)
-			{
-				L.E("grid should be empty.");
-				return;
-			}
 
 			TiledSharp.Document _doc;
 

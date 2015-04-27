@@ -3,10 +3,14 @@ using UnityEngine;
 
 namespace HX 
 {
-	public struct WorldTransitionData
+	public struct StageTransitionData
 	{
 		public string scene;
-		public Path tmxPath;
+		public Directory dir;
+		public string name;
+
+		public Path defPath { get { return dir / new Path(name + ".json"); } }
+		public Path tmxPath { get { return dir / new Path(name + ".tmx"); } }
 	}
 
 	public static class TransitionManager
@@ -14,9 +18,8 @@ namespace HX
 		public const string SCENE_LOBBY = "Lobby";
 		public const string SCENE_GARAGE = "Garage";
 		
-		public static bool isWorldDirty { get; private set; }
-
-		public static WorldTransitionData world { get; private set; }
+		public static bool isStageDirty { get; private set; }
+		public static StageTransitionData stage { get; private set; }
 
 		private static bool BeforeStart()
 		{
@@ -45,23 +48,23 @@ namespace HX
 			StartScene(SCENE_GARAGE);
 		}
 
-		public static void StartWorld(WorldTransitionData _data)
+		public static void StartStage(StageTransitionData _data)
 		{
 			if (!BeforeStart())
 				return;
 
-			isWorldDirty = true;
-			world = _data;
+			isStageDirty = true;
+			stage = _data;
 
-			D.Assert(!string.IsNullOrEmpty(world.scene));
+			D.Assert(!string.IsNullOrEmpty(stage.scene));
 
-			Application.LoadLevel(world.scene);
+			Application.LoadLevel(stage.scene);
 		}
 
-		public static void MarkWorldNotDirty()
+		public static void MarkStageNotDirty()
 		{
-			D.Assert(isWorldDirty);
-			isWorldDirty = false;
+			D.Assert(isStageDirty);
+			isStageDirty = false;
 		}
 	}
 }

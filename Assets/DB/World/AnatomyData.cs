@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FullInspector;
+using Gem;
 
 namespace HX 
 {
@@ -18,7 +19,7 @@ namespace HX
 		}
 
 		public AnatomyKey key;
-		public string tmxDir { get { return "TMX/" + key + "/"; } }
+		public Directory stageDir { get { return new Directory("TMX/" + key + "/"); } }
 		public Dictionary<OrganKey, OrganData> vertexs;
 
 		public List<Conn> conns;

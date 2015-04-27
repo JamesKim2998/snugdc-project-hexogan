@@ -20,7 +20,7 @@ namespace HX
 			if (!string.IsNullOrEmpty(mTmxPath))
 			{
 				if (GUILayout.Button("load"))
-					target.SetupGrid(new Path(mTmxPath));
+					target.Setup(new Path(mTmxPath));
 			}
 		}
 	}

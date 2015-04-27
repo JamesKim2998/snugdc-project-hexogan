@@ -35,6 +35,12 @@ namespace HX
 
 		void Start()
 		{
+			if (TransitionManager.isStageDirty)
+			{
+				Setup(TransitionManager.stage);
+				TransitionManager.MarkStageNotDirty();
+			}
+
 			D.Assert(g == null);
 			if (g == null)
 				g = this;
@@ -55,7 +61,7 @@ namespace HX
 			StageEvents.onAfterUpdate.CheckAndCall();
 		}
 
-		public void Setup(Path _path)
+		public void Setup(StageTransitionData _data)
 		{
 			if (isSetupped)
 			{
@@ -65,12 +71,16 @@ namespace HX
 
 			mState = StageState.SETUP;
 
-			JsonHelper2.Deserialize(new Path(_path), out mDef);
+			JsonHelper2.Deserialize(_data.defPath, out mDef);
 
 			SetupExpression();
 			SetupHarvest();
 
+			world.Setup(_data.tmxPath);
+
 			mObjective.Setup((JObject)mDef["objectives"]);
+
+			Invoke("StartStage", 0);
 		}
 
 		private void Purge()
@@ -89,7 +99,7 @@ namespace HX
 			PurgeExpression();
 		}
 
-		public void StartStage()
+		private void StartStage()
 		{
 			if (mState != StageState.SETUP)
 			{

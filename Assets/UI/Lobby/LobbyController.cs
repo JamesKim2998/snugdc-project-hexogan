@@ -19,7 +19,7 @@ namespace HX.UI
 		[SerializeField]
 		private NeoButton mNeoButton;
 
-		private WorldTransitionData mTransition;
+		private StageTransitionData mTransition;
 
 		void Start()
 		{
@@ -42,12 +42,13 @@ namespace HX.UI
 				return;
 			}
 
-			TransitionManager.StartWorld(mTransition);
+			TransitionManager.StartStage(mTransition);
 		}
 
 		void OnSelectAnatomyVertex(AnatomyVertexView v)
 		{
-			mTransition.tmxPath = new Path(mAnatomy.data.tmxDir + v.data.tmx);
+			mTransition.dir = mAnatomy.data.stageDir;
+			mTransition.name = v.data.key.ToString();
 		}
 
 		static void OnClickNeoButton()

@@ -7,7 +7,8 @@ namespace HX
 	[CustomEditor(typeof(StageController))]
 	public class StageControllerEditor : Editor<StageController>
 	{
-		private string mSetupPath = "TMX/HUMAN/HUMAN_FOOT.json";
+		private string mStageDir = "TMX/HUMAN";
+		private string mStageName = "HUMAN_FOOT";
 
 		public override void OnInspectorGUI()
 		{
@@ -16,12 +17,16 @@ namespace HX
 			if (!Application.isPlaying)
 				return;
 
-			mSetupPath = EditorGUILayout.TextField("setup", mSetupPath);
-			if (GUILayout.Button("setup"))
-				target.Setup(new Path(mSetupPath));
+			mStageDir = EditorGUILayout.TextField("dir", mStageDir);
+			mStageName = EditorGUILayout.TextField("name", mStageName);
 
-			if (GUILayout.Button("start"))
-				target.StartStage();
+			if (GUILayout.Button("setup"))
+			{
+				var _data = new StageTransitionData();
+				_data.dir = new Directory(mStageDir);
+				_data.name = mStageName;
+				target.Setup(_data);
+			}
 
 			if (GUILayout.Button("commit"))
 				target.result.CommitAndSave();	

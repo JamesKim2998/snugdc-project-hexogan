@@ -3,11 +3,9 @@ using UnityEngine;
 
 namespace HX
 {
-	public class AssemblyPiece : Harvestable
+	public class HarvestablePiece : Harvestable
 	{
 		private const float DESTROY_DELAY = 0.5f;
-
-		public Assembly assembly;
 
 		[SerializeField, UsedImplicitly]
 		private Rigidbody2D mBody;
@@ -18,7 +16,7 @@ namespace HX
 		[SerializeField, UsedImplicitly]
 		private Animator mAnimator;
 
-		public AssemblyPiece()
+		public HarvestablePiece()
 			: base(HarvestableType.ASSEMBLY_PIECE)
 		{}
 

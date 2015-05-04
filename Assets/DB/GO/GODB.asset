@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Name: GODB
   m_EditorClassIdentifier: 
   assemblyPiece: {fileID: 11461948, guid: f8c1968ee4f7b954c8243b4c91013ff0, type: 2}
+  glucosePiece: {fileID: 11457594, guid: f0ac36fd2fb0aca498df960f60df6a5d, type: 2}

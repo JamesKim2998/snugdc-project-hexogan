@@ -49,6 +49,13 @@ namespace HX.Stage
 					return _go.gameObject;
 				}
 
+				case GOType.GLUCOSE_PIECE:
+				{
+					var _go = GODB.g.glucosePiece.Instantiate();
+					_tile.Properties.TryGetAndParse("energy", out _go.amount);
+					return _go.gameObject;
+				}
+
 				default:
 					L.E(L.M.ENUM_UNDEFINED(_type));
 					return null;

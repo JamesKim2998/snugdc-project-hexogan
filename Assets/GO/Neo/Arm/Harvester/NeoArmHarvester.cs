@@ -26,8 +26,13 @@ namespace HX
 			mHarvestField.TurnOff();
 		}
 
-		private static void OnHarvest(HarvestField _field, Harvestable _target)
+		private void OnHarvest(HarvestField _field, Harvestable _target)
 		{
+			if (_target.type == HarvestableType.GLUCOSE_PIECE)
+			{
+				// todo: 즉시 neo의 에너지를 증가
+			}
+
 			onHarvest.CheckAndCall(_field, _target);
 		}
 	}

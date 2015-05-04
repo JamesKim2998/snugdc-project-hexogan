@@ -16,8 +16,8 @@ namespace HX
 		[SerializeField, UsedImplicitly]
 		private Animator mAnimator;
 
-		public HarvestablePiece()
-			: base(HarvestableType.ASSEMBLY_PIECE)
+		public HarvestablePiece(HarvestableType _type)
+			: base(_type)
 		{}
 
 		protected override void DoEnterAggro()

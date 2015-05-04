@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="hexagonal" renderorder="right-down" width="8" height="8" tilewidth="32" tileheight="32" hexsidelength="18" staggeraxis="y" staggerindex="even" nextobjectid="4">
+<map version="1.0" orientation="hexagonal" renderorder="right-down" width="8" height="8" tilewidth="32" tileheight="32" hexsidelength="18" staggeraxis="y" staggerindex="even" nextobjectid="5">
  <tileset firstgid="1" source="../TSX/marker.tsx"/>
  <tileset firstgid="3" source="../TSX/plasm.tsx"/>
  <tileset firstgid="4" source="../TSX/wall.tsx"/>
@@ -214,10 +214,11 @@
     <property name="key" value="base"/>
    </properties>
   </object>
-  <object id="3" gid="2" x="126" y="99.5">
+  <object id="3" gid="2" x="220" y="123.833">
    <properties>
     <property name="key" value="destination"/>
    </properties>
   </object>
+  <object id="4" gid="8" x="110.667" y="113.333"/>
  </objectgroup>
 </map>

@@ -14,4 +14,10 @@
   </properties>
   <image width="16" height="16" source="arm_piece.png"/>
  </tile>
+ <tile id="2">
+  <properties>
+   <property name="type" value="GLUCOSE_PIECE"/>
+  </properties>
+  <image width="16" height="16" source="glucose_piece.png"/>
+ </tile>
 </tileset>

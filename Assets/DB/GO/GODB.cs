@@ -7,5 +7,6 @@ namespace HX
 		public static GODB g;
 
 		public AssemblyPiece assemblyPiece;
+		public GlucosePiece glucosePiece;
 	}
 }

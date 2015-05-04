@@ -1,1 +1,0 @@
-{"assembly":{"allocID":3,"storage":{"bodies":{"1":{"type":"BASE"}},"arms":{"2":{"type":"MOTOR"}}},"blueprint":{"bodies":[{"coor":{"p":-1,"q":0},"assemblyID":1}],"arms":[{"bodyCoor":{"p":-1,"q":0},"side":3,"assemblyID":2,"armCoor":{"p":-2,"q":0}}]}}}

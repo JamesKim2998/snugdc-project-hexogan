@@ -109,4 +109,5 @@ Thumbs.db
 *.sln
 *.dwlt
 /Binary
+/Resources/Save/*.json
 /Resources/Backup/*.json

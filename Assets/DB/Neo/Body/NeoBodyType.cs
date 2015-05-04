@@ -7,5 +7,6 @@ namespace HX
 	{
 		BASE = 1,
 		CORE = 2,
+		GENERATOR = 3,
 	}
 }

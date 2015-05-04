@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Gem;
 using UnityEngine;
@@ -10,6 +9,9 @@ namespace HX
 	{
 		public readonly Neo neo;
 		public NeoRigidbody body { get { return neo.body; } }
+
+		public readonly NeoEnergyController energyController = new NeoEnergyController();
+
 		public readonly NeoArmMotors motors;
 		public readonly NeoArmEmitters emitters;
 		public readonly NeoArmHarvesters harvesters;

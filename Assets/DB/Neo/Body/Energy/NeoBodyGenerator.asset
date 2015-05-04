@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b56e3cad2bd0be40b59f7a61627f37c, type: 3}
+  m_Name: NeoBodyGenerator
+  m_EditorClassIdentifier: 
+  _objectReferences:
+  - {fileID: 11400000, guid: 544a931ab0b3748478f5a9bcbf1731f9, type: 2}
+  - {fileID: 11400000, guid: 9247467751fb85b4fbc5653c09d7fe2f, type: 2}
+  _serializedStateKeys:
+  - key
+  - properties
+  _serializedStateValues:
+  - 3
+  - '[0,1]'
+  name: GENERATOR
+  mechanicPrf: {fileID: 11461210, guid: 3526526a57e463041aa85c0ce11b95c5, type: 2}
+  durability: 5
+  cohesion: 5
+  mMaterialPrf: {fileID: 169394, guid: a0bbcf98ebfb57a4d8f8752b9a65b827, type: 2}
+  properties:
+  - {fileID: 11400000, guid: 544a931ab0b3748478f5a9bcbf1731f9, type: 2}
+  - {fileID: 11400000, guid: 9247467751fb85b4fbc5653c09d7fe2f, type: 2}

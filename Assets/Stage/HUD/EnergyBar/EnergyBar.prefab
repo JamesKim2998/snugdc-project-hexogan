@@ -59,7 +59,7 @@ GameObject:
   - 114: {fileID: 11400318}
   - 114: {fileID: 11462530}
   m_Layer: 5
-  m_Name: GlucoseBar
+  m_Name: EnergyBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 179572}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -817, y: -452, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 469168}
@@ -246,6 +246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mBar: {fileID: 11416402}
+  mBack: {fileID: 11423822}
   mProgress: {fileID: 11400318}
 --- !u!114 &11471398
 MonoBehaviour:

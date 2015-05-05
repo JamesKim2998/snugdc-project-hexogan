@@ -2,10 +2,10 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace HX
+namespace HX.Stage
 {
-	[CustomEditor(typeof(GlucoseBar))]
-	public class GlucoseBarEditor : Editor<GlucoseBar>
+	[CustomEditor(typeof(EnergyBar))]
+	public class EnergyBarEditor : Editor<EnergyBar>
 	{
 		private int mMax;
 		private float mValue;
@@ -19,6 +19,9 @@ namespace HX
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
+
+			if (!Application.isPlaying)
+				return;
 
 			mMax = EditorGUILayout.IntField("max", mMax);
 			mValue = EditorGUILayout.FloatField("value", mValue);

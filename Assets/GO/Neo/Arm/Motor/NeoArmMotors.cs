@@ -93,6 +93,7 @@ namespace HX
 		{
 			private readonly List<MotorData> mDatas = new List<MotorData>();
 			private readonly IThrust mThrust;
+			private int mConsumption;
 
 			public MotorDatas(IThrust _thrust)
 			{
@@ -103,6 +104,12 @@ namespace HX
 			public void Add(MotorData _motorData)
 			{
 				mDatas.Add(_motorData);
+				mConsumption += _motorData.motor.thrustEnergyConsumption;
+			}
+
+			public float CalculateConsumption(float _dt, float _factor)
+			{
+				return _dt*_factor*mConsumption;
 			}
 
 			public void ApplyPos(Rigidbody2D _rigidbody, float _factor) { mThrust.ApplyPos(_rigidbody, _factor); }
@@ -121,6 +128,7 @@ namespace HX
 					TurnOff();
 				mThrust.Clear();
 				mDatas.Clear();
+				mConsumption = 0;
 			}
 
 			public bool isRunning { get; private set; }
@@ -162,16 +170,62 @@ namespace HX
 			}
 		}
 
+		private class MotorDatasComplementary
+		{
+			public readonly MotorDatas pos;
+			public readonly MotorDatas neg;
+
+			public MotorDatasComplementary(MotorDatas _pos, MotorDatas _neg)
+			{
+				pos = _pos;
+				neg = _neg;
+			}
+
+			public float CalculateConsumption(float _dt, float _factor)
+			{
+				return (_factor > 0)
+					? pos.CalculateConsumption(_dt, _factor) 
+					: neg.CalculateConsumption(_dt, -_factor);
+			}
+
+			public void BuildThrust(Vector2 _com)
+			{
+				pos.BuildThrust(_com);
+				neg.BuildThrust(_com);
+			}
+
+			public void Clear()
+			{
+				pos.Clear(); 
+				neg.Clear();
+			}
+
+			public void Motor(float _val)
+			{
+				pos.Motor(_val);
+				neg.Motor(-_val);
+			}
+
+			public void ApplyForce(NeoRigidbody _body, float _val)
+			{
+				if (_val > 0)
+					pos.ApplyPos(_body, _val);
+				else
+					neg.ApplyNeg(_body, -_val);
+			}
+		}
+
 		private readonly List<MotorData> mMotors = new List<MotorData>();
-		private readonly MotorDatas mThrusts = new MotorDatas(new Thrust());
-		private readonly MotorDatas mDrags = new MotorDatas(new Thrust());
-		private readonly MotorDatas mDriftLs = new MotorDatas(new Drift());
-		private readonly MotorDatas mDriftRs = new MotorDatas(new Drift());
+		private readonly MotorDatasComplementary mThrusts = new MotorDatasComplementary(new MotorDatas(new Thrust()), new MotorDatas(new Thrust()));
+		private readonly MotorDatasComplementary mDrifts = new MotorDatasComplementary(new MotorDatas(new Drift()), new MotorDatas(new Drift()));
 		#endregion
 
-		public NeoArmMotors(NeoRigidbody _body)
+		private readonly NeoEnergyController mEnergyController;
+
+		public NeoArmMotors(NeoRigidbody _body, NeoEnergyController _energyController)
 		{
 			body = _body;
+			mEnergyController = _energyController;
 		}
 
 		#region add/remove
@@ -193,35 +247,30 @@ namespace HX
 		public void ClearThrusts()
 		{
 			mThrusts.Clear();
-			mDrags.Clear();
-			mDriftLs.Clear();
-			mDriftRs.Clear();
+			mDrifts.Clear();
 		}
 
-		private const float THRESHOLD = 0.001f;
-
-		public void Motor(float _thrustNormal, float _driftNormal)
+		public void Motor(float _dt, float _thrustNormal, float _driftNormal)
 		{
+			var _shouldThrust = body.IsBelowSpeedLimit();
+			var _shouldDrift = body.IsBelowAngularSpeedLimit();
+
+			var _consumption = 0f;
+			if (_shouldThrust)
+				_consumption += mThrusts.CalculateConsumption(_dt, _thrustNormal);
+			if (_shouldDrift)
+				_consumption += mDrifts.CalculateConsumption(_dt, _driftNormal);
+
+			if (!mEnergyController.TryConsume(_consumption))
+				return;
+
 			mThrusts.Motor(_thrustNormal);
-			mDrags.Motor(-_thrustNormal);
-			mDriftLs.Motor(-_driftNormal);
-			mDriftRs.Motor(_driftNormal);
+			mDrifts.Motor(_driftNormal);
 
-			if (body.IsBelowSpeedLimit())
-			{
-				if (_thrustNormal > THRESHOLD)
-					mThrusts.ApplyPos(body, _thrustNormal);
-				else if (_thrustNormal < -THRESHOLD)
-					mDrags.ApplyNeg(body, -_thrustNormal);
-			}
-
-			if (body.IsBelowAngularSpeedLimit())
-			{
-				if (_driftNormal > THRESHOLD)
-					mDriftRs.ApplyNeg(body, _driftNormal);
-				else if (_driftNormal < -THRESHOLD)
-					mDriftLs.ApplyPos(body, -_driftNormal);
-			}
+			if (_shouldThrust)
+				mThrusts.ApplyForce(body, _thrustNormal);
+			if (_shouldDrift)
+				mDrifts.ApplyForce(body, _driftNormal);
 		}
 
 		public void BuildThrust()
@@ -237,31 +286,29 @@ namespace HX
 
 				switch (_side)
 				{
-					case HexEdge.R: mDrags.Add(_motorData); break;
-					case HexEdge.L: mThrusts.Add(_motorData); break;
+					case HexEdge.R: mThrusts.neg.Add(_motorData); break;
+					case HexEdge.L: mThrusts.pos.Add(_motorData); break;
 
 					case HexEdge.TR:
 					case HexEdge.TL:
 						if (_delta.x < 0)
-							mDriftLs.Add(_motorData);
+							mDrifts.neg.Add(_motorData);
 						else if (_delta.x > 0)
-							mDriftRs.Add(_motorData);
+							mDrifts.pos.Add(_motorData);
 						break;
 
 					case HexEdge.BR:
 					case HexEdge.BL:
 						if (_delta.x < 0)
-							mDriftRs.Add(_motorData);
+							mDrifts.pos.Add(_motorData);
 						else if (_delta.x > 0)
-							mDriftLs.Add(_motorData);
+							mDrifts.neg.Add(_motorData);
 						break;
 				}
 			}
 
 			mThrusts.BuildThrust(_com);
-			mDrags.BuildThrust(_com);
-			mDriftLs.BuildThrust(_com);
-			mDriftRs.BuildThrust(_com);
+			mDrifts.BuildThrust(_com);
 		}
 	}
 }

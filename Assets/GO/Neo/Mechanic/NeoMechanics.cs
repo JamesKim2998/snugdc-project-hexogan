@@ -30,7 +30,7 @@ namespace HX
 		public NeoMechanics(Neo _neo)
 		{
 			neo = _neo;
-			motors = new NeoArmMotors(body);
+			motors = new NeoArmMotors(body, energyController);
 			emitters = new NeoArmEmitters(neo.GetInstanceID(), body);
 			harvesters = new NeoArmHarvesters();
 		}

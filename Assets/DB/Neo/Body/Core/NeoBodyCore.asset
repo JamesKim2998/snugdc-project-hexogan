@@ -24,7 +24,7 @@ MonoBehaviour:
   mechanicPrf: {fileID: 11400000, guid: 513837b0ebf55b94a88c08b64b026305, type: 2}
   durability: 5
   cohesion: 5
-  energyConsumption: 10
+  energyConsumption: 2
   mMaterialPrf: {fileID: 140166, guid: a6806fa06470def42b8e9d32cdb09b33, type: 2}
   properties:
   - {fileID: 11400000, guid: be456cfc27b2e4443a8c9a5c231b4db8, type: 2}

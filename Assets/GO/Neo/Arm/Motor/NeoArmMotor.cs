@@ -10,6 +10,8 @@ namespace HX
 		public NeoArm arm { get { return mArm; }}
 
 		public int thrust;
+		public int thrustEnergyConsumption;
+
 		public Animator animator;
 
 		public void TurnOn()

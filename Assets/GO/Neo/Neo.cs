@@ -42,12 +42,12 @@ namespace HX
 			mechanics.Add(core.body, HexCoor.ZERO);
 		}
 
-		public void Motor(float _thrustNormal, float _driftNormal)
+		public void Motor(float _dt, float _thrustNormal, float _driftNormal)
 		{
 			if (_thrustNormal > -0.01f)
-				mechanics.motors.Motor(_thrustNormal, _driftNormal);
+				mechanics.motors.Motor(_dt, _thrustNormal, _driftNormal);
 			else
-				mechanics.motors.Motor(_thrustNormal, -_driftNormal);
+				mechanics.motors.Motor(_dt, _thrustNormal, -_driftNormal);
 		}
 
 		public void Shoot()

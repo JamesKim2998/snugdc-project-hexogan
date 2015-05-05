@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92f17ada86daef042b9176b6ed325bb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assemblyID: 0
   mass: 1
   com: {x: .0599999987, y: 0}
   mData: {fileID: 11400000, guid: 121cb3618bb895f41b245809b7668bbb, type: 2}
@@ -120,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mArm: {fileID: 11400000}
   thrust: 100
+  thrustEnergyConsumption: 4
   animator: {fileID: 9500000}
 --- !u!212 &21200000
 SpriteRenderer:

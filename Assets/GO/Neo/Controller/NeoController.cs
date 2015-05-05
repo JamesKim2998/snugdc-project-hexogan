@@ -33,7 +33,7 @@ namespace HX
 				&& Mathf.Approximately(_horizontal, 0));
 
 			if (_shouldMotor)
-				neo.Motor(_vertical, _horizontal);
+				neo.Motor(Time.fixedDeltaTime, _vertical, _horizontal);
 
 			if (Input.GetButtonDown(NeoInput.SHOOT))
 				neo.Shoot();

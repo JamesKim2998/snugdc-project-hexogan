@@ -1,4 +1,6 @@
-﻿using Gem;
+﻿#pragma warning disable 0162
+
+using Gem;
 using Newtonsoft.Json.Linq;
 
 namespace HX

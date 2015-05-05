@@ -16,4 +16,4 @@ MonoBehaviour:
     ownerPlayer: 
     emitter: 0
     projectile: 0
-    value: 10
+    value: 5

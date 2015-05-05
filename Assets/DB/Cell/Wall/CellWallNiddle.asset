@@ -11,6 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad75379b36ab97242b19d4b84b9bf6e6, type: 3}
   m_Name: CellWallNiddle
   m_EditorClassIdentifier: 
+  _objectReferences:
+  - {fileID: 11400000, guid: ac8de5b0d1ce68241aea15b7d8a90cc7, type: 2}
+  _serializedStateKeys:
+  - key
+  - properties
+  _serializedStateValues:
+  - 2
+  - '[0]'
   sprite: {fileID: 21300000, guid: 071d38f5782ade041b91637f1406e5ae, type: 3}
   goPrf: {fileID: 100002, guid: 91b2c70a5ef6c874bb6b8751e0a0229b, type: 2}
   constructorItemPrf: {fileID: 0}

@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mArm: {fileID: 11400000}
-  thrust: 100
+  thrust: 200
   thrustEnergyConsumption: 4
   animator: {fileID: 9500000}
 --- !u!212 &21200000

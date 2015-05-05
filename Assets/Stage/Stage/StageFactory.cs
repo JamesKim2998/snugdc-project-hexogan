@@ -45,7 +45,7 @@ namespace HX.Stage
 						return null;
 
 					var _go = GODB.g.assemblyPiece.Instantiate();
-					_go.assembly = AssemblyFactory.MakeWithDic(_mechanicType, _key);
+					_go.assembly = AssemblyFactory.MakeWithAssemblyPiece(_mechanicType, _key);
 					return _go.gameObject;
 				}
 

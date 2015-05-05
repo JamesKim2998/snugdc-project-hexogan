@@ -32,7 +32,11 @@ namespace HX
 		}
 
 		public virtual void Read(JObject _data) { }
-		public virtual void Write(JObject _data) { }
+
+		public virtual void Write(JObject _data)
+		{
+			_data["mechanicType"] = mechanicType.ToString();
+		}
 
 		public static AssemblyID AllocateID()
 		{

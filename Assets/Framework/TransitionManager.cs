@@ -56,10 +56,10 @@ namespace HX
 			isStageDirty = true;
 			stage = _data;
 
+			D.Assert(!string.IsNullOrEmpty(stage.scene));
+
 			if (_shouldProceedDay)
 				DayManager.Proceed();
-
-			D.Assert(!string.IsNullOrEmpty(stage.scene));
 
 			Application.LoadLevel(stage.scene);
 		}

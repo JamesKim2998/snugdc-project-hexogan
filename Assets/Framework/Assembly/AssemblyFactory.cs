@@ -1,4 +1,5 @@
-﻿using Gem;
+﻿using System;
+using Gem;
 using Newtonsoft.Json.Linq;
 
 namespace HX
@@ -16,7 +17,7 @@ namespace HX
 			sArmDic = (JObject)_dic["arms"];
 		}
 
-		public static Assembly MakeWithDic(NeoMechanicType _type, string _key)
+		public static Assembly MakeWithAssemblyPiece(NeoMechanicType _type, string _key)
 		{
 			switch (_type)
 			{
@@ -44,6 +45,26 @@ namespace HX
 			if (!sArmDic.TryGet(_key, out _data))
 				return null;
 			return MakeArm((JObject)_data);
+		}
+
+		public static Assembly Make(AssemblyID _id, JObject _data)
+		{
+			NeoMechanicType _mechanicType;
+			if (!_data.TryGetAndParse("mechanicType", out _mechanicType))
+				return null;
+
+			switch (_mechanicType)
+			{
+				case NeoMechanicType.BODY:
+					return MakeBody(_id, _data);
+				case NeoMechanicType.ARM:
+					return MakeArm(_id, _data);
+				default:
+					D.Assert(false);
+					break;
+			}
+
+			return null;
 		}
 
 		public static BodyAssembly MakeBody(JObject _data)

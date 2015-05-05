@@ -16,6 +16,8 @@ namespace HX
 		public int durability = 5;
 		public int cohesion = 5;
 
+		public int energyConsumption;
+
 		public GameObject mMaterialPrf;
 
 		// note: it need to be compared explicitly.

@@ -22,7 +22,7 @@ namespace HX.Stage
 					result.Acquire((AssemblyPiece)_harvestable);
 					break;
 				default:
-					L.E(L.M.ENUM_UNDEFINED(_harvestable.type));
+					L.D(L.M.ENUM_UNDEFINED(_harvestable.type));
 					break;
 			}
 		}

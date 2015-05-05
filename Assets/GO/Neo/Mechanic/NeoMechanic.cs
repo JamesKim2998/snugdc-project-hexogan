@@ -19,6 +19,8 @@ namespace HX
 
 		public HexCoor coor { get; private set; }
 
+		private bool mShouldUpdateLife;
+
 		[SerializeField, UsedImplicitly]
 		private Collider2D mCollider;
 		public new Collider2D collider { get { return mCollider; }}
@@ -27,7 +29,7 @@ namespace HX
 		[Obsolete]
 		public Animator animator;
 
-		#region construct/destruct
+		#region construct/destruct/update
 
 		protected virtual void Awake()
 		{
@@ -35,6 +37,15 @@ namespace HX
 			mDamageDetector.onDetect += Damage;
 			cohesionLeft = data.cohesion;
 			durabilityLeft = data.durability;
+		}
+
+		void Update()
+		{
+			if (mShouldUpdateLife)
+			{
+				UpdateLife();
+				mShouldUpdateLife = false;
+			}
 		}
 
 		#endregion
@@ -106,7 +117,7 @@ namespace HX
 		protected void RemoveCohesion(NeoMechanic _mechanic)
 		{
 			cohesionLeft -= _mechanic.data.cohesion/6f;
-			UpdateLife();
+			mShouldUpdateLife = true;
 		}
 
 		#endregion

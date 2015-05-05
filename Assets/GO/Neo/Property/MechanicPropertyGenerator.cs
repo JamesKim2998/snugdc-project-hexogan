@@ -2,7 +2,7 @@
 
 namespace HX
 {
-	public class NeoBodyGeneratorData : ScriptableObject
+	public class MechanicPropertyGenerator : ScriptableObject
 	{
 		public int generation;
 	}

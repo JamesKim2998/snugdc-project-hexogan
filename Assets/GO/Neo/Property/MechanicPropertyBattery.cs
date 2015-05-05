@@ -2,7 +2,7 @@
 
 namespace HX
 {
-	public class NeoBodyBatteryData : ScriptableObject
+	public class MechanicPropertyBattery : ScriptableObject
 	{
 		public int capacity;
 	}

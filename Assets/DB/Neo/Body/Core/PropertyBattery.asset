@@ -11,4 +11,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2797f23e2548002469c2a6bd003d6747, type: 3}
   m_Name: PropertyBattery
   m_EditorClassIdentifier: 
-  capacity: 50
+  capacity: 100

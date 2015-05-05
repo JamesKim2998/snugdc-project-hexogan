@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d5d5e029e351d1498e3bd720f8090e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mArm: {fileID: 11400000}
   mHarvestField: {fileID: 11457434}
 --- !u!114 &11457434
 MonoBehaviour:

@@ -1,12 +1,43 @@
-﻿namespace HX
+﻿using System;
+using Gem;
+
+namespace HX
 {
-	public class NeoEnergyController 
+	public class NeoEnergyController
 	{
-		public int capacity { get; set; }
-		public int generation;
-		public int consumption;
+		private int mCapacity;
+
+		public int capacity
+		{
+			get { return mCapacity; }
+			private set
+			{
+				D.Assert(value >= 0);
+				if (capacity == value) return;
+				mCapacityOld = mCapacity;
+				mCapacity = value;
+			}
+		}
+
+		private int mGeneration;
+		public int generation
+		{
+			get { return mGeneration; }
+			set { D.Assert(value >= 0); mGeneration = value; }
+		}
+
+		private int mConsumption;
+		public int consumption
+		{
+			get { return mConsumption; }
+			set { D.Assert(value >= 0); mConsumption = value; }
+		}
 
 		public float available { get; private set; }
+
+		public bool isCapacityDirty { get { return mCapacityOld != null; } }
+		private int? mCapacityOld;
+		public static Action<int, int> onCapacityChanged;
 
 		public bool isEmpty()
 		{
@@ -26,7 +57,13 @@
 			if (_netGeneration >= 0)
 				Charge(_netGeneration);
 			else
-				DoConsume(_netGeneration);
+				DoConsume(-_netGeneration);
+
+			if (isCapacityDirty)
+			{
+				onCapacityChanged.CheckAndCall(capacity, mCapacityOld.Value);
+				mCapacityOld = null;
+			}
 		}
 
 		public void AddCapacityAndCharge(int _val)
@@ -35,10 +72,11 @@
 			Charge(_val);
 		}
 
-		public void RemoveCapacityAndConsume(int _val)
+		public void RemoveCapacityAndCut(int _val)
 		{
+			var _oldCapacity = capacity;
 			capacity -= _val;
-			DoConsume(_val);
+			available *= capacity / (float)_oldCapacity;
 		}
 
 		public void Charge(float _val)
@@ -63,6 +101,7 @@
 
 		private void DoConsume(float _val)
 		{
+			D.Assert(_val >= 0);
 			available -= _val;
 			if (available < 0) available = 0;
 		}

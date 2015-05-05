@@ -54,6 +54,8 @@ namespace HX
 				Build();
 				mMassDirty = false;
 			}
+
+			energyController.Update(Time.deltaTime);
 		}
 
 		public HexNode<NeoBody> GetBody(HexCoor _coor)
@@ -68,8 +70,14 @@ namespace HX
 		{
 			_mechanic.collider.enabled = false;
 			_mechanic.SetParent(this, _coor);
+
 			body.AddMass(_mechanic.mass, _coor, _side);
 			mMassDirty = true;
+
+			energyController.consumption += _mechanic.data.energyConsumption;
+
+			ApplyProperties(_mechanic);
+
 			mMechanicsDirty.Add(_mechanic);
 		}
 
@@ -80,6 +88,8 @@ namespace HX
 
 		public void Remove(NeoMechanic _mechanic)
 		{
+			DisapplyProperties(_mechanic);
+
 			if (_mechanic == NeoMechanicType.BODY)
 			{
 				var _body = _mechanic.GetComponent<NeoBody>();
@@ -99,6 +109,24 @@ namespace HX
 		private void BeforeRemove(NeoMechanic _mechanic)
 		{
 			mMechanicsDirty.Remove(_mechanic);
+		}
+
+		private void ApplyProperties(NeoMechanic _mechanic)
+		{
+			var _battery = _mechanic.data.GetProperty<MechanicPropertyBattery>();
+			if (_battery) energyController.AddCapacityAndCharge(_battery.capacity);
+
+			var _generator = _mechanic.data.GetProperty<MechanicPropertyGenerator>();
+			if (_generator) energyController.generation += _generator.generation;
+		}
+
+		private void DisapplyProperties(NeoMechanic _mechanic)
+		{
+			var _battery = _mechanic.data.GetProperty<MechanicPropertyBattery>();
+			if (_battery) energyController.RemoveCapacityAndCut(_battery.capacity);
+
+			var _generator = _mechanic.data.GetProperty<MechanicPropertyGenerator>();
+			if (_generator) energyController.generation -= _generator.generation;
 		}
 
 		public bool Add(NeoBody _body, HexCoor _coor)
@@ -148,7 +176,11 @@ namespace HX
 		private void RemoveMechanic(NeoMechanic _mechanic, HexCoor _coor, HexEdge? _side = null)
 		{
 			_mechanic.Detach();
+
 			body.AddMass(-_mechanic.mass, _coor, _side);
+
+			energyController.consumption -= _mechanic.data.energyConsumption;
+
 			mMassDirty = true;
 		}
 

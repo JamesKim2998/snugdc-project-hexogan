@@ -7,7 +7,11 @@ namespace HX
 {
 	public class NeoArmHarvester : MonoBehaviour
 	{
-		[SerializeField, UsedImplicitly] private HarvestField mHarvestField;
+		[SerializeField, UsedImplicitly]
+		private NeoArm mArm;
+
+		[SerializeField, UsedImplicitly]
+		private HarvestField mHarvestField;
 
 		public static Action<HarvestField, Harvestable> onHarvest;
 
@@ -28,12 +32,19 @@ namespace HX
 
 		private void OnHarvest(HarvestField _field, Harvestable _target)
 		{
+			D.Assert(mArm.parent);
+			if (mArm.parent == null) return;
+
 			if (_target.type == HarvestableType.GLUCOSE_PIECE)
-			{
-				// todo: 즉시 neo의 에너지를 증가
-			}
+				OnHarvest((GlucosePiece)_target);
 
 			onHarvest.CheckAndCall(_field, _target);
+		}
+
+		private void OnHarvest(GlucosePiece _target)
+		{
+			D.Assert(mArm.parent);
+			mArm.parent.energyController.Charge(_target.amount);
 		}
 	}
 }

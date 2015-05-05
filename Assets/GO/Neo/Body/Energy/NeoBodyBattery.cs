@@ -10,11 +10,11 @@ namespace HX
 		private NeoBody mBody;
 		public NeoBody body { get { return mBody; } }
 		public float energyLeft { get; private set; }
-		public NeoBodyBatteryData data { get; private set; }
+		public MechanicPropertyBattery data { get; private set; }
 
 		private void Awake()
 		{
-			data = body.data.GetProperty<NeoBodyBatteryData>();
+			data = body.data.GetProperty<MechanicPropertyBattery>();
 			energyLeft = data.capacity;
 		}
 	}

@@ -219,6 +219,10 @@
     <property name="key" value="destination"/>
    </properties>
   </object>
-  <object id="4" gid="8" x="110.667" y="113.333"/>
+  <object id="4" gid="8" x="110.667" y="113.333">
+   <properties>
+    <property name="energy" value="10"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

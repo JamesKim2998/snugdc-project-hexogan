@@ -42,7 +42,7 @@ namespace HX.UI
 				return;
 			}
 
-			TransitionManager.StartStage(mTransition);
+			TransitionManager.StartStage(mTransition, true);
 		}
 
 		void OnSelectAnatomyVertex(AnatomyVertexView v)

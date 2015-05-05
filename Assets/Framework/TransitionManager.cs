@@ -48,13 +48,16 @@ namespace HX
 			StartScene(SCENE_GARAGE);
 		}
 
-		public static void StartStage(StageTransitionData _data)
+		public static void StartStage(StageTransitionData _data, bool _shouldProceedDay)
 		{
 			if (!BeforeStart())
 				return;
 
 			isStageDirty = true;
 			stage = _data;
+
+			if (_shouldProceedDay)
+				DayManager.Proceed();
 
 			D.Assert(!string.IsNullOrEmpty(stage.scene));
 

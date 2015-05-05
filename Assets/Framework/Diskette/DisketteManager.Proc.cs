@@ -7,12 +7,17 @@ namespace HX
 {
 	public static partial class DisketteManager
 	{
+		private const string DAY = "day";
 		private const string ASSEMBLY = "assembly";
 
 		private static bool DoLoad(JObject _data)
 		{
 			do
 			{
+				var _day = _data[DAY];
+				if (_day == null || !DayManager.Load(_day))
+					break;
+
 				var _assembly = _data[ASSEMBLY] as JObject;
 				if (_assembly == null || !AssemblyManager.Load(_assembly))
 					break;
@@ -30,6 +35,10 @@ namespace HX
 
 			do
 			{
+				var _day = DayManager.Save();
+				if (_day == null) break;
+				_data[DAY] = _day;
+
 				var _assembly = AssemblyManager.Save();
 				if (_assembly == null) break;
 				_data[ASSEMBLY] = _assembly;

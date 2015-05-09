@@ -241,8 +241,6 @@ namespace HX
 
 				var _projectile = _projectileGO.GetComponent<Projectile>();
 				_projectile.owner = owner;
-				_projectile.ownerPlayer = ownerPlayer;
-				_projectile.ownerEmitter = type;
 				if (damage.HasValue) _projectile.damage.value = damage.Value;
 
 				if (ownerBody && relativeVelocityEnabled)
@@ -295,8 +293,6 @@ namespace HX
 
 			var _projectile = _projectileGO.GetComponent<Projectile>();
 			_projectile.owner = owner;
-			_projectile.ownerPlayer = _ownerPlayer;
-			_projectile.ownerEmitter = type;
 
 			_projectileGO.GetComponent<NetworkView>().viewID = _viewID;
 			_projectileGO.GetComponent<NetworkView>().enabled = true;

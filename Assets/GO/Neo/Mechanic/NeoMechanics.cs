@@ -10,7 +10,8 @@ namespace HX
 		public readonly Neo neo;
 		public NeoRigidbody body { get { return neo.body; } }
 
-		public readonly NeoEnergyController energyController = new NeoEnergyController();
+		public readonly NeoRoughnessController roughness;
+		public readonly NeoEnergyController energy;
 
 		public readonly NeoArmMotors motors;
 		public readonly NeoArmEmitters emitters;
@@ -27,10 +28,12 @@ namespace HX
 		private bool mIslandDirty = false;
 		private readonly List<NeoMechanic> mMechanicsDirty = new List<NeoMechanic>();
 
-		public NeoMechanics(Neo _neo)
+		public NeoMechanics(Neo _neo, NeoRoughnessController _roughness, NeoEnergyController _energy)
 		{
 			neo = _neo;
-			motors = new NeoArmMotors(body, energyController);
+			roughness = _roughness;
+			energy = _energy;
+			motors = new NeoArmMotors(body, energy);
 			emitters = new NeoArmEmitters(neo.GetInstanceID(), body);
 			harvesters = new NeoArmHarvesters();
 		}
@@ -55,7 +58,9 @@ namespace HX
 				mMassDirty = false;
 			}
 
-			energyController.Update(Time.deltaTime);
+			var _dt = Time.deltaTime;
+			roughness.Update(_dt);
+			energy.Update(_dt);
 		}
 
 		public HexNode<NeoBody> GetBody(HexCoor _coor)
@@ -74,7 +79,8 @@ namespace HX
 			body.AddMass(_mechanic.mass, _coor, _side);
 			mMassDirty = true;
 
-			energyController.consumption += _mechanic.data.energyConsumption;
+			roughness.IncreaseMaxAndRecover(_mechanic.data.roughness);
+			energy.consumption += _mechanic.data.energyConsumption;
 
 			ApplyProperties(_mechanic);
 
@@ -88,6 +94,8 @@ namespace HX
 
 		public void Remove(NeoMechanic _mechanic)
 		{
+			Stage.StageEvents.onMechanicLost.CheckAndCall(_mechanic);
+				
 			DisapplyProperties(_mechanic);
 
 			if (_mechanic == NeoMechanicType.BODY)
@@ -114,19 +122,19 @@ namespace HX
 		private void ApplyProperties(NeoMechanic _mechanic)
 		{
 			var _battery = _mechanic.data.GetProperty<MechanicPropertyBattery>();
-			if (_battery) energyController.AddCapacityAndCharge(_battery.capacity);
+			if (_battery) energy.AddCapacityAndCharge(_battery.capacity);
 
 			var _generator = _mechanic.data.GetProperty<MechanicPropertyGenerator>();
-			if (_generator) energyController.generation += _generator.generation;
+			if (_generator) energy.generation += _generator.generation;
 		}
 
 		private void DisapplyProperties(NeoMechanic _mechanic)
 		{
 			var _battery = _mechanic.data.GetProperty<MechanicPropertyBattery>();
-			if (_battery) energyController.RemoveCapacityAndCut(_battery.capacity);
+			if (_battery) energy.RemoveCapacityAndCut(_battery.capacity);
 
 			var _generator = _mechanic.data.GetProperty<MechanicPropertyGenerator>();
-			if (_generator) energyController.generation -= _generator.generation;
+			if (_generator) energy.generation -= _generator.generation;
 		}
 
 		public bool Add(NeoBody _body, HexCoor _coor)
@@ -179,7 +187,8 @@ namespace HX
 
 			body.AddMass(-_mechanic.mass, _coor, _side);
 
-			energyController.consumption -= _mechanic.data.energyConsumption;
+			roughness.CutMax(_mechanic.data.roughness);
+			energy.consumption -= _mechanic.data.energyConsumption;
 
 			mMassDirty = true;
 		}

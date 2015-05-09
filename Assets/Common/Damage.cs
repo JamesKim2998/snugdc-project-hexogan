@@ -1,29 +1,20 @@
-using UnityEngine;
-
 namespace HX
 {
 	[System.Serializable]
 	public class Damage
 	{
-		public static readonly Damage MAX = new Damage(int.MaxValue);
+		public static readonly Damage MAX = new Damage(float.MaxValue);
 
-		public string ownerPlayer;
+		public float value;
 
-		public EmitterType emitter;
-		public ProjectileType projectile;
-
-		[System.NonSerialized]
-		public Vector2 velocity;
-		public int value;
-
-		public Damage(int _value)
+		public Damage(float _value)
 		{
 			value = _value;
 		}
 
-		public static implicit operator int(Damage _attackData)
+		public static implicit operator float(Damage _this)
 		{
-			return _attackData.value;
+			return _this.value;
 		}
 	}
 }

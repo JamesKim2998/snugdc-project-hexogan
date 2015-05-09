@@ -44,7 +44,7 @@ namespace HX
 		private void OnHarvest(GlucosePiece _target)
 		{
 			D.Assert(mArm.parent);
-			mArm.parent.energyController.Charge(_target.amount);
+			mArm.parent.energy.Charge(_target.amount);
 		}
 	}
 }

@@ -3,11 +3,12 @@ using UnityEngine;
 
 namespace HX.Stage
 {
-	public class EnergyBar : MonoBehaviour
+	public class BaseBar : MonoBehaviour
 	{
 		private const float THRESHHOLD = 0.1f;
-		private const float LENGTH_MAX = 800;
-		private const float VALUE_TO_LEN = 1;
+		
+		public float lengthMax { get; protected set; }
+		public float valueToLength { get; protected set; }
 
 		private float mValue;
 		public float value
@@ -30,7 +31,7 @@ namespace HX.Stage
 			set
 			{
 				mMax = value;
-				var _width = (int)Mathf.Min(value * VALUE_TO_LEN, LENGTH_MAX);
+				var _width = (int)Mathf.Min(value * valueToLength, lengthMax);
 				mBar.width = _width;
 				mBack.width = _width;
 				Refresh();
@@ -45,6 +46,12 @@ namespace HX.Stage
 
 		[SerializeField, UsedImplicitly]
 		private UIProgressBar mProgress;
+
+		public BaseBar()
+		{
+			lengthMax = 800;
+			valueToLength = 1;
+		}
 
 		void Refresh()
 		{

@@ -7,6 +7,8 @@ namespace HX
 {
 	public class NeoMechanic : MonoBehaviour
 	{
+		private const float DAMAGE_BLOCK_ABSOLVE_BY_ROUGHNESS = 0.8f;
+
 		public NeoMechanicType mechanicType { get; protected set; }
 		[HideInInspector] public AssemblyID assemblyID;
 
@@ -148,12 +150,21 @@ namespace HX
 		public float cohesionLeft { get; private set; }
 		private DamageDetector mDamageDetector;
 
-		public void Damage(Damage _attackData)
+		public void Damage(Damage _dmg)
 		{
 			if (cohesionLeft > 0 && parent)
-				cohesionLeft -= _attackData;
+			{
+				var _dmgToRoughness = new Damage(_dmg);
+				_dmgToRoughness.value *= DAMAGE_BLOCK_ABSOLVE_BY_ROUGHNESS;
+				parent.roughness.Damage(_dmg);
+
+				cohesionLeft -= _dmg.value * (1 - DAMAGE_BLOCK_ABSOLVE_BY_ROUGHNESS);
+			}
 			else if (durabilityLeft > 0)
-				durabilityLeft -= _attackData;
+			{
+				durabilityLeft -= _dmg;
+			}
+
 			UpdateLife();
 		}
 
@@ -171,6 +182,7 @@ namespace HX
 
 		public void Decay()
 		{
+			Stage.StageEvents.onMechanicDecay.CheckAndCall(this);
 			Destroy(gameObject, 1);
 		}
 

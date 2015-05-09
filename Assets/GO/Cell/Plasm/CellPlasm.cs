@@ -7,7 +7,7 @@ namespace HX
 	{
 		public CellPlasmData data { get; private set; }
 
-		public int hpLeft { get; private set; }
+		public float hpLeft { get; private set; }
 		public Action<CellPlasm> postDecay;
 
 		public DamageDetector damageDetector;

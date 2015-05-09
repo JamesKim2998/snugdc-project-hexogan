@@ -6,25 +6,7 @@ namespace HX
 	[RequireComponent(typeof(Rigidbody2D))]
 	public class Projectile : MonoBehaviour
 	{
-		public ProjectileType editorType = ProjectileType.NONE;
-
-		public ProjectileType type
-		{
-			get { return damage.projectile; }
-			set { damage.projectile = value; }
-		}
-
-		public string ownerPlayer
-		{
-			get { return damage.ownerPlayer; }
-			set { damage.ownerPlayer = value; }
-		}
-
-		public EmitterType ownerEmitter
-		{
-			get { return damage.emitter; }
-			set { damage.emitter = value; }
-		}
+		public ProjectileType type;
 
 		[HideInInspector]
 		public int owner = 0;
@@ -103,8 +85,6 @@ namespace HX
 
 		void Start()
 		{
-			type = editorType;
-
 			if (initialVelocity != Vector2.zero)
 				GetComponent<Rigidbody2D>().velocity = initialVelocity;
 
@@ -246,10 +226,7 @@ namespace HX
 					return;
 
 				if (_damageDetector && _damageDetector.enabled)
-				{
-					damage.velocity = GetComponent<Rigidbody2D>().velocity;
 					_damageDetector.Damage(damage);
-				}
 
 				if (onHit != null)
 					onHit(this, _collider);

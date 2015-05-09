@@ -13,6 +13,7 @@ namespace HX
 
 		public NeoMechanic mechanicPrf;
 
+		public int roughness = 5;
 		public int durability = 5;
 		public int cohesion = 5;
 

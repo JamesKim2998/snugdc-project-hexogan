@@ -1,6 +1,4 @@
-﻿using Gem;
-
-namespace HX.Stage
+﻿namespace HX.Stage
 {
 	public partial class StageController
 	{

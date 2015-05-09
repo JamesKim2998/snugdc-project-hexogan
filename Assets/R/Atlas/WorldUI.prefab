@@ -42,7 +42,7 @@ MonoBehaviour:
   material: {fileID: 2100000, guid: bf7f7254745abd744930948d7fe24648, type: 2}
   mSprites:
   - name: glucose_bar_bee
-    x: 0
+    x: 91
     y: 47
     width: 96
     height: 81
@@ -55,7 +55,7 @@ MonoBehaviour:
     paddingTop: 12
     paddingBottom: 9
   - name: rect
-    x: 0
+    x: 91
     y: 14
     width: 32
     height: 32
@@ -67,6 +67,19 @@ MonoBehaviour:
     paddingRight: 0
     paddingTop: 0
     paddingBottom: 0
+  - name: roughness_bar_cube
+    x: 0
+    y: 24
+    width: 90
+    height: 104
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 7
+    paddingRight: 7
+    paddingTop: 5
+    paddingBottom: 5
   mPixelSize: 1
   mReplacement: {fileID: 0}
   mCoordinates: 0

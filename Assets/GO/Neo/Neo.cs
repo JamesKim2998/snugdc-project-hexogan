@@ -11,9 +11,12 @@ namespace HX
 		[SerializeField] private NeoBodyCore mCore;
 		public NeoBodyCore core { get { return mCore; } }
 
+		public readonly NeoRoughnessController roughness = new NeoRoughnessController();
+		public readonly NeoEnergyController energy = new NeoEnergyController();
+
 		void Awake()
 		{
-			mechanics = new NeoMechanics(this);
+			mechanics = new NeoMechanics(this, roughness, energy);
 		}
 
 		void Start()

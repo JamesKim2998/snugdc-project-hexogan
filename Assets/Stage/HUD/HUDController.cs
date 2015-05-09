@@ -9,6 +9,7 @@ namespace HX.Stage
 
 		void Start()
 		{
+			SetupRoughnessBar();
 			SetupEnergyBar();
 
 			D.Assert(g == null);
@@ -18,6 +19,7 @@ namespace HX.Stage
 
 		void OnDestroy()
 		{
+			PurgeRoughnessBar();
 			PurgeEnergyBar();
 
 			D.Assert(g == this);
@@ -27,6 +29,7 @@ namespace HX.Stage
 
 		void Update()
 		{
+			UpdateRoughnessBar();
 			UpdateEnergyBar();
 		}
 	}

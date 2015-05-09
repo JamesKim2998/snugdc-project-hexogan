@@ -10,6 +10,10 @@ namespace HX.Stage
 	public class StageEvents
 	{
 		public static Action onAfterUpdate;
+
+		public static Action<NeoMechanic> onMechanicLost;
+		public static Action<NeoMechanic> onMechanicDecay;
+
 		public static Action<Assembly> onAcquireAssembly;
 	}
 }

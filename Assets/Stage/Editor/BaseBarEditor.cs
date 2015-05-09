@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace HX.Stage
 {
-	[CustomEditor(typeof(EnergyBar))]
-	public class EnergyBarEditor : Editor<EnergyBar>
+	[CustomEditor(typeof(BaseBar))]
+	public class BaseBarEditor : Editor<BaseBar>
 	{
 		private int mMax;
 		private float mValue;

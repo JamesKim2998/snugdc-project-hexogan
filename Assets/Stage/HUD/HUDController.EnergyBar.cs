@@ -6,14 +6,14 @@ namespace HX.Stage
 	public partial class HUDController
 	{
 		[SerializeField, UsedImplicitly]
-		private EnergyBar mEnergyBar;
+		private BaseBar mEnergyBar;
 
 		private void UpdateEnergyBar()
 		{
 			var _neo = StageController.g.neo;
 			if (_neo != null)
 			{
-				mEnergyBar.value = _neo.mechanics.energyController.available;
+				mEnergyBar.value = _neo.mechanics.energy.available;
 			}
 		}
 

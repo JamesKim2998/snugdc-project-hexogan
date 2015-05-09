@@ -7,7 +7,7 @@ namespace HX
 	{
 		public CellWallData data { get; private set; }
 
-		public int hpLeft { get; private set; }
+		public float hpLeft { get; private set; }
 		public Action<CellWall> postDecay;
 
 		public DamageDetector damageDetector;
